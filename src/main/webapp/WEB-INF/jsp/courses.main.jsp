@@ -10,7 +10,7 @@
 <h1>Main Courses</h1>
 
 <ul>
-    <c:forEach var="item" items="${news}">
+    <c:forEach var="item" items="${courses}">
         <li>${item.id} | ${item.content}</li>
     </c:forEach>
     <s:message code="Courses"/>
