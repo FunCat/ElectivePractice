@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<!DOCTYPE log4j:configuration PUBLIC "-//LOGGER"
+        "http://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/xml/doc-files/log4j.dtd">
+<log4j:configuration>
+    <!-- console appender. Use it only for debug, not in production! -->
+
+    <appender name="stdout" class="org.apache.log4j.ConsoleAppender">
+        <param name="Target" value="System.out"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{ISO8601} %-5p %x  %c{1}.%M:%L %m %n"/>
+        </layout>
+    </appender>
+
+    <appender name="log-file" class="org.apache.log4j.RollingFileAppender">
+        <param name="file" value="logs/news/debug.log"/>
+        <param name="MaxFileSize" value="5000KB"/>
+        <param name="MaxBackupIndex" value="3"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{ISO8601} %-5p %x  %c{1}.%M:%L %m %n"/>
+        </layout>
+    </appender>
+
+    <appender name="hibernate-log-file" class="org.apache.log4j.RollingFileAppender">
+        <param name="file" value="logs/news/hibernate.log"/>
+        <param name="MaxFileSize" value="5000KB"/>
+        <param name="MaxBackupIndex" value="3"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{ISO8601} %-5p %x  %c{1}.%M:%L %m %n"/>
+        </layout>
+    </appender>
+
+    <logger name="org.hibernate">
+        <level value="ALL"/>
+        <appender-ref ref="hibernate-log-file"/>
+    </logger>
+
+    <root>
+        <level value="DEBUG"/>
+        <appender-ref ref="log-file"/>
+    </root>
+
+</log4j:configuration>
