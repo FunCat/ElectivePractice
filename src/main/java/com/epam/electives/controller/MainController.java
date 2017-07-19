@@ -19,7 +19,7 @@ public class MainController  {
     @RequestMapping("/courses.main")
     public ModelAndView courses(@RequestParam int n){
         ModelAndView modelAndView = new ModelAndView("courses.main");
-        modelAndView.addObject("news", courseMainService.getN(n));
+        modelAndView.addObject("courses", courseMainService.getN(n));
         return modelAndView;
     }
 
@@ -28,20 +28,20 @@ public class MainController  {
     public PageDto<Course> mainAllNews(@RequestBody GetCourseRequest request){
 //        ModelAndView modelAndView = new ModelAndView("course.main");
 //        modelAndView.addObject("course", courseMainService.getPart(request));
-        PageDto<Course> news = courseMainService.getPart(request);
-        return news;
+        PageDto<Course> courses = courseMainService.getPart(request);
+        return courses;
         //return modelAndView;
     }
 
     @ResponseBody
     @RequestMapping(value = "/addCourse", method = RequestMethod.POST)
-    public Course addNews(@RequestBody Course news){
+    public Course addNews(@RequestBody Course courses){
 
         // temp appId, later take it from HttpRequest request
 //        ModelAndView modelAndView = new ModelAndView("addNews");
 //        modelAndView.addObject("news", newsMainService.saveOrUpdate(news));
-        courseMainService.saveOrUpdate(news);
-        return news;
+        courseMainService.saveOrUpdate(courses);
+        return courses;
         //return modelAndView;
     }
 }
