@@ -18,8 +18,15 @@
     </c:forEach>
 </ul>
 <s:message code="Courses"/>
+
+<button id="prevPage"> <<< </button>
+<button id="nextPage"> >>> </button>
 </body>
 </html>
+<script>
+    var contextPath = "${pageContext.request.contextPath}";
+</script>
 <script src="js/jquery-3.2.1.js"></script>
+<script src="js/navigation.js"></script>
 <%--<script src="./js/jquery-3.2.1.js"></script>--%>
 <%--<script src="${pageContext.request.contextPath}/js/jquery-3.2.1.js"></script>--%>
