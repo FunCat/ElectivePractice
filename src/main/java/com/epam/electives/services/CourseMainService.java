@@ -38,9 +38,14 @@ public class CourseMainService {
             course.setUpdateDate(new Date());
         } else {
             course.setCreateDate(new Date());
+            course.setUpdateDate(new Date());
             course.setStatus(Course.Status.ACTIVE);
         }
         courseDao.saveOrUpdate(course);
         return course;
+    }
+
+    public Course getById(long id){
+        return courseDao.findCourseById(id);
     }
 }

@@ -10,17 +10,58 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.Date;
+
 @Controller
 public class MainController  {
 
     @Autowired
     CourseMainService courseMainService;
 
+    @RequestMapping("/")
+    public ModelAndView startPage(){
+        ModelAndView modelAndView = new ModelAndView("home");
+        return modelAndView;
+    }
+
     @RequestMapping("/courses.main")
     public ModelAndView courses(@RequestParam int n){
         ModelAndView modelAndView = new ModelAndView("courses.main");
         modelAndView.addObject("courses", courseMainService.getN(n));
         return modelAndView;
+    }
+
+    @RequestMapping("/all")
+    public ModelAndView coursesAll(){
+        ModelAndView modelAndView = new ModelAndView("all");
+        modelAndView.addObject("listCourses", courseMainService.getAll());
+        return modelAndView;
+    }
+
+    @RequestMapping(value="/newcourse", method=RequestMethod.POST)
+    public ModelAndView addCourse(@RequestParam("courseName") String courseName) {
+        Course course = new Course();
+        course.setName(courseName);
+        courseMainService.saveOrUpdate(course);
+        return coursesAll();
+    }
+
+    @RequestMapping(value="/editcourse", method=RequestMethod.POST)
+    public ModelAndView editCourse(@RequestParam long id) {
+        Course course = courseMainService.getById(id);
+        ModelAndView modelAndView = new ModelAndView("editcourse");
+        modelAndView.addObject("courseName", course.getName());
+        modelAndView.addObject("courseId", course.getId());
+        return modelAndView;
+    }
+
+    @RequestMapping(value="/edit", method=RequestMethod.POST)
+    public ModelAndView updateCourse(@RequestParam long id, @RequestParam String courseName) {
+        Course course = courseMainService.getById(id);
+        course.setName(courseName);
+        course.setUpdateDate(new Date());
+        courseMainService.saveOrUpdate(course);
+        return coursesAll();
     }
 
     @ResponseBody
