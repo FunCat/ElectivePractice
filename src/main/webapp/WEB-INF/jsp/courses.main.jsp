@@ -5,6 +5,9 @@
 <html>
 <head>
     <title>Title</title>
+    <link rel = "stylesheet"
+          type = "text/css"
+          href = "css/style.css" />
 </head>
 <body>
 <h1>Main Courses</h1>
@@ -17,5 +20,5 @@
 <s:message code="Courses"/>
 </body>
 </html>
-<script src="${pageContext.request.contextPath}/WEB-INF/js/jquery-3.2.1.js"></script>
-<script src='<c:url value="/WEB-INF/js/jquery-3.2.1.js"/>'></script>
+<%--<script src="${pageContext.request.contextPath}js/jquery-3.2.1.js"></script>--%>
+<script src="../js/jquery-3.2.1.js"></script>
