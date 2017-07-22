@@ -20,5 +20,6 @@
 <s:message code="Courses"/>
 </body>
 </html>
-<%--<script src="${pageContext.request.contextPath}js/jquery-3.2.1.js"></script>--%>
-<script src="../js/jquery-3.2.1.js"></script>
+<script src="js/jquery-3.2.1.js"></script>
+<%--<script src="./js/jquery-3.2.1.js"></script>--%>
+<%--<script src="${pageContext.request.contextPath}/js/jquery-3.2.1.js"></script>--%>
