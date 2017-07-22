@@ -1,11 +1,10 @@
 package com.epam.electives.controller;
 
-import com.epam.electives.dto.GetCourseRequest;
+import com.epam.electives.dto.GetEntityRequest;
 import com.epam.electives.dto.PageDto;
 import com.epam.electives.model.Course;
 import com.epam.electives.services.CourseMainService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -66,7 +65,7 @@ public class MainController  {
 
     @ResponseBody
     @RequestMapping(value = "/news.all", method = RequestMethod.POST)
-    public PageDto<Course> mainAllNews(@RequestBody GetCourseRequest request){
+    public PageDto<Course> mainAllNews(@RequestBody GetEntityRequest request){
 //        ModelAndView modelAndView = new ModelAndView("course.main");
 //        modelAndView.addObject("course", courseMainService.getPart(request));
         PageDto<Course> courses = courseMainService.getPart(request);

@@ -1,15 +1,14 @@
 package com.epam.electives.dao.impl;
 
-import com.epam.electives.dao.CourseDao;
-
+import com.epam.electives.dao.UserDao;
 import com.epam.electives.dto.GetEntityRequest;
 import com.epam.electives.dto.PageDto;
-import com.epam.electives.model.Course;
+import com.epam.electives.model.User;
 import lombok.extern.log4j.Log4j;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
-
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -21,7 +20,7 @@ import static org.hibernate.criterion.Projections.rowCount;
 @Log4j
 @Repository
 @Transactional
-public class CourseDaoImpl implements CourseDao {
+public class UserDaoImpl implements UserDao {
 
     private EntityManager entityManager;
 
@@ -35,31 +34,45 @@ public class CourseDaoImpl implements CourseDao {
     }
 
     @Override
-    public List<Course> findAll() {
-        Criteria criteria = getCurrentSession().createCriteria(Course.class);
+    public List<User> findAll() {
+        Criteria criteria = getCurrentSession().createCriteria(User.class);
         return criteria.list();
     }
 
     @Override
-    public List<Course> findN(int n) {
-        Criteria criteria = getCurrentSession().createCriteria(Course.class);
+    public List<User> findN(int n) {
+        Criteria criteria = getCurrentSession().createCriteria(User.class);
         criteria.setMaxResults(n);
         return criteria.list();
     }
 
     @Override
-    public Course findCourseById(Long id){
-        return (Course) getCurrentSession().get(Course.class, id);
+    public User findUserById(Long id){
+        return (User) getCurrentSession().get(User.class, id);
     }
 
     @Override
-    public void saveOrUpdate(Course course) {
-        getCurrentSession().saveOrUpdate(course);
+    public User findUserByName(String firstname, String middlename, String lastname) {
+        Criteria criteria = getCurrentSession().createCriteria(User.class);
+        return (User)criteria.add(Restrictions.eq("lastname",lastname))
+                .add(Restrictions.eq("firstname",firstname))
+                .add(Restrictions.eq("middlename",middlename))
+                .uniqueResult();
     }
 
     @Override
-    public PageDto<Course> findParts(GetEntityRequest request) {
-        Criteria criteria = getCurrentSession().createCriteria(Course.class);
+    public User findUserByLogin(String login) {
+        return (User) getCurrentSession().get(User.class, login);
+    }
+
+    @Override
+    public void saveOrUpdate(User user) {
+        getCurrentSession().saveOrUpdate(user);
+    }
+
+    @Override
+    public PageDto<User> findParts(GetEntityRequest request) {
+        Criteria criteria = getCurrentSession().createCriteria(User.class);
 
         Long totalRecordsCount = (Long) criteria.setProjection(rowCount()).uniqueResult();
 
@@ -75,7 +88,7 @@ public class CourseDaoImpl implements CourseDao {
         if (request.getLength() != null)
             criteria.setMaxResults(request.getLength());
 
-        List<Course> records = criteria.list();
+        List<User> records = criteria.list();
 
         return new PageDto<>(records, totalRecordsCount);
     }
