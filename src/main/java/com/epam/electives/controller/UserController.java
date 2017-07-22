@@ -70,6 +70,7 @@ public class UserController {
         user.setLastname(lastname);
         user.setMiddlename(middlename);
         user.setBirthday(birthday);
+        userMainService.saveOrUpdate(user);
         return userMain();
     }
 }
