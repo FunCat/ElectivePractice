@@ -32,7 +32,7 @@ public class UserController {
 
     @RequestMapping("/user/main")
     public ModelAndView userMain() {
-        ModelAndView modelAndView = new ModelAndView("all");
+        ModelAndView modelAndView = new ModelAndView("courses");
         //modelAndView.addObject("listCourses", courseMainService.getAll()); //todo Создать метод для выборки курсов
         return modelAndView;
     }

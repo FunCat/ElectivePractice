@@ -1,4 +1,5 @@
 body{
+	font-family: "Helvetica Neue", Helvetica,Arial, sans-serif;
 	padding-top: 70px;
 }
 .navbar{
@@ -38,7 +39,56 @@ body{
 	transition: border 0.1s;
 }
 
+
+.title_page_wrap{
+	margin: 20px 0px;
+	display: inline-block;
+	border-bottom: 1px solid rgb(92, 224, 92);
+}
+.title_page{
+	font-size: 140%;
+	padding: 10px;
+	color: #5ce05c;
+}
 /* =====================  Course Page  ======================== */
+.addCourse_wrap{
+	overflow: hidden;
+}
+.addCourse_btn{
+	width: 150px;
+	height: 40px;
+	font-size: 110%;
+	float: right;
+	background-color: #5ce05c;
+	text-align: center;
+	padding-top: 8px;
+	margin-right: 20px;
+	margin-top: 20px;
+	color: white;
+	border: 1px solid white;
+}
+.addCourse_btn:hover{
+	border: 1px solid rgb(92, 224, 92);
+	color: rgb(92, 224, 92);
+	background-color: white;
+	cursor: pointer;
+	transition: all 0.1s;
+}
+.addBtn{
+	width: 100px;
+	height: 26px;
+	padding: 0px;
+	background-color: #5ce05c;
+	color: white;
+	border: 1px solid white;
+}
+.addBtn:hover{
+	border: 1px solid rgb(92, 224, 92);
+	color: rgb(92, 224, 92);
+	background-color: white;
+	cursor: pointer;
+	transition: all 0.1s;
+}
 .course_table{
 	margin: auto;
 	text-align: center;
@@ -72,3 +122,4 @@ body{
 	background-color: white;
 	transition: all 0.1s;
 }
+

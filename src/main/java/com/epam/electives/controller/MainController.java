@@ -30,14 +30,14 @@ public class MainController  {
         return modelAndView;
     }
 
-    @RequestMapping("/all")
+    @RequestMapping("/courses")
     public ModelAndView coursesAll(){
-        ModelAndView modelAndView = new ModelAndView("all");
+        ModelAndView modelAndView = new ModelAndView("courses");
         modelAndView.addObject("listCourses", courseMainService.getAll());
         return modelAndView;
     }
 
-    @RequestMapping(value="/newcourse", method=RequestMethod.POST)
+    @RequestMapping(value="/addcourse", method=RequestMethod.POST)
     public ModelAndView addCourse(@RequestParam("courseName") String courseName) {
         Course course = new Course();
         course.setName(courseName);
@@ -45,7 +45,13 @@ public class MainController  {
         return coursesAll();
     }
 
-    @RequestMapping(value="/editcourse", method=RequestMethod.POST)
+    @RequestMapping(value="/newcourse")
+    public ModelAndView addCourse() {
+        ModelAndView modelAndView = new ModelAndView("newcourse");
+        return modelAndView;
+    }
+
+    @RequestMapping(value="/editcourse")
     public ModelAndView editCourse(@RequestParam long id) {
         Course course = courseMainService.getById(id);
         ModelAndView modelAndView = new ModelAndView("editcourse");
@@ -61,27 +67,5 @@ public class MainController  {
         course.setUpdateDate(new Date());
         courseMainService.saveOrUpdate(course);
         return coursesAll();
-    }
-
-    @ResponseBody
-    @RequestMapping(value = "/news.all", method = RequestMethod.POST)
-    public PageDto<Course> mainAllNews(@RequestBody GetEntityRequest request){
-//        ModelAndView modelAndView = new ModelAndView("course.main");
-//        modelAndView.addObject("course", courseMainService.getPart(request));
-        PageDto<Course> courses = courseMainService.getPart(request);
-        return courses;
-        //return modelAndView;
-    }
-
-    @ResponseBody
-    @RequestMapping(value = "/addCourse", method = RequestMethod.POST)
-    public Course addNews(@RequestBody Course courses){
-
-        // temp appId, later take it from HttpRequest request
-//        ModelAndView modelAndView = new ModelAndView("addNews");
-//        modelAndView.addObject("news", newsMainService.saveOrUpdate(news));
-        courseMainService.saveOrUpdate(courses);
-        return courses;
-        //return modelAndView;
     }
 }

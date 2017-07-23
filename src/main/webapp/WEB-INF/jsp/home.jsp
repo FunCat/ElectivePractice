@@ -18,7 +18,7 @@
 			<div id="navbar">
 				<ul class="nav">
 					<li><a class="active" href="${pageContext.request.contextPath}/">Home</a></li>
-					<li><a href="${pageContext.request.contextPath}/all">Courses</a></li>
+					<li><a href="${pageContext.request.contextPath}/courses">Courses</a></li>
 					<li><a href="${pageContext.request.contextPath}/about">About</a></li>
 					<li><a href="${pageContext.request.contextPath}/contact">Contact</a></li>
 				</ul>
