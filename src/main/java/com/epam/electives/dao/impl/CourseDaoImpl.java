@@ -8,6 +8,7 @@ import com.epam.electives.model.Course;
 import lombok.extern.log4j.Log4j;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.Projection;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
@@ -62,9 +63,11 @@ public class CourseDaoImpl implements CourseDao {
     public PageDto<Course> findParts(GetCourseRequest request) {
         Criteria criteria = getCurrentSession().createCriteria(Course.class);
 
+        criteria.add(Restrictions.eq("status", Course.Status.ACTIVE));
+
         Long totalRecordsCount = (Long) criteria.setProjection(rowCount()).uniqueResult();
 
-        // Сбрасываем, чтобы использовать снова.
+//        // Сбрасываем, чтобы использовать снова.
         criteria.setProjection(null)
                 .setResultTransformer(Criteria.ROOT_ENTITY);
 

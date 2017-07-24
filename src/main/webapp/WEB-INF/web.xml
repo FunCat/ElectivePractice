@@ -75,6 +75,6 @@
     <!--если написать  <url-pattern>*.action</url-pattern> будет срабатывать на все url заканчивающиеся на .action-->
     <servlet-mapping>
         <servlet-name>home</servlet-name>
-        <url-pattern>*.main</url-pattern>
+        <url-pattern>/</url-pattern>
     </servlet-mapping>
 </web-app>
