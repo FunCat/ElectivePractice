@@ -10,6 +10,7 @@
 <html>
 <head>
     <title>Edit course</title>
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
     <link href="<c:url value="/resources/css/bootstrap.min.css" />" rel="stylesheet" type="text/css" />
     <link href="<c:url value="/resources/css/main.css" />" rel="stylesheet" type="text/css" />
 </head>

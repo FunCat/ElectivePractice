@@ -10,6 +10,7 @@
 <html>
 <head>
 	<title>Courses</title>
+	<link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
 	<link href="<c:url value="/resources/css/bootstrap.min.css" />" rel="stylesheet" type="text/css" />
 	<link href="<c:url value="/resources/css/main.css" />" rel="stylesheet" type="text/css" />
 </head>
@@ -37,27 +38,24 @@
 	</div>
 
 	<div id="mainBlock" class="container">
-		<table class="course_table">
-			<tr>
+		<table id="course_table" class="course_table">
+			<tr class="appendAfterRow">
 				<th class="col-md-6">Название курса</th>
 				<th class="col-md-2">Преподаватель</th>
 				<th class="col-md-2">Начало курса</th>
 				<th class="col-md-2"></th>
 			</tr>
-			<c:forEach var="item" items="${listCourses}">
-				<tr>
-					<td class="col-md-5">${item.name}</td>
-					<td class="col-md-2">${item.id}</td>
-					<td class="col-md-3">${item.createDate}</td>
-					<td class="col-md-2"><a href="${pageContext.request.contextPath}/editcourse?id=${item.id}"><input type="button" value="Edit" class="editbtn"/></a></td>
-				</tr>
-			</c:forEach>
 		</table>
 	</div>
+
+	<div id="navigationPanel" class="container">
+		<input id="prevPageBtn" type="button" value="<- Prev page" />
+		<input id="nextPageBtn" type="button" value="Next page ->" />
+	</div>
+
+
 <s:message code="Courses"/>
-
-
-
 </body>
 </html>
 <script src='<c:url value="/resources/js/jquery-3.2.1.js"/>'></script>
+<script src='<c:url value="/resources/js/courses.js"/>'></script>

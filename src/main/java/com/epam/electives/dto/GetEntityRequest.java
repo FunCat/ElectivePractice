@@ -12,4 +12,8 @@ public class GetEntityRequest {
     Integer start;
     Integer length;
 
+    public GetEntityRequest(Integer start, Integer length) {
+        this.start = start;
+        this.length = length;
+    }
 }

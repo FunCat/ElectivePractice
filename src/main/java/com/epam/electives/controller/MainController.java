@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Date;
+import java.util.List;
 
 @Controller
 public class MainController  {
@@ -35,6 +36,19 @@ public class MainController  {
         ModelAndView modelAndView = new ModelAndView("courses");
         modelAndView.addObject("listCourses", courseMainService.getAll());
         return modelAndView;
+    }
+
+    @RequestMapping(value = "/coursesPart", method = RequestMethod.POST)
+    @ResponseBody
+    public PageDto<Course> coursesPage(@RequestParam int page){
+        int start = (page - 1) * 10;
+        PageDto<Course> pd = courseMainService.getPart(new GetEntityRequest(start, 10));
+        if(page * 10 > pd.getRecordsTotal())
+            pd = courseMainService.getPart(new GetEntityRequest(start, (int)(pd.getRecordsTotal() - start)));
+        else if(page * 10 < 0)
+            pd = courseMainService.getPart(new GetEntityRequest(1, 10));
+
+        return pd;
     }
 
     @RequestMapping(value="/addcourse", method=RequestMethod.POST)
