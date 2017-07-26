@@ -72,43 +72,47 @@
                 <s:message code="Courses"/>
             </h3>
 
-            <ul id="coursesList">
+            <%--<ul id="coursesList">--%>
+                <%--<c:forEach var="item" items="${courses}">--%>
+                    <%--<li>${item.id} | ${item.name}</li>--%>
+                <%--</c:forEach>--%>
+            <%--</ul>--%>
+
+            <table class="table table-striped" data-effect="fade">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Course Name</th>
+                    <th>Last Name</th>
+                    <th>Username</th>
+                </tr>
+                </thead>
+                <tbody id="coursesList">
                 <c:forEach var="item" items="${courses}">
-                    <li>${item.id} | ${item.name}</li>
+                    <tr>
+                        <td>${item.id}</td>
+                        <td>${item.name}</td>
+                        <td>Otto</td>
+                        <td>@mdo</td>
+                    </tr>
                 </c:forEach>
-            </ul>
+                </tbody>
+            </table>
+
+
 
 
             <div class="text-center">
-                <!-- Pagination Normal -->
-                <%--${booleanExpr ? 'cssClass' : 'otherCssClass'}--%>
-
-
-                <%--<c:set var="count" value="0" scope="page" />--%>
-                <%--<c:forEach var="item" items="${pages}">--%>
-                <%--<li><a href="#">${count + 1}</a></li>--%>
-                <%--</c:forEach>--%>
-
-                <ul class="pagination">
-                    <%--<c:set var="count" value="1" scope="page" />--%>
-                    <%--<li class="${count == 1 ? 'disabled' : ''}">--%>
+               <ul class="pagination">
                     <li class="">
                         <a href="#" id="prevPage">«</a>
                     </li>
-
                     <c:forEach var="i" begin="1" end="${numOfPages}">
                         <li class="page" id="${i}" ><a href="#" ><c:out value="${i}"/></a></li>
                     </c:forEach>
-
-                    <%--<li class="active"><a href="#">1</a></li>--%>
-                    <%--<li><a href="#">2</a></li>--%>
-                    <%--<li><a href="#">3</a></li>--%>
-                    <%--<li><a href="#">4</a></li>--%>
-                    <%--<li><a href="#">5</a></li>--%>
                     <li class="">
-                        <%--<li class="${count == pages ? 'disabled' : ''}">--%>
                         <a href="#" id="nextPage">»</a>
-                    </li> <!--class="disabled"-->
+                    </li>
                 </ul>
 
             </div>

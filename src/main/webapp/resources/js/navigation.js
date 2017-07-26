@@ -12,7 +12,6 @@ var a = {
 };
 //
 $(document).bind('DOMSubtreeModified', function () {
-    console.log("changed: " + curPage);
     if (curPage == 0) {
         $(".pagination li:first").addClass('disabled')
     } else {
@@ -23,18 +22,14 @@ $(document).bind('DOMSubtreeModified', function () {
     } else {
         $(".pagination li:last").removeClass('disabled')
     }
-
-    // $(".pagination #page_"+curPage).addClass("active");
     $(".pagination .page").removeClass("active");
     $(".pagination #"+(curPage+1)).addClass("active");
-    console.log(".pagination #"+curPage);
 });
 
 
 $("#nextPage").click(function () {
     if (curPage == numOfPages-1) return;
     a.start = ++curPage * curInterval;
-    // console.log(curPage);
 
     $.ajax({
         contentType: 'application/json',
@@ -43,13 +38,17 @@ $("#nextPage").click(function () {
         data: JSON.stringify(a),
         url: contextPath + "/part",
         success: function (response) {
-            // console.log(response);
 
             if (curPage > 0) {
                 $("#coursesList").html("");
                 $.each(response.data, function (index, value) {
                     console.log(index, value);
-                    $("#coursesList").append("<li>" + value.id + " " + value.name + "</li>");
+                    // $("#coursesList").append("<li>" + value.id + " " + value.name + "</li>");
+                    $("#coursesList").append("<tr>" +
+                        "<td>" + value.id + "</td>" +
+                        "<td>" + value.name + "</td>" +
+                        "<td>###</td>" +
+                        "<td>@mdo</td></tr>")
                 });
             }
         }
@@ -60,7 +59,6 @@ $("#nextPage").click(function () {
 $("#prevPage").click(function () {
     if (curPage == 0) return;
     a.start = --curPage * curInterval;
-    // console.log(curPage);
 
     $.ajax({
         contentType: 'application/json',
@@ -73,7 +71,13 @@ $("#prevPage").click(function () {
             $("#coursesList").html("");
             $.each(response.data, function (index, value) {
                 console.log(index, value);
-                $("#coursesList").append("<li>" + value.id + " " + value.name + "</li>")
+                // $("#coursesList").append("<li>" + value.id + " " + value.name + "</li>")
+
+                $("#coursesList").append("<tr>" +
+                    "<td>" + value.id + "</td>" +
+                    "<td>" + value.name + "</td>" +
+                    "<td>###</td>" +
+                    "<td>@mdo</td></tr>")
             });
         }
     });
@@ -84,7 +88,6 @@ $(".pagination .page").click(function () {
     console.log("$(this): "+ $(this));
     a.start = $(this).attr('id');
     curPage = $(this).attr('id')-1;
-    // console.log(curPage);
 
     $.ajax({
         contentType: 'application/json',
@@ -97,7 +100,12 @@ $(".pagination .page").click(function () {
             $("#coursesList").html("");
             $.each(response.data, function (index, value) {
                 console.log(index, value);
-                $("#coursesList").append("<li>" + value.id + " " + value.name + "</li>")
+                // $("#coursesList").append("<li>" + value.id + " " + value.name + "</li>")
+                $("#coursesList").append("<tr>" +
+                    "<td>" + value.id + "</td>" +
+                    "<td>" + value.name + "</td>" +
+                    "<td>###</td>" +
+                    "<td>@mdo</td></tr>")
             });
         }
     });
