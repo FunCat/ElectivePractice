@@ -15,16 +15,32 @@ public class MainController  {
 
     @Autowired
     CourseMainService courseMainService;
+//
+//    @RequestMapping("/courses.main")
+//    public ModelAndView courses(@RequestParam int n){
+//        ModelAndView modelAndView = new ModelAndView("courses.main");
+//        modelAndView.addObject("courses", courseMainService.getN(n));
+//        return modelAndView;
+//    }
 
-    @RequestMapping("/courses.main")
-    public ModelAndView courses(@RequestParam int n){
+    @RequestMapping(value = "/courses.main", method = RequestMethod.GET)
+    public ModelAndView courses(@RequestBody(required = false) GetCourseRequest request){
         ModelAndView modelAndView = new ModelAndView("courses.main");
-        modelAndView.addObject("courses", courseMainService.getN(n));
+        if(request == null) {
+            request = new GetCourseRequest();
+            request.setStart(0);
+            request.setLength(2);
+        }
+        PageDto<Course> courses = courseMainService.getPart(request);
+//        courseMainService.getAll().size();
+        modelAndView.addObject("courses", courses.getData());
+        modelAndView.addObject("numOfPages", courses.getRecordsTotal()/2);
         return modelAndView;
     }
 
+
     @ResponseBody
-    @RequestMapping(value = "/news.all", method = RequestMethod.POST)
+    @RequestMapping(value = "/part", method = RequestMethod.POST)
     public PageDto<Course> mainAllNews(@RequestBody GetCourseRequest request){
 //        ModelAndView modelAndView = new ModelAndView("course.main");
 //        modelAndView.addObject("course", courseMainService.getPart(request));

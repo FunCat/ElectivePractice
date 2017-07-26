@@ -71,7 +71,7 @@ public class CourseDaoImpl implements CourseDao {
         criteria.setProjection(null)
                 .setResultTransformer(Criteria.ROOT_ENTITY);
 
-        criteria.addOrder(org.hibernate.criterion.Order.desc("createDate"));
+        criteria.addOrder(org.hibernate.criterion.Order.asc("id"));
 
         if (request.getStart() != null)
             criteria.setFirstResult(request.getStart());
