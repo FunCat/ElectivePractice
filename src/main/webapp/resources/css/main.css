@@ -43,7 +43,7 @@ table tr td{
 	border-bottom: 3px solid white;
 	transition: border 0.1s;
 }
-.loginBtn{
+.loginBtn, .profileBtn{
 	float: right;
 	width: 150px;
 	height: 40px;

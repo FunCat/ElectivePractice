@@ -1,6 +1,7 @@
 package com.epam.electives.controller;
 
 import com.epam.electives.model.User;
+import com.epam.electives.services.CourseMainService;
 import com.epam.electives.services.UserMainService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -8,6 +9,9 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -19,16 +23,24 @@ import java.util.Date;
 public class UserController {
     @Autowired
     UserMainService userMainService;
+    @Autowired
+    CourseMainService courseMainService;
+
+    @RequestMapping("/main")
+    public ModelAndView userMain() {
+        ModelAndView modelAndView = new ModelAndView("user/main");
+        modelAndView.addObject("listCourses", courseMainService.getAll());
+        return modelAndView;
+    }
+
+    @RequestMapping("/home")
+    public ModelAndView userHome() {
+        ModelAndView modelAndView = new ModelAndView("user/home");
+        return modelAndView;
+    }
 
     @RequestMapping(value= "/login")
     public ModelAndView userLogin() {
-        return new ModelAndView("user/login");
-    }
-
-    @RequestMapping(value = "/profile")
-    public ModelAndView userProfile(@ModelAttribute("login") String login) {
-        if(login != null)
-            return new ModelAndView("courses");
         return new ModelAndView("user/login");
     }
 
@@ -48,12 +60,50 @@ public class UserController {
         return "Такого пользователя не существует!";
     }
 
-    @RequestMapping("/main")
-    public ModelAndView userMain() {
-        ModelAndView modelAndView = new ModelAndView("user/main");
-        //modelAndView.addObject("listCourses", courseMainService.getAll());
-        return modelAndView;
+    @RequestMapping(value = "/cabinet")
+    public ModelAndView userProfile(@ModelAttribute("login") String login) {
+        if(login != null) {
+            User user = userMainService.getByLogin(login);
+            ModelAndView modelAndView = new ModelAndView("user/cabinet");
+            modelAndView.addObject("userFirstname", user.getFirstname());
+            modelAndView.addObject("userLastname", user.getLastname());
+            modelAndView.addObject("userMiddlename", user.getMiddlename());
+            modelAndView.addObject("userLogin", user.getLogin());
+            modelAndView.addObject("userBirthday", user.getOnlyDate());
+            return modelAndView;
+        }
+        return new ModelAndView("user/login");
     }
+
+    @RequestMapping(value= "/edit_profile", method=RequestMethod.POST, produces = "text/plain;charset=UTF-8")
+    @ResponseBody
+    public String  userEditProfile(@ModelAttribute("login") String login,
+                                        @RequestParam("firstname") String firstname,
+                                        @RequestParam("lastname") String lastname,
+                                        @RequestParam("middlename") String middlename,
+                                        @RequestParam("userlogin") String userlogin,
+                                        @RequestParam("birthday") String birthday) {
+        User user = userMainService.getByLogin(login);
+        user.setFirstname(firstname);
+        user.setLastname(lastname);
+        user.setMiddlename(middlename);
+        user.setLogin(userlogin);
+        DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        Date date = null;
+        try {
+            date = formatter.parse(birthday);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return "Неправильно указана дата рождения!";
+        }
+        user.setBirthday(date);
+        User checking = userMainService.saveOrUpdate(user);
+        if(checking != null)
+            return "Обновление прошло успешно!";
+        return "Возникли неполадки попробуйте чуть позже!";
+    }
+
+
 
     @RequestMapping("/registration")
     public ModelAndView userRegistration(){
