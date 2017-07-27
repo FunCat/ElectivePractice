@@ -4,9 +4,8 @@ import com.epam.electives.model.User;
 import com.epam.electives.services.UserMainService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Date;
@@ -15,34 +14,53 @@ import java.util.Date;
  * Created by Crash on 22.07.2017.
  */
 @Controller
+@RequestMapping("/user")
+@SessionAttributes("login")
 public class UserController {
     @Autowired
     UserMainService userMainService;
 
-    @RequestMapping(value= "/user/login", method=RequestMethod.POST)
-    public ModelAndView userLogin(@RequestParam("login") String login, @RequestParam("password") String password) {
-        User user = userMainService.getByLogin(login);
-        if(user !=null){
-            if(user.getPassword().equals(password)) {
-                return userMain();
-            }
-        }
-        return new ModelAndView("user.login"); //todo Заполнить user.login.jsp!!!
+    @RequestMapping(value= "/login")
+    public ModelAndView userLogin() {
+        return new ModelAndView("user/login");
     }
 
-    @RequestMapping("/user/main")
+    @RequestMapping(value = "/profile")
+    public ModelAndView userProfile(@ModelAttribute("login") String login) {
+        if(login != null)
+            return new ModelAndView("courses");
+        return new ModelAndView("user/login");
+    }
+
+    @RequestMapping(value= "/login_check", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
+    @ResponseBody
+    public String userLoginCheck(@RequestParam("login") String login,
+                                 @RequestParam("password") String password,
+                                 ModelMap model) {
+        User user = userMainService.getByLogin(login);
+        if(user != null){
+            if(user.getPassword().equals(password)) {
+                model.put("login", login);
+                return "Успешная авторизация!";
+            }
+            else return "Неверный логин или пароль!";
+        }
+        return "Такого пользователя не существует!";
+    }
+
+    @RequestMapping("/main")
     public ModelAndView userMain() {
-        ModelAndView modelAndView = new ModelAndView("courses");
-        //modelAndView.addObject("listCourses", courseMainService.getAll()); //todo Создать метод для выборки курсов
+        ModelAndView modelAndView = new ModelAndView("user/main");
+        //modelAndView.addObject("listCourses", courseMainService.getAll());
         return modelAndView;
     }
 
-    @RequestMapping("/user/registration")
+    @RequestMapping("/registration")
     public ModelAndView userRegistration(){
-        return new ModelAndView("user.registration"); // todo Заполнить user.registration.jsp
+        return new ModelAndView("user.registration");
     }
 
-    @RequestMapping(value= "/user/registration", method=RequestMethod.POST)
+    @RequestMapping(value= "/registration", method=RequestMethod.POST)
     public ModelAndView userRegistration(@RequestParam("login") String login,
                                          @RequestParam("password") String password,
                                          @RequestParam("password2") String password2,

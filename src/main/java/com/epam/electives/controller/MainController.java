@@ -38,7 +38,7 @@ public class MainController  {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/coursesPart", method = RequestMethod.POST)
+    @RequestMapping(value = "/coursesPage", method = RequestMethod.POST)
     @ResponseBody
     public PageDto<Course> coursesPage(@RequestParam int page){
         int start = (page - 1) * 10;

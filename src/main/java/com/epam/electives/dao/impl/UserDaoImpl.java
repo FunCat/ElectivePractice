@@ -6,6 +6,7 @@ import com.epam.electives.dto.PageDto;
 import com.epam.electives.model.User;
 import lombok.extern.log4j.Log4j;
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
@@ -62,7 +63,9 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User findUserByLogin(String login) {
-        return (User) getCurrentSession().get(User.class, login);
+        Criteria userCriteria = getCurrentSession().createCriteria(User.class);
+        userCriteria.add(Restrictions.eq("login", login));
+        return (User) userCriteria.uniqueResult();
     }
 
     @Override

@@ -2,6 +2,11 @@ body{
 	font-family: 'Raleway', Helvetica,Arial, sans-serif;
 	padding-top: 70px;
 }
+table tr td{
+	padding: 4px;
+}
+
+/* =====================  Navbar  ======================== */
 .navbar{
 	background-color: rgb(92, 224, 92);
 }
@@ -38,7 +43,20 @@ body{
 	border-bottom: 3px solid white;
 	transition: border 0.1s;
 }
+.loginBtn{
+	float: right;
+	width: 150px;
+	height: 40px;
+	margin-top: 14px;
+}
 
+/* =====================  END Navbar  ======================== */
+
+
+
+/* =====================  Style fot Page  ======================== */
+
+/* ===  Title  === */
 .title_page_wrap{
 	margin: 20px 0px;
 	display: inline-block;
@@ -49,45 +67,55 @@ body{
 	padding: 10px;
 	color: #5ce05c;
 }
+.mylargeBtn, 
+.myMediumBtn, 
+.mySmallBtn{
+	background-color: #5ce05c;
+	color: white;
+	border: 1px solid white;
+	border-radius: 10px;
+	text-align: center;
+}
+.mylargeBtn:hover, 
+.myMediumBtn:hover, 
+.mySmallBtn:hover{
+	border: 1px solid rgb(92, 224, 92);
+	color: rgb(92, 224, 92);
+	background-color: white;
+	cursor: pointer;
+	transition: all 0.1s;
+}
+.myLargeBtn{
+	width: 150px;
+	height: 40px;
+	font-size: 110%;
+	padding-top: 9px;
+}
+.myMediumBtn{
+	width: 130px;
+	height: 35px;
+	font-size: 100%;
+	padding-top: 2px;
+}
+.mySmallBtn{
+	width: 60px;
+	height: 30px;
+	font-size: 100%;
+}
+/* === END Title  === */
+
+/* =====================  END Style fot Page  ======================== */
+
+
+
 /* =====================  Course Page  ======================== */
 .addCourse_wrap{
 	overflow: hidden;
 }
 .addCourse_btn{
-	width: 150px;
-	height: 40px;
-	font-size: 110%;
 	float: right;
-	background-color: #5ce05c;
-	text-align: center;
-	padding-top: 8px;
 	margin-right: 20px;
 	margin-top: 20px;
-	color: white;
-	border: 1px solid white;
-	border-radius: 10px;
-}
-.addCourse_btn:hover{
-	border: 1px solid rgb(92, 224, 92);
-	color: rgb(92, 224, 92);
-	background-color: white;
-	cursor: pointer;
-	transition: all 0.1s;
-}
-.addBtn{
-	width: 100px;
-	height: 26px;
-	padding: 0px;
-	background-color: #5ce05c;
-	color: white;
-	border: 1px solid white;
-}
-.addBtn:hover{
-	border: 1px solid rgb(92, 224, 92);
-	color: rgb(92, 224, 92);
-	background-color: white;
-	cursor: pointer;
-	transition: all 0.1s;
 }
 .course_table{
 	margin: auto;
@@ -110,37 +138,7 @@ body{
 	padding-bottom: 7px;
 	border: 1px solid rgb(92, 224, 92);
 }
-.editbtn{
-	border: none;
-	background-color: rgb(92, 224, 92);
-	color: white;
-	border: 1px solid white;
-	width: 60px;
-	height: 30px;
-	border-radius: 10px;
-}
-.editbtn:hover{
-	border: 1px solid rgb(92, 224, 92);
-	color: rgb(92, 224, 92);
-	background-color: white;
-	transition: all 0.1s;
-}
 #navigationPanel{
 	text-align: center;
 	padding: 15px;
-}
-#prevPageBtn, #nextPageBtn{
-	border: none;
-	background-color: rgb(92, 224, 92);
-	color: white;
-	border: 1px solid white;
-	width: 130px;
-	height: 35px;
-	border-radius: 10px;
-}
-#prevPageBtn:hover, #nextPageBtn:hover{
-	border: 1px solid rgb(92, 224, 92);
-	color: rgb(92, 224, 92);
-	background-color: white;
-	transition: all 0.1s;
 }

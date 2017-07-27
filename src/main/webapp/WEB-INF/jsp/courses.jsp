@@ -30,11 +30,15 @@
 					<li><a href="${pageContext.request.contextPath}/contact">Contact</a></li>
 				</ul>
 			</div>
+
+			<a href="${pageContext.request.contextPath}/user/login">
+				<div class="loginBtn myLargeBtn">Login</div>
+			</a>
 		</div>
 	</nav>
 
 	<div class="addCourse_wrap">
-		<a href="${pageContext.request.contextPath}/newcourse"><div class="addCourse_btn">Добавить курс</div></a>
+		<a href="${pageContext.request.contextPath}/newcourse"><div class="addCourse_btn myLargeBtn">Добавить курс</div></a>
 	</div>
 
 	<div id="mainBlock" class="container">
@@ -49,8 +53,8 @@
 	</div>
 
 	<div id="navigationPanel" class="container">
-		<input id="prevPageBtn" type="button" value="<- Prev page" />
-		<input id="nextPageBtn" type="button" value="Next page ->" />
+		<input id="prevPageBtn" class="myMediumBtn" type="button" value="<- Prev page" />
+		<input id="nextPageBtn" class="myMediumBtn" type="button" value="Next page ->" />
 	</div>
 
 

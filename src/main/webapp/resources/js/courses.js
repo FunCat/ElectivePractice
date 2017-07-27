@@ -18,7 +18,7 @@ $(document).ready(function(){
 });
 
 function getCoursesPage() {
-    $.post('/ElectiveEPAM/coursesPart',
+    $.post('/ElectiveEPAM/coursesPage',
         {page: countpage},
         function (data) {
             console.log(data);
@@ -29,7 +29,7 @@ function getCoursesPage() {
                     "</td><td class='col-md-2'>" + this.id +
                     "</td><td class='col-md-3'>" + new Date(this.createDate).toDateString() +
                     "</td><td class='col-md-2'><a href='/editcourse?id=" + this.id +
-                    "'><input type='button' value='Edit' class='editbtn'/></a></td></tr>");
+                    "'><input type='button' value='Edit' class='editbtn mySmallBtn'/></a></td></tr>");
             });
         }
     );
