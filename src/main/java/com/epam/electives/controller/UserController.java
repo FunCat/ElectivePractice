@@ -1,9 +1,8 @@
 package com.epam.electives.controller;
 
-import com.epam.electives.model.User;
+import com.epam.electives.model.UserProfile;
 import com.epam.electives.services.CourseMainService;
 import com.epam.electives.services.UserMainService;
-import org.hibernate.event.spi.PreInsertEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -51,7 +50,7 @@ public class UserController {
     public String userLoginCheck(@RequestParam("login") String login,
                                  @RequestParam("password") String password,
                                  ModelMap model) {
-        User user = userMainService.getByLogin(login);
+        UserProfile user = userMainService.getByLogin(login);
         if(user != null){
             if(user.getPassword().equals(password)) {
                 model.put("login", login);
@@ -66,11 +65,11 @@ public class UserController {
     public ModelAndView userProfile(Principal username) {
         String login = username.getName();
         if(login != null) {
-            User user = userMainService.getByLogin(login);
+            UserProfile user = userMainService.getByLogin(login);
             ModelAndView modelAndView = new ModelAndView("user/cabinet");
-            modelAndView.addObject("userFirstname", user.getFirstname());
+            modelAndView.addObject("userFirstname", user.getName());
             modelAndView.addObject("userLastname", user.getLastname());
-            modelAndView.addObject("userMiddlename", user.getMiddlename());
+            modelAndView.addObject("userMiddlename", user.getSurname());
             modelAndView.addObject("userLogin", user.getLogin());
             modelAndView.addObject("userBirthday", user.getOnlyDate());
             return modelAndView;
@@ -86,10 +85,10 @@ public class UserController {
                                         @RequestParam("middlename") String middlename,
                                         @RequestParam("userlogin") String userlogin,
                                         @RequestParam("birthday") String birthday) {
-        User user = userMainService.getByLogin(login);
-        user.setFirstname(firstname);
+        UserProfile user = userMainService.getByLogin(login);
+        user.setName(firstname);
         user.setLastname(lastname);
-        user.setMiddlename(middlename);
+        user.setSurname(middlename);
         user.setLogin(userlogin);
         DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         Date date = null;
@@ -100,7 +99,7 @@ public class UserController {
             return "Неправильно указана дата рождения!";
         }
         user.setBirthday(date);
-        User checking = userMainService.saveOrUpdate(user);
+        UserProfile checking = userMainService.saveOrUpdate(user);
         if(checking != null)
             return "Обновление прошло успешно!";
         return "Возникли неполадки попробуйте чуть позже!";
@@ -131,15 +130,15 @@ public class UserController {
             return userRegistration();
         }
 
-        User user = userMainService.getByLogin(login);
+        UserProfile user = userMainService.getByLogin(login);
         if(user !=null){
             return userRegistration();
         }
         user.setLogin(login);
         user.setPassword(password);
-        user.setFirstname(firstname);
+        user.setName(firstname);
         user.setLastname(lastname);
-        user.setMiddlename(middlename);
+        user.setSurname(middlename);
         user.setBirthday(birthday);
         userMainService.saveOrUpdate(user);
         return userMain();

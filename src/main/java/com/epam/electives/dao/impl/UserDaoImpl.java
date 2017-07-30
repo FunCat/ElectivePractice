@@ -3,10 +3,9 @@ package com.epam.electives.dao.impl;
 import com.epam.electives.dao.UserDao;
 import com.epam.electives.dto.GetEntityRequest;
 import com.epam.electives.dto.PageDto;
-import com.epam.electives.model.User;
+import com.epam.electives.model.UserProfile;
 import lombok.extern.log4j.Log4j;
 import org.hibernate.Criteria;
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
@@ -35,47 +34,47 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public List<User> findAll() {
-        Criteria criteria = getCurrentSession().createCriteria(User.class);
+    public List<UserProfile> findAll() {
+        Criteria criteria = getCurrentSession().createCriteria(UserProfile.class);
         return criteria.list();
     }
 
     @Override
-    public List<User> findN(int n) {
-        Criteria criteria = getCurrentSession().createCriteria(User.class);
+    public UserProfile findUserById(Long id) {
+        return (UserProfile) getCurrentSession().get(UserProfile.class, id);
+    }
+
+    @Override
+    public UserProfile findUserByName(String name, String surname, String lastname) {
+        Criteria criteria = getCurrentSession().createCriteria(UserProfile.class);
+        return (UserProfile)criteria.add(Restrictions.eq("lastname",lastname))
+                .add(Restrictions.eq("name",name))
+                .add(Restrictions.eq("surname",surname))
+                .uniqueResult();
+    }
+
+    @Override
+    public UserProfile findUserByLogin(String login) {
+        Criteria UserProfileCriteria = getCurrentSession().createCriteria(UserProfile.class);
+        UserProfileCriteria.add(Restrictions.eq("login", login));
+        return (UserProfile) UserProfileCriteria.uniqueResult();
+    }
+
+    @Override
+    public List<UserProfile> findN(int n) {
+        Criteria criteria = getCurrentSession().createCriteria(UserProfile.class);
         criteria.setMaxResults(n);
         return criteria.list();
     }
 
     @Override
-    public User findUserById(Long id){
-        return (User) getCurrentSession().get(User.class, id);
+    public void saveOrUpdate(UserProfile UserProfile) {
+        getCurrentSession().saveOrUpdate(UserProfile);
     }
 
     @Override
-    public User findUserByName(String firstname, String middlename, String lastname) {
-        Criteria criteria = getCurrentSession().createCriteria(User.class);
-        return (User)criteria.add(Restrictions.eq("lastname",lastname))
-                .add(Restrictions.eq("firstname",firstname))
-                .add(Restrictions.eq("middlename",middlename))
-                .uniqueResult();
-    }
-
-    @Override
-    public User findUserByLogin(String login) {
-        Criteria userCriteria = getCurrentSession().createCriteria(User.class);
-        userCriteria.add(Restrictions.eq("login", login));
-        return (User) userCriteria.uniqueResult();
-    }
-
-    @Override
-    public void saveOrUpdate(User user) {
-        getCurrentSession().saveOrUpdate(user);
-    }
-
-    @Override
-    public PageDto<User> findParts(GetEntityRequest request) {
-        Criteria criteria = getCurrentSession().createCriteria(User.class);
+    public PageDto<UserProfile> findParts(GetEntityRequest request) {
+        Criteria criteria = getCurrentSession().createCriteria(UserProfile.class);
 
         Long totalRecordsCount = (Long) criteria.setProjection(rowCount()).uniqueResult();
 
@@ -91,7 +90,7 @@ public class UserDaoImpl implements UserDao {
         if (request.getLength() != null)
             criteria.setMaxResults(request.getLength());
 
-        List<User> records = criteria.list();
+        List<UserProfile> records = criteria.list();
 
         return new PageDto<>(records, totalRecordsCount);
     }

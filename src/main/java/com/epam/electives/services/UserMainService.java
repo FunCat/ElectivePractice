@@ -3,12 +3,11 @@ package com.epam.electives.services;
 import com.epam.electives.dao.UserDao;
 import com.epam.electives.dto.GetEntityRequest;
 import com.epam.electives.dto.PageDto;
-import com.epam.electives.model.User;
+import com.epam.electives.model.UserProfile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -18,34 +17,34 @@ public class UserMainService {
     @Autowired
     UserDao userDao;
 
-    public List<User> getAll(){
+    public List<UserProfile> getAll(){
         return userDao.findAll();
     }
 
-    public PageDto<User> getPart(GetEntityRequest request){
+    public PageDto<UserProfile> getPart(GetEntityRequest request){
 
-        PageDto<User> news = userDao.findParts(request);
+        PageDto<UserProfile> news = userDao.findParts(request);
         return news;
     }
 
-    public List<User> getN(int n){
+    public List<UserProfile> getN(int n){
         return userDao.findN(n);
     }
 
-    public User saveOrUpdate(User user){
+    public UserProfile saveOrUpdate(UserProfile user){
         userDao.saveOrUpdate(user);
         return user;
     }
 
-    public User getByLogin(String login){
+    public UserProfile getByLogin(String login){
         return userDao.findUserByLogin(login);
     }
 
-    public User getByName(String firstname, String middlename, String lastname){
-        return userDao.findUserByName(firstname, middlename, lastname);
+    public UserProfile getByName(String name, String surname, String lastname){
+        return userDao.findUserByName(name, surname, lastname);
     }
 
-    public User getById(long id){
+    public UserProfile getById(long id){
         return userDao.findUserById(id);
     }
 }

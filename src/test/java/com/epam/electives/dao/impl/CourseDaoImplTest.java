@@ -20,9 +20,7 @@ public class CourseDaoImplTest {
     public void findParts() throws Exception {
 
 
-        GetEntityRequest getCourseRequest = new GetEntityRequest();
-        getCourseRequest.setStart(0);
-        getCourseRequest.setLength(2);
+        GetEntityRequest getCourseRequest = new GetEntityRequest(0, 2);
 
         System.out.println(courseDao.findParts(getCourseRequest));
     }

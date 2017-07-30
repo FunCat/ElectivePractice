@@ -3,6 +3,8 @@ package com.epam.electives.model;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -23,4 +25,9 @@ public class UserProfile {
     private String login;
     private String password;
     private Role role;
+
+    public String getOnlyDate(){
+        DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        return formatter.format(birthday);
+    }
 }

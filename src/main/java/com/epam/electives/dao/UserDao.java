@@ -2,26 +2,27 @@ package com.epam.electives.dao;
 
 import com.epam.electives.dto.GetEntityRequest;
 import com.epam.electives.dto.PageDto;
-import com.epam.electives.model.User;
+import com.epam.electives.model.UserProfile;
 
 import java.util.List;
+
 
 /**
  * Created by Crash on 7/22/17.
  */
 public interface UserDao {
-    List<User> findAll();
+    List<UserProfile> findAll();
 
-    User findUserById(Long id);
+    UserProfile findUserById(Long id);
 
-    User findUserByName(String name,String middlename, String lastname);
+    UserProfile findUserByName(String name,String middlename, String lastname);
 
-    User findUserByLogin(String login);
+    UserProfile findUserByLogin(String login);
 
-    PageDto<User> findParts(GetEntityRequest request);
+    PageDto<UserProfile> findParts(GetEntityRequest request);
 
-    void saveOrUpdate(User user);
+    void saveOrUpdate(UserProfile user);
 
-    List<User> findN(int n);
+    List<UserProfile> findN(int n);
 
 }

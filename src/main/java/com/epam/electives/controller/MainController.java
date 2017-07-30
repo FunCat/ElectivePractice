@@ -31,9 +31,7 @@ public class MainController  {
     public ModelAndView courses(@RequestBody(required = false) GetEntityRequest request){
         ModelAndView modelAndView = new ModelAndView("courses.main");
         if(request == null) {
-            request = new GetEntityRequest();
-            request.setStart(0);
-            request.setLength(2);
+            request = new GetEntityRequest(0,2);
         }
         PageDto<Course> courses = courseMainService.getPart(request);
 //        courseMainService.getAll().size();
@@ -105,7 +103,7 @@ public class MainController  {
     public ModelAndView updateCourse(@RequestParam long id, @RequestParam String courseName) {
         Course course = courseMainService.getById(id);
         course.setName(courseName);
-        course.setUpdateDate(new Date());
+        course.setStartDate(new Date());
         courseMainService.saveOrUpdate(course);
         return coursesAll();
     }
@@ -125,9 +123,7 @@ public class MainController  {
     public ModelAndView home(@RequestBody(required = false) GetEntityRequest request){
         ModelAndView modelAndView = new ModelAndView("home");
         if(request == null) {
-            request = new GetEntityRequest();
-            request.setStart(0);
-            request.setLength(2);
+            request = new GetEntityRequest(0,2);
         }
         PageDto<Course> courses = courseMainService.getPart(request);
 //        courseMainService.getAll().size();
