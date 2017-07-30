@@ -31,6 +31,7 @@
         <hibernate.version>4.3.0.Final</hibernate.version>
         <log4j.version>1.2.14</log4j.version>
         <fasterxml.version>2.5.1</fasterxml.version>
+        <spring.securiry>4.2.3.RELEASE</spring.securiry>
     </properties>
 
     <dependencies>
@@ -179,6 +180,40 @@
             <version>${spring.version}</version>
             <scope>test</scope>
         </dependency>
+
+
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>${servlet-api.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+            <version>${spring.securiry}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-core</artifactId>
+            <version>${spring.securiry}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+            <version>${spring.securiry}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-taglibs</artifactId>
+            <version>${spring.securiry}</version>
+        </dependency>
+
+
     </dependencies>
 
     <build>

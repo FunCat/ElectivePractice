@@ -1,6 +1,6 @@
 package com.epam.electives.dao;
 
-import com.epam.electives.dto.GetCourseRequest;
+import com.epam.electives.dto.GetEntityRequest;
 import com.epam.electives.dto.PageDto;
 import com.epam.electives.model.Course;
 
@@ -16,7 +16,7 @@ public interface CourseDao {
 
     void saveOrUpdate(Course news);
 
-    PageDto<Course> findParts(GetCourseRequest request);
+    PageDto<Course> findParts(GetEntityRequest request);
 
     List<Course> findN(int n);
 

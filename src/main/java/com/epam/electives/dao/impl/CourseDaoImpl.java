@@ -2,13 +2,12 @@ package com.epam.electives.dao.impl;
 
 import com.epam.electives.dao.CourseDao;
 
-import com.epam.electives.dto.GetCourseRequest;
+import com.epam.electives.dto.GetEntityRequest;
 import com.epam.electives.dto.PageDto;
 import com.epam.electives.model.Course;
 import lombok.extern.log4j.Log4j;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
-import org.hibernate.criterion.Projection;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
@@ -60,7 +59,7 @@ public class CourseDaoImpl implements CourseDao {
     }
 
     @Override
-    public PageDto<Course> findParts(GetCourseRequest request) {
+    public PageDto<Course> findParts(GetEntityRequest request) {
         Criteria criteria = getCurrentSession().createCriteria(Course.class);
 
         criteria.add(Restrictions.eq("status", Course.Status.ACTIVE));
@@ -71,7 +70,7 @@ public class CourseDaoImpl implements CourseDao {
         criteria.setProjection(null)
                 .setResultTransformer(Criteria.ROOT_ENTITY);
 
-        criteria.addOrder(org.hibernate.criterion.Order.desc("createDate"));
+        criteria.addOrder(org.hibernate.criterion.Order.asc("id"));
 
         if (request.getStart() != null)
             criteria.setFirstResult(request.getStart());
