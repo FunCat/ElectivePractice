@@ -3,12 +3,14 @@ package com.epam.electives.controller;
 import com.epam.electives.model.User;
 import com.epam.electives.services.CourseMainService;
 import com.epam.electives.services.UserMainService;
+import org.hibernate.event.spi.PreInsertEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.security.Principal;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -41,7 +43,7 @@ public class UserController {
 
     @RequestMapping(value= "/login")
     public ModelAndView userLogin() {
-        return new ModelAndView("user/login");
+        return new ModelAndView("login");
     }
 
     @RequestMapping(value= "/login_check", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
@@ -61,7 +63,8 @@ public class UserController {
     }
 
     @RequestMapping(value = "/cabinet")
-    public ModelAndView userProfile(@ModelAttribute("login") String login) {
+    public ModelAndView userProfile(Principal username) {
+        String login = username.getName();
         if(login != null) {
             User user = userMainService.getByLogin(login);
             ModelAndView modelAndView = new ModelAndView("user/cabinet");
@@ -72,7 +75,7 @@ public class UserController {
             modelAndView.addObject("userBirthday", user.getOnlyDate());
             return modelAndView;
         }
-        return new ModelAndView("user/login");
+        return new ModelAndView("login");
     }
 
     @RequestMapping(value= "/edit_profile", method=RequestMethod.POST, produces = "text/plain;charset=UTF-8")

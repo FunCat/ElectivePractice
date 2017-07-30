@@ -5,6 +5,8 @@ import com.epam.electives.dto.PageDto;
 import com.epam.electives.model.Course;
 import com.epam.electives.services.CourseMainService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -24,16 +26,15 @@ public class MainController  {
         return modelAndView;
     }
 
-    @RequestMapping("/courses.main")
-    public ModelAndView courses(@RequestParam int n){
-        ModelAndView modelAndView = new ModelAndView("courses.main");
-        modelAndView.addObject("courses", courseMainService.getN(n));
-        return modelAndView;
-    }
-
     @RequestMapping("/courses")
     public ModelAndView coursesAll(){
-        ModelAndView modelAndView = new ModelAndView("courses");
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
+        ModelAndView modelAndView;
+        if(!currentPrincipalName.equals("anonymousUser"))
+            modelAndView = new ModelAndView("user/main");
+        else
+            modelAndView = new ModelAndView("courses");
         modelAndView.addObject("listCourses", courseMainService.getAll());
         return modelAndView;
     }
@@ -81,5 +82,16 @@ public class MainController  {
         course.setUpdateDate(new Date());
         courseMainService.saveOrUpdate(course);
         return coursesAll();
+    }
+
+    @RequestMapping(value="/login")
+    public ModelAndView login(@RequestParam(value = "error",required = false) String error) {
+        ModelAndView model = new ModelAndView();
+        if (error != null) {
+            model.addObject("error", "Invalid username or password!");
+        }
+
+        model.setViewName("login");
+        return model;
     }
 }
