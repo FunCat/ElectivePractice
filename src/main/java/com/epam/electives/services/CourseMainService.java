@@ -43,4 +43,8 @@ public class CourseMainService {
         courseDao.saveOrUpdate(course);
         return course;
     }
+
+    public Course getById(long id){
+        return courseDao.findCourseById(id);
+    }
 }

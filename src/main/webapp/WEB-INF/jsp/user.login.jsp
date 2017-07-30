@@ -7,12 +7,9 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
     <title>Login</title>
-    <meta name="_csrf" content="${_csrf.token}"/>
-    <meta name="_csrf_header" content="${_csrf.headerName}"/>
     <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
     <link href="<c:url value="/resources/css/bootstrap.min.css" />" rel="stylesheet" type="text/css" />
     <link href="<c:url value="/resources/css/main.css" />" rel="stylesheet" type="text/css" />
@@ -36,29 +33,11 @@
 </nav>
 
 <div class="container">
-    <div class="title_page_wrap">
-        <span class="title_page">Login</span>
-    </div>
-    <form:form action="${pageContext.request.contextPath}/login" method="POST">
-        <table>
-            <tr>
-                <td>Login:</td>
-                <td><input class="userLogin" type="text" name="username"/></td>
-            </tr>
-            <tr>
-                <td>Password:</td>
-                <td><input class="userPassword" type="password" name="password"/></td>
-            </tr>
-            <tr>
-                <td colspan="2" style="text-align: center"><input class="myMediumBtn" type="submit" value="Login"/></td>
-            </tr>
-        </table>
-    </form:form>
-    <div class="result">
-        <c:if test="${not empty error}">
-            <div>${error}</div>
-        </c:if>
-    </div>
+    <form action="${pageContext.request.contextPath}/courses" method="post">
+        <input type="text" name="userLogin"/>
+        <input type="text" name="userPassword"/>
+        <input class="myBtn" type="submit" value="Login"/>
+    </form>
 </div>
 
 </body>

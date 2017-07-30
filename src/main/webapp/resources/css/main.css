@@ -1,0 +1,144 @@
+body{
+	font-family: 'Raleway', Helvetica,Arial, sans-serif;
+	padding-top: 70px;
+}
+table tr td{
+	padding: 4px;
+}
+
+/* =====================  Navbar  ======================== */
+.navbar{
+	background-color: rgb(92, 224, 92);
+}
+#navbar{
+	float: right;
+}
+.navbar-header{
+	padding-top: 17px;
+	color: white;
+	font-size: 190%;
+	float: left;
+}
+.nav, .nav li{
+	margin: 0px;
+	padding: 0px;
+}
+.nav li a.active{
+	font-weight: bold;
+}
+.nav li{
+	display: inline-block;
+	width: 100px;
+	min-height: 70px;
+	text-align: center;
+}
+.nav li a{
+	color: white;
+	padding: 23px 0px 0px 0px;
+	height: 70px;
+	font-size: 120%;
+}
+.nav li a:hover{
+	background-color: transparent;
+	border-bottom: 3px solid white;
+	transition: border 0.1s;
+}
+.loginBtn, .profileBtn{
+	float: right;
+	width: 150px;
+	height: 40px;
+	margin-top: 14px;
+}
+
+/* =====================  END Navbar  ======================== */
+
+
+
+/* =====================  Style fot Page  ======================== */
+
+/* ===  Title  === */
+.title_page_wrap{
+	margin: 20px 0px;
+	display: inline-block;
+	border-bottom: 1px solid rgb(92, 224, 92);
+}
+.title_page{
+	font-size: 140%;
+	padding: 10px;
+	color: #5ce05c;
+}
+.mylargeBtn, 
+.myMediumBtn, 
+.mySmallBtn{
+	background-color: #5ce05c;
+	color: white;
+	border: 1px solid white;
+	border-radius: 10px;
+	text-align: center;
+}
+.mylargeBtn:hover, 
+.myMediumBtn:hover, 
+.mySmallBtn:hover{
+	border: 1px solid rgb(92, 224, 92);
+	color: rgb(92, 224, 92);
+	background-color: white;
+	cursor: pointer;
+	transition: all 0.1s;
+}
+.myLargeBtn{
+	width: 150px;
+	height: 40px;
+	font-size: 110%;
+	padding-top: 9px;
+}
+.myMediumBtn{
+	width: 130px;
+	height: 35px;
+	font-size: 100%;
+	padding-top: 2px;
+}
+.mySmallBtn{
+	width: 60px;
+	height: 30px;
+	font-size: 100%;
+}
+/* === END Title  === */
+
+/* =====================  END Style fot Page  ======================== */
+
+
+
+/* =====================  Course Page  ======================== */
+.addCourse_wrap{
+	overflow: hidden;
+}
+.addCourse_btn{
+	float: right;
+	margin-right: 20px;
+	margin-top: 20px;
+}
+.course_table{
+	margin: auto;
+	text-align: center;
+}
+.course_table tr th{
+	border-bottom: 3px solid rgb(92, 224, 92);
+	padding-top: 20px;
+	font-size: 110%;
+	text-align: center;
+	padding-bottom: 5px;
+	color: #5ce05c;
+}
+.course_table tr{
+	margin: 2px 0px;
+	border-bottom: 1px solid rgb(92, 224, 92);
+}
+.course_table tr td{
+	padding-top: 7px;
+	padding-bottom: 7px;
+	border: 1px solid rgb(92, 224, 92);
+}
+#navigationPanel{
+	text-align: center;
+	padding: 15px;
+}
