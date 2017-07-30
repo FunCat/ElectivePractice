@@ -47,8 +47,10 @@ $("#nextPage").click(function () {
                     $("#coursesList").append("<tr>" +
                         "<td>" + value.id + "</td>" +
                         "<td>" + value.name + "</td>" +
-                        "<td>###</td>" +
-                        "<td>@mdo</td></tr>")
+                        "<td>" + value.startDate + "</td>" +
+                        "<td>" + value.teacher.lastname + "</td>" +
+                        "</tr>")
+
                 });
             }
         }
@@ -76,8 +78,10 @@ $("#prevPage").click(function () {
                 $("#coursesList").append("<tr>" +
                     "<td>" + value.id + "</td>" +
                     "<td>" + value.name + "</td>" +
-                    "<td>###</td>" +
-                    "<td>@mdo</td></tr>")
+                    "<td>" + value.startDate + "</td>" +
+                    "<td>" + value.teacher.lastname + "</td>" +
+                    "</tr>")
+
             });
         }
     });
@@ -104,8 +108,9 @@ $(".pagination .page").click(function () {
                 $("#coursesList").append("<tr>" +
                     "<td>" + value.id + "</td>" +
                     "<td>" + value.name + "</td>" +
-                    "<td>###</td>" +
-                    "<td>@mdo</td></tr>")
+                    "<td>" + value.startDate + "</td>" +
+                    "<td>" + value.teacher.lastname + "</td>" +
+                    "</tr>")
             });
         }
     });

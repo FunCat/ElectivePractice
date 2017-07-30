@@ -29,10 +29,12 @@
                 <prop key="hibernate.implicit_naming_strategy">
                     org.hibernate.boot.model.naming.ImplicitNamingStrategyJpaCompliantImpl
                 </prop>
-                <!--<prop key="hibernate.show_sql">true</prop>-->
+                <prop key="hibernate.show_sql">true</prop>
                 <prop key="hibernate.enable_lazy_load_no_trans">true</prop>
                 <prop key="hibernate.default_batch_fetch_size">100</prop>
                 <prop key="hibernate.hbm2ddl.auto">update</prop>
+                <prop key="hibernate.validator.apply_to_ddl">true</prop>
+                <prop key="hibernate.validator.autoregister_listeners">true</prop>
                 <prop key="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</prop>
             </props>
         </property>

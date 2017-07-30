@@ -5,20 +5,18 @@
          metadata-complete="false"
          version="3.1">
 
-    <!--где искать конфишурационный файл для настройки логов-->
     <context-param>
         <param-name>log4jConfigLocation</param-name>
         <param-value>/WEB-INF/log4j.xml</param-value>
     </context-param>
 
-    <!--без этого не работает-->
     <listener>
         <listener-class>
             org.springframework.web.context.ContextLoaderListener
         </listener-class>
     </listener>
 
-    <!--без этого работает-->
+    <!-- -->
     <listener>
         <listener-class>
             org.springframework.web.context.request.RequestContextListener
@@ -28,7 +26,6 @@
         <listener-class>org.springframework.web.util.WebAppRootListener</listener-class>
     </listener>
 
-    <!--какой то листенер для логов-->
     <listener>
         <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
     </listener>
@@ -38,10 +35,10 @@
         <param-name>contextConfigLocation</param-name>
         <param-value>
             classpath:application-context.xml
+            <!--/WEB-INF/spring/*.xml-->
         </param-value>
     </context-param>
 
-    <!--не знаю что это но вроде что то для преобразования запросов в utf8-->
     <filter>
         <filter-name>encodingFilter</filter-name>
         <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
@@ -59,7 +56,17 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
-    <!--для спринга нужно хотя бы один сервелет-->
+
+    <!--<filter>-->
+        <!--<filter-name>springSecurityFilterChain</filter-name>-->
+        <!--<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>-->
+    <!--</filter>-->
+    <!--<filter-mapping>-->
+        <!--<filter-name>springSecurityFilterChain</filter-name>-->
+        <!--<url-pattern>/*</url-pattern>-->
+    <!--</filter-mapping>-->
+
+
     <servlet>
         <servlet-name>home</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>

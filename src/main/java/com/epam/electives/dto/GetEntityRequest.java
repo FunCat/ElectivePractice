@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 @JsonAutoDetect
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class GetCourseRequest {
+public class GetEntityRequest {
     Integer start;
     Integer length;
 

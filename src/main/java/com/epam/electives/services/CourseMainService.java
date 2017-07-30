@@ -1,7 +1,7 @@
 package com.epam.electives.services;
 
 import com.epam.electives.dao.CourseDao;
-import com.epam.electives.dto.GetCourseRequest;
+import com.epam.electives.dto.GetEntityRequest;
 import com.epam.electives.dto.PageDto;
 import com.epam.electives.model.Course;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +22,10 @@ public class CourseMainService {
         return courseDao.findAll();
     }
 
-    public PageDto<Course> getPart(GetCourseRequest request){
+    public PageDto<Course> getPart(GetEntityRequest request){
 
-        PageDto<Course> news = courseDao.findParts(request);
-        return news;
+        PageDto<Course> courses = courseDao.findParts(request);
+        return courses;
     }
 
     public List<Course> getN(int n){
@@ -35,9 +35,9 @@ public class CourseMainService {
     public Course saveOrUpdate(Course course){
 
         if(course.getId()!=null) {
-            course.setUpdateDate(new Date());
+            course.setStartDate(new Date());
         } else {
-            course.setCreateDate(new Date());
+            course.setEndDate(new Date());
             course.setStatus(Course.Status.ACTIVE);
         }
         courseDao.saveOrUpdate(course);

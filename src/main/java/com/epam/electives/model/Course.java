@@ -2,10 +2,7 @@ package com.epam.electives.model;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 
@@ -16,8 +13,10 @@ public class Course {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private Date createDate;
-    private Date updateDate;
+    @ManyToOne
+    private UserProfile teacher;
+    private Date startDate;
+    private Date endDate;
     private Status status;
 
     public enum Status {

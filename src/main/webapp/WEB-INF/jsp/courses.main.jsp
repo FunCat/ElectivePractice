@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="s" uri="/WEB-INF/tld/spring.tld" %>
-
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -78,13 +78,22 @@
                 <%--</c:forEach>--%>
             <%--</ul>--%>
 
+            <sec:authorize access="!isAuthenticated()">
+                <p><a class="btn btn-lg btn-success" href="<c:url value="/login" />" role="button">Войти</a></p>
+            </sec:authorize>
+            <sec:authorize access="isAuthenticated()">
+                <p>Ваш логин: <sec:authentication property="principal.username" /></p>
+                <p><a class="btn btn-lg btn-danger" href="<c:url value="/logout" />" role="button">Выйти</a></p>
+
+            </sec:authorize>
+
             <table class="table table-striped" data-effect="fade">
                 <thead>
                 <tr>
                     <th>#</th>
                     <th>Course Name</th>
-                    <th>Last Name</th>
-                    <th>Username</th>
+                    <th>Start Date</th>
+                    <th>Teacher</th>
                 </tr>
                 </thead>
                 <tbody id="coursesList">
@@ -92,8 +101,8 @@
                     <tr>
                         <td>${item.id}</td>
                         <td>${item.name}</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
+                        <td>${item.startDate}</td>
+                        <td>${item.teacher.lastname}</td>
                     </tr>
                 </c:forEach>
                 </tbody>

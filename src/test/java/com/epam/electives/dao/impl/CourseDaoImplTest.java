@@ -1,13 +1,11 @@
 package com.epam.electives.dao.impl;
 
 import com.epam.electives.dao.CourseDao;
-import com.epam.electives.dto.GetCourseRequest;
+import com.epam.electives.dto.GetEntityRequest;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import static org.junit.Assert.*;
 
 /**
  * Created by rusamaha on 7/22/17.
@@ -22,9 +20,9 @@ public class CourseDaoImplTest {
     public void findParts() throws Exception {
 
 
-        GetCourseRequest getCourseRequest = new GetCourseRequest();
+        GetEntityRequest getCourseRequest = new GetEntityRequest();
         getCourseRequest.setStart(0);
-        getCourseRequest.setLength(10);
+        getCourseRequest.setLength(2);
 
         System.out.println(courseDao.findParts(getCourseRequest));
     }
