@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Date;
+import java.util.List;
 
 @Controller
 @RequestMapping("/")
@@ -30,12 +31,15 @@ public class MainController  {
     public ModelAndView courses(@RequestBody(required = false) GetEntityRequest request){
         ModelAndView modelAndView = new ModelAndView("courses.main");
         if(request == null) {
-            request = new GetEntityRequest(0,2);
+            request = new GetEntityRequest(0,10);
         }
         PageDto<Course> courses = courseMainService.getPart(request);
 //        courseMainService.getAll().size();
         modelAndView.addObject("courses", courses.getData());
-        modelAndView.addObject("numOfPages", courses.getRecordsTotal()/2);
+        modelAndView.addObject("numOfPages",
+                (courses.getRecordsTotal() % 10 == 0) ?
+                        courses.getRecordsTotal() / 10 :
+                        courses.getRecordsTotal() / 10 + 1);
         return modelAndView;
     }
 
@@ -118,22 +122,19 @@ public class MainController  {
         return model;
     }
 
-//    @RequestMapping(value = "/home", method = RequestMethod.GET)
-//    public ModelAndView home(@RequestBody(required = false) GetEntityRequest request){
-//        ModelAndView modelAndView = new ModelAndView("home");
-//        if(request == null) {
-//            request = new GetEntityRequest(0,2);
-//        }
-//        PageDto<Course> courses = courseMainService.getPart(request);
-////        courseMainService.getAll().size();
-//        modelAndView.addObject("courses", courses.getData());
-//        modelAndView.addObject("numOfPages", courses.getRecordsTotal()/2);
-//        return modelAndView;
-//    }
-
-    @RequestMapping(value="/home")
-    public ModelAndView getHomePage() {
+    @RequestMapping(value = "/home", method = RequestMethod.GET)
+    public ModelAndView home(@RequestBody(required = false) GetEntityRequest request){
         ModelAndView modelAndView = new ModelAndView("home");
+        if(request == null) {
+            request = new GetEntityRequest(0,10);
+        }
+        PageDto<Course> courses = courseMainService.getPart(request);
+//        courseMainService.getAll().size();
+        modelAndView.addObject("courses", courses.getData());
+        modelAndView.addObject("numOfPages",
+                (courses.getRecordsTotal() % 10 == 0) ?
+                        courses.getRecordsTotal() / 10 :
+                        courses.getRecordsTotal() / 10 + 1);
         return modelAndView;
     }
 
