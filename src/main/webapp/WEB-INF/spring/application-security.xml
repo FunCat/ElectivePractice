@@ -8,21 +8,36 @@
 
     <http use-expressions="true">
         <intercept-url pattern="/user/*" access="hasRole('ROLE_USER')" />
+        <intercept-url pattern="/teacher/*" access="hasRole('ROLE_TEACHER')" />
         <form-login
-            login-page="/login"
-            authentication-failure-url="/login?error=true"
-            default-target-url="/courses"/>
+                login-page="/login"
+                authentication-failure-url="/login?error=true"
+                default-target-url="/courses"/>
         <logout />
         <csrf disabled="true"/>
     </http>
 
     <authentication-manager>
         <authentication-provider>
-            <user-service>
-                <user name="admin" password="admin" authorities="ROLE_USER, ROLE_ADMIN" />
-                <user name="user" password="user" authorities="ROLE_USER" />
-            </user-service>
+            <!--<user-service>-->
+                <!--<user name="admin" password="admin" authorities="ROLE_USER, ROLE_ADMIN" />-->
+                <!--<user name="user" password="user" authorities="ROLE_USER" />-->
+            <!--</user-service>-->
+
+            <jdbc-user-service data-source-ref="dataSource"
+
+                               users-by-username-query="SELECT login, password, enabled
+                                                        FROM userprofile
+                                                        WHERE login = ?"
+
+                               authorities-by-username-query="  SELECT u.login, r.authority
+                                                                FROM userprofile u, userrole r
+                                                                WHERE u.id = r.user_id AND u.login = ?"
+
+            />
         </authentication-provider>
     </authentication-manager>
+
+    <!--<beans:bean id="userDetailsService" class="com.epam.electives.security.UserDetailsServiceImpl" />-->
 
 </beans:beans>

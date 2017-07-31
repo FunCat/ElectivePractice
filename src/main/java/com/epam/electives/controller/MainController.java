@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Date;
-import java.util.List;
 
 @Controller
 @RequestMapping("/")
@@ -119,16 +118,28 @@ public class MainController  {
         return model;
     }
 
-    @RequestMapping(value = "/home", method = RequestMethod.GET)
-    public ModelAndView home(@RequestBody(required = false) GetEntityRequest request){
+//    @RequestMapping(value = "/home", method = RequestMethod.GET)
+//    public ModelAndView home(@RequestBody(required = false) GetEntityRequest request){
+//        ModelAndView modelAndView = new ModelAndView("home");
+//        if(request == null) {
+//            request = new GetEntityRequest(0,2);
+//        }
+//        PageDto<Course> courses = courseMainService.getPart(request);
+////        courseMainService.getAll().size();
+//        modelAndView.addObject("courses", courses.getData());
+//        modelAndView.addObject("numOfPages", courses.getRecordsTotal()/2);
+//        return modelAndView;
+//    }
+
+    @RequestMapping(value="/home")
+    public ModelAndView getHomePage() {
         ModelAndView modelAndView = new ModelAndView("home");
-        if(request == null) {
-            request = new GetEntityRequest(0,2);
-        }
-        PageDto<Course> courses = courseMainService.getPart(request);
-//        courseMainService.getAll().size();
-        modelAndView.addObject("courses", courses.getData());
-        modelAndView.addObject("numOfPages", courses.getRecordsTotal()/2);
+        return modelAndView;
+    }
+
+    @RequestMapping(value="/teacher/main")
+    public ModelAndView getTeacherPage() {
+        ModelAndView modelAndView = new ModelAndView("teacher/main");
         return modelAndView;
     }
 

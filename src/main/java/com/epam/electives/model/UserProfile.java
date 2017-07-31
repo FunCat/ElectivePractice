@@ -25,6 +25,7 @@ public class UserProfile {
     private String login;
     private String password;
     private Role role;
+    private boolean enabled;
 
     public String getOnlyDate(){
         DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");

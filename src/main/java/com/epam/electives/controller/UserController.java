@@ -109,7 +109,7 @@ public class UserController {
 
     @RequestMapping("/registration")
     public ModelAndView userRegistration(){
-        return new ModelAndView("user.registration");
+        return new ModelAndView("user/registration");
     }
 
     @RequestMapping(value= "/registration", method=RequestMethod.POST)

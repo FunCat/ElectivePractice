@@ -4,9 +4,11 @@ import com.epam.electives.dao.UserDao;
 import com.epam.electives.dto.GetEntityRequest;
 import com.epam.electives.dto.PageDto;
 import com.epam.electives.model.UserProfile;
+import com.epam.electives.model.UserRole;
 import lombok.extern.log4j.Log4j;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
@@ -95,4 +97,12 @@ public class UserDaoImpl implements UserDao {
         return new PageDto<>(records, totalRecordsCount);
     }
 
+    @Override
+    public List<String> getUserRoles(String login) {
+        UserProfile user = findUserByLogin(login);
+        Criteria criteria = getCurrentSession().createCriteria(UserRole.class);
+        criteria.add(Restrictions.eq("user_id", user.getId()));
+        criteria.setProjection(Projections.property("authority"));
+        return criteria.list();
+    }
 }
