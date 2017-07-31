@@ -99,6 +99,17 @@ public class MainController  {
         return modelAndView;
     }
 
+//    @RequestMapping(value="/editcourse2", method=RequestMethod.POST)
+//    public Course editCourse2(@RequestBody GetEntityRequest request) {
+//        Course course = courseMainService.getById(id);
+////        ModelAndView modelAndView = new ModelAndView("editcourse");
+////        modelAndView.addObject("courseName", course.getName());
+////        modelAndView.addObject("courseId", course.getId());
+//        return course;
+//    }
+
+
+
     @RequestMapping(value="/edit", method=RequestMethod.POST)
     public ModelAndView updateCourse(@RequestParam long id, @RequestParam String courseName) {
         Course course = courseMainService.getById(id);

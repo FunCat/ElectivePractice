@@ -26,8 +26,8 @@ public class UserProfile {
     private String password;
     private Role role;
 
-    public String getOnlyDate(){
+    public String getOnlyDate() {
         DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        return formatter.format(birthday);
+        return birthday == null ? null : formatter.format(birthday);
     }
 }

@@ -97,10 +97,44 @@ $(".pagination .page").click(function () {
         contentType: 'application/json',
         dataType: 'json',
         type: 'POST',
-        data: JSON.stringify(a),
+        // data: JSON.stringify(a),
         url: contextPath + "/part",
         success: function (response) {
             // console.log(response);
+            $("#coursesList").html("");
+            $.each(response.data, function (index, value) {
+                console.log(index, value);
+                // $("#coursesList").append("<li>" + value.id + " " + value.name + "</li>")
+                $("#coursesList").append("<tr>" +
+                    "<td>" + value.id + "</td>" +
+                    "<td>" + value.name + "</td>" +
+                    "<td>" + value.startDate + "</td>" +
+                    "<td>" + value.teacher.lastname + "</td>" +
+                    "</tr>")
+            });
+        }
+    });
+});
+
+
+$(".edit_course").click(function () {
+
+    $.ajax({
+        contentType: 'application/json',
+        dataType: 'json',
+        type: 'POST',
+        data: JSON.stringify(a),
+        url: contextPath + "/editcourse2",
+        success: function (response) {
+            // console.log(response);
+            $(this).parent().html("")
+                .append("<tr>" +
+                "<td>" + value.id + "</td>" +
+                "<td>" + value.name + "</td>" +
+                "<td>" + value.startDate + "</td>" +
+                "<td>" + value.teacher.lastname + "</td>" +
+                "</tr>");
+
             $("#coursesList").html("");
             $.each(response.data, function (index, value) {
                 console.log(index, value);
