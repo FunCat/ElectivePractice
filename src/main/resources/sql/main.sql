@@ -12,10 +12,17 @@ VALUES ('1987-11-5', 'Leonardo', 'Stewart', '', 'leonardo.stewart',  'Carrots/*8
 
 -- Add COURSES
 
-INSERT INTO courses (startdate, name, status, enddate, teacher_id)
+INSERT INTO course (startdate, name, status, enddate, teacher_id)
 VALUES ('2017-7-16', 'Course 1', 0, '2017-7-20', 6),
        ('2017-7-15', 'Course 2', 1, '2017-7-23', 6),
        ('2017-7-18', 'Course 3', 0, '2017-7-22', 7),
        ('2017-7-20', 'Course 4', 2, '2017-7-21', 6),
        ('2017-7-19', 'Course 5', 0, '2017-7-20', 7);
-
+       ('2017-7-15', 'Course 6', 1, '2017-7-23', 6),
+       ('2017-7-18', 'Course 7', 0, '2017-7-22', 7),
+       ('2017-7-20', 'Course 8', 2, '2017-7-21', 6),
+       ('2017-7-19', 'Course 9', 0, '2017-7-20', 7);
+       ('2017-7-15', 'Course 10', 1, '2017-7-23', 6),
+       ('2017-7-18', 'Course 11', 0, '2017-7-22', 7),
+       ('2017-7-20', 'Course 12', 2, '2017-7-21', 6),
+       ('2017-7-19', 'Course 13', 0, '2017-7-20', 7);
