@@ -30,38 +30,16 @@ $(document).bind('DOMSubtreeModified', function () {
 $("#nextPage").click(function () {
     if (curPage == numOfPages-1) return;
     a.start = ++curPage * curInterval;
-
-    $.ajax({
-        contentType: 'application/json',
-        dataType: 'json',
-        type: 'POST',
-        data: JSON.stringify(a),
-        url: contextPath + "/part",
-        success: function (response) {
-
-            if (curPage > 0) {
-                $("#coursesList").html("");
-                $.each(response.data, function (index, value) {
-                    console.log(index, value);
-                    // $("#coursesList").append("<li>" + value.id + " " + value.name + "</li>");
-                    $("#coursesList").append("<tr>" +
-                        "<td>" + value.id + "</td>" +
-                        "<td>" + value.name + "</td>" +
-                        "<td>" + value.startDate + "</td>" +
-                        "<td>" + value.teacher.lastname + "</td>" +
-                        "</tr>")
-
-                });
-            }
-        }
-    });
-
+    getCoursesPage();
 });
 
 $("#prevPage").click(function () {
     if (curPage == 0) return;
     a.start = --curPage * curInterval;
+    getCoursesPage();
+});
 
+function getCoursesPage() {
     $.ajax({
         contentType: 'application/json',
         dataType: 'json',
@@ -78,14 +56,14 @@ $("#prevPage").click(function () {
                 $("#coursesList").append("<tr>" +
                     "<td>" + value.id + "</td>" +
                     "<td>" + value.name + "</td>" +
-                    "<td>" + value.startDate + "</td>" +
+                    "<td>" + new Date(value.startDate).toDateString().slice(0,10) + "</td>" +
                     "<td>" + value.teacher.lastname + "</td>" +
                     "</tr>")
 
             });
         }
     });
-});
+}
 
 $(".pagination .page").click(function () {
     console.log("this: " + this);
@@ -97,7 +75,7 @@ $(".pagination .page").click(function () {
         contentType: 'application/json',
         dataType: 'json',
         type: 'POST',
-        // data: JSON.stringify(a),
+        data: JSON.stringify(a),
         url: contextPath + "/part",
         success: function (response) {
             // console.log(response);
@@ -108,7 +86,7 @@ $(".pagination .page").click(function () {
                 $("#coursesList").append("<tr>" +
                     "<td>" + value.id + "</td>" +
                     "<td>" + value.name + "</td>" +
-                    "<td>" + value.startDate + "</td>" +
+                    "<td>" + new Date(value.startDate).toDateString().slice(0,10) + "</td>" +
                     "<td>" + value.teacher.lastname + "</td>" +
                     "</tr>")
             });
