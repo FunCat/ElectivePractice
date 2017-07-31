@@ -4,7 +4,7 @@
 
 
 var curPage = 0;
-var curInterval = 2;
+var curInterval = 10;
 
 var a = {
     start: curPage,
@@ -26,6 +26,10 @@ $(document).bind('DOMSubtreeModified', function () {
     $(".pagination #"+(curPage+1)).addClass("active");
 });
 
+$(document).ready(function(){
+    getCoursesPage();
+    console.log(numOfPages);
+})
 
 $("#nextPage").click(function () {
     if (curPage == numOfPages-1) return;
@@ -66,10 +70,8 @@ function getCoursesPage() {
 }
 
 $(".pagination .page").click(function () {
-    console.log("this: " + this);
-    console.log("$(this): "+ $(this));
-    a.start = $(this).attr('id');
-    curPage = $(this).attr('id')-1;
+    a.start = ($(this).attr('id') - 1) * 10;
+    curPage = $(this).attr('id') - 1;
 
     $.ajax({
         contentType: 'application/json',

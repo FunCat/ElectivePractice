@@ -6,10 +6,10 @@
 <html lang="en">
 <head>
     <title>Electives Courses</title>
-    <link rel="stylesheet" type="text/css" href="resources/css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/style.css" />"/>
     <!-- Bootstrap css -->
-    <link rel="stylesheet" type="text/css" href="resources/css/bootstrap.min.css"/>
-    <link rel="stylesheet" type="text/css" href="resources/css/bootstrap.techie.css"/>
+    <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/bootstrap.min.css" />"/>
+    <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/bootstrap.techie.css" />"/>
 
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 
