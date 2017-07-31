@@ -24,7 +24,6 @@ public class UserProfile {
     private Date birthday;
     private String login;
     private String password;
-    private Role role;
     private boolean enabled;
 
     public String getOnlyDate() {

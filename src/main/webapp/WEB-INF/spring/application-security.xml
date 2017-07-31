@@ -19,11 +19,6 @@
 
     <authentication-manager>
         <authentication-provider>
-            <!--<user-service>-->
-                <!--<user name="admin" password="admin" authorities="ROLE_USER, ROLE_ADMIN" />-->
-                <!--<user name="user" password="user" authorities="ROLE_USER" />-->
-            <!--</user-service>-->
-
             <jdbc-user-service data-source-ref="dataSource"
 
                                users-by-username-query="SELECT login, password, enabled
@@ -37,7 +32,4 @@
             />
         </authentication-provider>
     </authentication-manager>
-
-    <!--<beans:bean id="userDetailsService" class="com.epam.electives.security.UserDetailsServiceImpl" />-->
-
 </beans:beans>

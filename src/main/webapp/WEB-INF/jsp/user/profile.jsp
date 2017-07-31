@@ -11,14 +11,12 @@
 
     <div class="container">
 		<div class="col-md-2">
-			<div class="well" style="max-width: 340px; padding: 8px 0;">
-              <ul class="nav nav-list">
-                <li class="nav-header">Меню</li>
-                <li><a href="#">Мои курсы</a></li>
-                <li><a href="#">Управление курсами</a></li>
-                <li class="active"><a href="/user/profile">Редактирование аккаунта</a></li>
-              </ul>
-            </div>
+			<p class="lead text-muted">Меню</p>
+            <ul class="nav nav-tabs nav-stacked">
+              <li><a href="#">Мои курсы</a></li>
+              <li><a href="#">Управление курсами</a></li>
+              <li><a href="${pageContext.request.contextPath}/user/profile">Редактирование аккаунта</a></li>
+            </ul>
 		</div>
 
 
