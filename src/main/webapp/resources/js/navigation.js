@@ -55,15 +55,15 @@ function getCoursesPage() {
             $("#coursesList").html("");
             $.each(response.data, function (index, value) {
                 console.log(index, value);
-                // $("#coursesList").append("<li>" + value.id + " " + value.name + "</li>")
 
-                $("#coursesList").append("<tr>" +
-                    "<td>" + value.id + "</td>" +
-                    "<td>" + value.name + "</td>" +
-                    "<td>" + new Date(value.startDate).toDateString().slice(0,10) + "</td>" +
-                    "<td>" + value.teacher.lastname + "</td>" +
-                    "</tr>")
-
+                $("#coursesList").append("<a href='https://i.mycdn.me/image?id=804610547057&ts=00000000a600000226&plc=WEB&tkn=*67ht7wJA2wSO4acSdFqPasgmxnU&fn=sqr_288'>"+//"<a href='${pageContext.request.contextPath}/profile'>" +
+                    "<div class = 'line'>" +
+                    "<div class = 'cell'>" + value.name + '</div>' +
+                    "<div class = 'cell'>" + value.teacher.lastname + '</div>' +
+                    "<div class = 'cell'>" + new Date(value.startDate).toDateString().slice(0,10) + '</div>' +
+                    "<div class = 'cell'>" + new Date(value.endDate).toDateString().slice(0,10) + '</div>' +
+                    '</div>' +
+                    '</a>')
             });
         }
     });
@@ -84,13 +84,15 @@ $(".pagination .page").click(function () {
             $("#coursesList").html("");
             $.each(response.data, function (index, value) {
                 console.log(index, value);
-                // $("#coursesList").append("<li>" + value.id + " " + value.name + "</li>")
-                $("#coursesList").append("<tr>" +
-                    "<td>" + value.id + "</td>" +
-                    "<td>" + value.name + "</td>" +
-                    "<td>" + new Date(value.startDate).toDateString().slice(0,10) + "</td>" +
-                    "<td>" + value.teacher.lastname + "</td>" +
-                    "</tr>")
+
+                $("#coursesList").append("<a href='https://i.mycdn.me/image?id=804610547057&ts=00000000a600000226&plc=WEB&tkn=*67ht7wJA2wSO4acSdFqPasgmxnU&fn=sqr_288'>"+//"<a href='${pageContext.request.contextPath}/profile'>" +
+                    "<div class = 'line'>" +
+                    "<div class = 'cell'>" + value.name + '</div>' +
+                    "<div class = 'cell'>" + value.teacher.lastname + '</div>' +
+                    "<div class = 'cell'>" + new Date(value.startDate).toDateString().slice(0,10) + '</div>' +
+                    "<div class = 'cell'>" + new Date(value.endDate).toDateString().slice(0,10) + '</div>' +
+                    '</div>' +
+                    '</a>')
             });
         }
     });

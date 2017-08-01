@@ -1,67 +1,57 @@
-<%--
-	Created by IntelliJ IDEA.
-	User: Sergey Petrov
-	Date: 21.07.2017
-	Time: 19:49
-	To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<html>
-<head>
-	<title>Courses</title>
-	<meta name="_csrf" content="${_csrf.token}"/>
-	<meta name="_csrf_header" content="${_csrf.headerName}"/>
-	<link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
-	<link href="<c:url value="/resources/css/bootstrap.min.css" />" rel="stylesheet" type="text/css" />
-	<link href="<c:url value="/resources/css/main.css" />" rel="stylesheet" type="text/css" />
-</head>
-<body>
+<%@ taglib prefix="s" uri="/WEB-INF/tld/spring.tld" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-	<nav class="navbar navbar-fixed-top">
-		<div class="container">
-			<div class="navbar-header">
-				Site name
-			</div>
-
-			<div id="navbar">
-				<ul class="nav">
-					<li><a href="${pageContext.request.contextPath}/">Home</a></li>
-					<li><a class="active" href="${pageContext.request.contextPath}/courses">Courses</a></li>
-					<li><a href="${pageContext.request.contextPath}/about">About</a></li>
-					<li><a href="${pageContext.request.contextPath}/contact">Contact</a></li>
-				</ul>
-			</div>
-
-			<a href="${pageContext.request.contextPath}/user/login">
-				<div class="loginBtn myLargeBtn">Login</div>
-			</a>
-		</div>
-	</nav>
-
-	<div class="addCourse_wrap">
-		<a href="${pageContext.request.contextPath}/newcourse"><div class="addCourse_btn myLargeBtn">Добавить курс</div></a>
-	</div>
-
-	<div id="mainBlock" class="container">
-		<table id="course_table" class="course_table">
-			<tr class="appendAfterRow">
-				<th class="col-md-6">Название курса</th>
-				<th class="col-md-2">Преподаватель</th>
-				<th class="col-md-2">Начало курса</th>
-				<th class="col-md-2"></th>
-			</tr>
-		</table>
-	</div>
-
-	<div id="navigationPanel" class="container">
-		<input id="prevPageBtn" class="myMediumBtn" type="button" value="<- Prev page" />
-		<input id="nextPageBtn" class="myMediumBtn" type="button" value="Next page ->" />
-	</div>
+<jsp:include page="static/header.jsp"/>
 
 
-<s:message code="Courses"/>
-</body>
-</html>
-<script src='<c:url value="/resources/js/jquery-3.2.1.js"/>'></script>
-<script src='<c:url value="/resources/js/courses.js"/>'></script>
+            <h3>
+                <s:message code="Courses"/>
+            </h3>
+
+            <div class="table table-striped" data-effect="fade">
+                <div class = "headLine">
+                    <div class = "cell">Course Name</div>
+                    <div class = "cell">Teacher</div>
+                    <div class = "cell">Start Date</div>
+                    <div class = "cell">End Date</div>
+                    <%--<sec:authorize access="isAuthenticated()">--%>
+                        <%--<td>--%>
+                        <%--</td>--%>
+                    <%--</sec:authorize>--%>
+                </div>
+
+                <div id = "coursesList"></div>
+
+            </div>
+
+
+
+
+            <div class="text-center">
+               <ul class="pagination">
+                    <li class="">
+                        <a href="#" id="prevPage">«</a>
+                    </li>
+                    <c:forEach var="i" begin="1" end="${numOfPages}">
+                        <li class="page" id="${i}" >
+                            <a href="#" ><c:out value="${i}"/></a>
+                        </li>
+                    </c:forEach>
+                    <li class="">
+                        <a href="#" id="nextPage">»</a>
+                    </li>
+                </ul>
+
+            </div>
+
+
+
+
+<jsp:include page="static/footer.jsp"/>
+
+<%--<script src="js/jquery-3.2.1.js"></script>--%>
+<%--<script src="js/navigation.js"></script>--%>
+<%--<script src="./js/jquery-3.2.1.js"></script>--%>
+<%--<script src="${pageContext.request.contextPath}/js/jquery-3.2.1.js"></script>--%>

@@ -5,7 +5,7 @@
 
 
 </div> <!-- /container -->
-<footer class="text-center">
+<footer class="footer text-center">
     <p>Made by Trainees from EPAM</p>
     <div class="credits">
         <!--

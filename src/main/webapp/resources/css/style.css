@@ -2,3 +2,81 @@ input[disabled] {
     background-color: transparent;
     border: none;
 }
+a{
+    text-decoration: none;
+    color: #818181;
+}
+.loginBtn{
+    font-size: 110%;
+    text-align: center;
+    padding: 10px;
+    width: 120px;
+    border-radius: 15px;
+    float: right;
+    margin-top: 30px;
+    text-decoration: none;
+    background-color: #dddddd;
+    margin-right: 10px;
+    color: #989898;
+    transition: all 0.1s;
+    border: 1px solid #dddddd;
+}
+.loginBtn:hover,
+.loginBtn:focus{
+    cursor: pointer;
+    color: #ffffff;
+    background-color: #414141;
+    border-color: #414141;
+}
+.title_page_wrap{
+    margin: 10px 0px;
+    font-size: 150%;
+    font-weight: 600;
+    color: #414141;
+}
+.myMediumBtn{
+    background-color: #dddddd;
+    color: #989898;
+    height: 35px;
+    display: inline-block;
+    margin-top: 10px;
+    text-align: center;
+    cursor: pointer;
+    border: 1px solid transparent;
+    padding: 5px 15px;
+    font-size: 14px;
+    border-radius: 4px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-transition: all 0.3s linear;
+    -o-transition: all 0.3s linear;
+    transition: all 0.3s linear;
+}
+.loginBlock{
+    width: 300px;
+    margin: 20px auto;
+}
+.headLine{
+    width: 100%;
+    font-size: 120%;
+    font-weight: 600;
+    overflow: hidden;
+    padding-bottom: 10px;
+}
+
+.line{
+    padding: 8px;
+    line-height: 1.666;
+    border-top: 1px solid #dddddd;
+    overflow: hidden;
+}
+.line:hover{
+    background-color: rgba(84, 84, 84, 0.13);;
+}
+
+.cell{
+    width: 25%;
+    float: left;
+}

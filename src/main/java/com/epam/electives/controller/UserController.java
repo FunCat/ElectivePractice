@@ -19,56 +19,27 @@ import java.util.Date;
  * Created by Crash on 22.07.2017.
  */
 @Controller
-@RequestMapping("/user")
 public class UserController {
     @Autowired
     UserMainService userMainService;
     @Autowired
     CourseMainService courseMainService;
 
-    @RequestMapping("/main")
-    public ModelAndView userMain() {
-        ModelAndView modelAndView = new ModelAndView("user/main");
-        modelAndView.addObject("listCourses", courseMainService.getAll());
-        return modelAndView;
-    }
-
-    @RequestMapping("/home")
-    public ModelAndView userHome() {
-        ModelAndView modelAndView = new ModelAndView("user/home");
-        return modelAndView;
-    }
-
-    @RequestMapping(value= "/login")
-    public ModelAndView userLogin() {
-        return new ModelAndView("login");
-    }
-
-    @RequestMapping(value= "/login_check", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
-    @ResponseBody
-    public String userLoginCheck(@RequestParam("login") String login,
-                                 @RequestParam("password") String password,
-                                 ModelMap model) {
-        UserProfile user = userMainService.getByLogin(login);
-        if(user != null){
-            if(user.getPassword().equals(password)) {
-                model.put("login", login);
-                return "Успешная авторизация!";
-            }
-            else return "Неверный логин или пароль!";
-        }
-        return "Такого пользователя не существует!";
-    }
-
+    /**
+     * Return page with user profile.
+     *
+     * @param username user login.
+     * @return profile page.
+     */
     @RequestMapping(value = "/profile")
     public ModelAndView userProfile(Principal username) {
         String login = username.getName();
         if(login != null) {
             UserProfile user = userMainService.getByLogin(login);
-            ModelAndView modelAndView = new ModelAndView("user/profile");
-            modelAndView.addObject("userFirstname", user.getName());
+            ModelAndView modelAndView = new ModelAndView("profile");
+            modelAndView.addObject("userName", user.getName());
             modelAndView.addObject("userLastname", user.getLastname());
-            modelAndView.addObject("userMiddlename", user.getSurname());
+            modelAndView.addObject("userSurname", user.getSurname());
             modelAndView.addObject("userLogin", user.getLogin());
             modelAndView.addObject("userBirthday", user.getOnlyDate());
             return modelAndView;
@@ -76,6 +47,17 @@ public class UserController {
         return new ModelAndView("login");
     }
 
+    /**
+     * Update information about user.
+     *
+     * @param login object from java.security that represent user login.
+     * @param firstname new user firstname.
+     * @param lastname new user lastname.
+     * @param middlename new user middlename.
+     * @param userlogin new user login.
+     * @param birthday new user birthday.
+     * @return String with result of updating.
+     */
     @RequestMapping(value= "/edit_profile", method=RequestMethod.POST, produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public String  userEditProfile(Principal login,
@@ -104,14 +86,42 @@ public class UserController {
         return "Возникли неполадки попробуйте чуть позже!";
     }
 
+    /**
+     * Change user password.
+     *
+     * @param login object from java.security that represent user login.
+     * @param nowPassword password that user has got at the moment.
+     * @param newPassword new password.
+     * @param newPassword2 repeat new password.
+     * @return String with result of updating.
+     */
+    @RequestMapping(value= "/edit_password", method=RequestMethod.POST, produces = "text/plain;charset=UTF-8")
+    @ResponseBody
+    public String  userEditProfile(Principal login,
+                                   @RequestParam("nowpassword") String nowPassword,
+                                   @RequestParam("newpassword") String newPassword,
+                                   @RequestParam("newpassword2") String newPassword2) {
+        UserProfile user = userMainService.getByLogin(login.getName());
+        if(!user.getPassword().equals(nowPassword))
+            return "Неверный старый пароль!";
+        if(!newPassword.equals(newPassword2))
+            return "Новые пароли не совпадают!";
+
+        user.setPassword(newPassword);
+        UserProfile checking = userMainService.saveOrUpdate(user);
+        if(checking != null)
+            return "Обновление прошло успешно!";
+        return "Возникли неполадки попробуйте чуть позже!";
+    }
+
 
 
     @RequestMapping("/registration")
     public ModelAndView userRegistration(){
-        return new ModelAndView("user/registration");
+        return new ModelAndView("registration");
     }
 
-    @RequestMapping(value= "/registration", method=RequestMethod.POST)
+    @RequestMapping(value="/registration", method=RequestMethod.POST)
     public ModelAndView userRegistration(@RequestParam("login") String login,
                                          @RequestParam("password") String password,
                                          @RequestParam("password2") String password2,
@@ -140,6 +150,6 @@ public class UserController {
         user.setSurname(middlename);
         user.setBirthday(birthday);
         userMainService.saveOrUpdate(user);
-        return userMain();
+        return new ModelAndView("profile");
     }
 }
