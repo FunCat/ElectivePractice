@@ -3121,7 +3121,6 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   margin-top: 4px;
   padding-top: 6px;
   padding-bottom: 6px;
-  line-height: 2.0825;
   border: 1px solid #ddd;
   border-radius: 4px 4px 0 0;
   background-color: #eeeeee;
@@ -3295,8 +3294,8 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   color: #fff;
   padding: 14px 18px;
   border: 0;
-  border-left: 5px solid #418d49;
-  background-color: #009688;
+  border-left: 5px solid #009688;
+  background-color: #414141;
   z-index: 2;
   -webkit-transition: background 0.05s ease;
   -o-transition: background 0.05s ease;

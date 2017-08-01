@@ -149,4 +149,10 @@ public class MainController  {
         return modelAndView;
     }
 
+    @RequestMapping(value="/teacher/main")
+    public ModelAndView getTeacherPage() {
+        ModelAndView modelAndView = new ModelAndView("teacher/main");
+        return modelAndView;
+    }
+
 }

@@ -20,7 +20,6 @@ import java.util.Date;
  */
 @Controller
 @RequestMapping("/user")
-@SessionAttributes("login")
 public class UserController {
     @Autowired
     UserMainService userMainService;
@@ -61,12 +60,12 @@ public class UserController {
         return "Такого пользователя не существует!";
     }
 
-    @RequestMapping(value = "/cabinet")
+    @RequestMapping(value = "/profile")
     public ModelAndView userProfile(Principal username) {
         String login = username.getName();
         if(login != null) {
             UserProfile user = userMainService.getByLogin(login);
-            ModelAndView modelAndView = new ModelAndView("user/cabinet");
+            ModelAndView modelAndView = new ModelAndView("user/profile");
             modelAndView.addObject("userFirstname", user.getName());
             modelAndView.addObject("userLastname", user.getLastname());
             modelAndView.addObject("userMiddlename", user.getSurname());
@@ -79,13 +78,13 @@ public class UserController {
 
     @RequestMapping(value= "/edit_profile", method=RequestMethod.POST, produces = "text/plain;charset=UTF-8")
     @ResponseBody
-    public String  userEditProfile(@ModelAttribute("login") String login,
+    public String  userEditProfile(Principal login,
                                         @RequestParam("firstname") String firstname,
                                         @RequestParam("lastname") String lastname,
                                         @RequestParam("middlename") String middlename,
                                         @RequestParam("userlogin") String userlogin,
                                         @RequestParam("birthday") String birthday) {
-        UserProfile user = userMainService.getByLogin(login);
+        UserProfile user = userMainService.getByLogin(login.getName());
         user.setName(firstname);
         user.setLastname(lastname);
         user.setSurname(middlename);
@@ -109,7 +108,7 @@ public class UserController {
 
     @RequestMapping("/registration")
     public ModelAndView userRegistration(){
-        return new ModelAndView("user.registration");
+        return new ModelAndView("user/registration");
     }
 
     @RequestMapping(value= "/registration", method=RequestMethod.POST)

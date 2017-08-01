@@ -3,7 +3,7 @@
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<jsp:include page="header.jsp"/>
+<jsp:include page="static/header.jsp"/>
 
 
             <h3>
@@ -80,7 +80,7 @@
 
 
 
-<jsp:include page="footer.jsp"/>
+<jsp:include page="static/footer.jsp"/>
 
 <%--<script src="js/jquery-3.2.1.js"></script>--%>
 <%--<script src="js/navigation.js"></script>--%>
