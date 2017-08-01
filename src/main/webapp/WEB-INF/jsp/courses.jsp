@@ -22,23 +22,8 @@
                     <%--</sec:authorize>--%>
                 </div>
 
-                <div id = "coursesList">
-                <c:forEach var="item" items="${courses}">
-                    <%--<a href="${pageContext.request.contextPath}/profile">--%>
-                    <a href="https://i.mycdn.me/image?id=804610547057&ts=00000000a600000226&plc=WEB&tkn=*67ht7wJA2wSO4acSdFqPasgmxnU&fn=sqr_288">
-                        <div class = "line">
-                            <div class = "cell"><input value="${item.name}" /></div>
-                            <div class = "cell"><input value="${item.teacher.lastname}" /></div>
-                            <div class = "cell"><input value="${item.startDate}" /></div>
-                            <div class = "cell"><input value="${item.endDate}" /></div>
-                            <%--<sec:authorize access="isAuthenticated()"><td>--%>
-                                <%--<a class="btn btn-xs btn-success edit_course" id="" href="#" role="button">Редактировать</a>--%>
-                                <%--</td>--%>
-                            <%--</sec:authorize>--%>
-                        </div>
-                    </a>
-                </c:forEach>
-            </div>
+                <div id = "coursesList"></div>
+
             </div>
 
 

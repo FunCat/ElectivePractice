@@ -4,7 +4,7 @@
 
 <jsp:include page="static/header.jsp"/>
 
-<div class="container">
+<div class="container loginBlock" style="width: 300px;">
     <div class="title_page_wrap">
         <span class="title_page">Login</span>
     </div>

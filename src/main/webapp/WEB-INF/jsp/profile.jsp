@@ -51,7 +51,7 @@
 					<td><input type="text" class="userBirthday" value="${userBirthday}" /></td>
 				</tr>
 				<tr>
-					<td colspan="2"><input type="button" value="Edit" class="editBtnProfile"></td>
+					<td colspan="2"><input type="button" value="Edit" class="editBtnProfile myMediumBtn"></td>
 				</tr>
 			</table>
 			<div class="resultProfile"></div>
@@ -75,7 +75,7 @@
 					<td><input type="password" class="newPassword2" /></td>
 				</tr>
 				<tr>
-					<td colspan="2"><input type="button" value="Edit" class="editBtnPassword"></td>
+					<td colspan="2"><input type="button" value="Edit" class="editBtnPassword myMediumBtn"></td>
 				</tr>
 			</table>
 			<div class="resultPassword"></div>

@@ -13,8 +13,10 @@
 
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 
-    <link href='https://fonts.googleapis.com/css?family=Lato:400,300,400italic,700,900' rel='stylesheet'
-          type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+
+    <%--<link href='https://fonts.googleapis.com/css?family=Lato:400,300,400italic,700,900' rel='stylesheet'--%>
+          <%--type='text/css'>--%>
 
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta name="description" content="Electives Web practice project">
@@ -27,15 +29,21 @@
 <div class="container">
     <div class="row">
         <div class="col-sm-12 col-lg-12">
-            <h1>Electives</h1>
+            <div class="container">
+                <div class="col-sm-8 col-lg-8">
+                    <h1>Electives</h1>
+                </div>
+                <div class="col-sm-4 col-lg-4">
+                    <sec:authorize access="!isAuthenticated()">
+                        <a href="<c:url value="/login" />"><div class="loginBtn" style="text-decoration: none;">Войти</div></a>
+                    </sec:authorize>
+                    <sec:authorize access="isAuthenticated()">
+                        <a href="<c:url value="/logout" />"><div class="loginBtn" style="text-decoration: none;">Выйти</div></a>
+                        <a href="${pageContext.request.contextPath}/profile"><div class="loginBtn" style="text-decoration: none;">Профиль</div></a>
+                    </sec:authorize>
+                </div>
 
-            <sec:authorize access="!isAuthenticated()">
-                <div><a class="btn btn-lg btn-success" href="<c:url value="/login" />" role="button">Войти</a></div>
-            </sec:authorize>
-            <sec:authorize access="isAuthenticated()">
-                <div><a class="btn btn-lg" href="${pageContext.request.contextPath}/profile" role="button">Профиль</a></div>
-                <div><a class="btn btn-lg btn-danger" href="<c:url value="/logout" />" role="button">Выйти</a></div>
-            </sec:authorize>
+            </div>
 
             <%--<nav class="navbar navbar-inverse" role="navigation">--%>
                 <%--<!-- Brand and toggle get grouped for better mobile display -->--%>

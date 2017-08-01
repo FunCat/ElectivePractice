@@ -25,23 +25,12 @@ public class UserController {
     @Autowired
     CourseMainService courseMainService;
 
-
-    @RequestMapping(value= "/login_check", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
-    @ResponseBody
-    public String userLoginCheck(@RequestParam("login") String login,
-                                 @RequestParam("password") String password,
-                                 ModelMap model) {
-        UserProfile user = userMainService.getByLogin(login);
-        if(user != null){
-            if(user.getPassword().equals(password)) {
-                model.put("login", login);
-                return "Успешная авторизация!";
-            }
-            else return "Неверный логин или пароль!";
-        }
-        return "Такого пользователя не существует!";
-    }
-
+    /**
+     * Return page with user profile.
+     *
+     * @param username user login.
+     * @return profile page.
+     */
     @RequestMapping(value = "/profile")
     public ModelAndView userProfile(Principal username) {
         String login = username.getName();
@@ -58,6 +47,17 @@ public class UserController {
         return new ModelAndView("login");
     }
 
+    /**
+     * Update information about user.
+     *
+     * @param login object from java.security that represent user login.
+     * @param firstname new user firstname.
+     * @param lastname new user lastname.
+     * @param middlename new user middlename.
+     * @param userlogin new user login.
+     * @param birthday new user birthday.
+     * @return String with result of updating.
+     */
     @RequestMapping(value= "/edit_profile", method=RequestMethod.POST, produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public String  userEditProfile(Principal login,
@@ -86,6 +86,15 @@ public class UserController {
         return "Возникли неполадки попробуйте чуть позже!";
     }
 
+    /**
+     * Change user password.
+     *
+     * @param login object from java.security that represent user login.
+     * @param nowPassword password that user has got at the moment.
+     * @param newPassword new password.
+     * @param newPassword2 repeat new password.
+     * @return String with result of updating.
+     */
     @RequestMapping(value= "/edit_password", method=RequestMethod.POST, produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public String  userEditProfile(Principal login,
@@ -112,7 +121,7 @@ public class UserController {
         return new ModelAndView("registration");
     }
 
-    @RequestMapping(value= "/registration", method=RequestMethod.POST)
+    @RequestMapping(value="/registration", method=RequestMethod.POST)
     public ModelAndView userRegistration(@RequestParam("login") String login,
                                          @RequestParam("password") String password,
                                          @RequestParam("password2") String password2,
