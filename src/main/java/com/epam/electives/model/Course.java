@@ -24,7 +24,7 @@ public class Course {
 
     public enum Status {
         ACTIVE,
-        DELETED,
+        CANCELED,
         ARCHIVE
     }
 }

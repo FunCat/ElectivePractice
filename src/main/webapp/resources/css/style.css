@@ -2,3 +2,21 @@ input[disabled] {
     background-color: transparent;
     border: none;
 }
+.headLine{
+    width: 100%;
+    font-size: 150%;
+    font-weight: 600;
+    overflow: hidden;
+}
+
+.line{
+    padding: 8px;
+    line-height: 1.666;
+    border-top: 1px solid #dddddd;
+    overflow: hidden;
+}
+
+.cell{
+    width: 25%;
+    float: left;
+}

@@ -10,42 +10,36 @@
                 <s:message code="Courses"/>
             </h3>
 
-            <%--<ul id="coursesList">--%>
-                <%--<c:forEach var="item" items="${courses}">--%>
-                    <%--<li>${item.id} | ${item.name}</li>--%>
-                <%--</c:forEach>--%>
-            <%--</ul>--%>
+            <div class="table table-striped" data-effect="fade">
+                <div class = "headLine">
+                    <div class = "cell">Course Name</div>
+                    <div class = "cell">Teacher</div>
+                    <div class = "cell">Start Date</div>
+                    <div class = "cell">End Date</div>
+                    <%--<sec:authorize access="isAuthenticated()">--%>
+                        <%--<td>--%>
+                        <%--</td>--%>
+                    <%--</sec:authorize>--%>
+                </div>
 
-            <table class="table table-striped" data-effect="fade">
-                <thead>                <tr>
-                    <th>#</th>
-                    <th>Course Name</th>
-                    <th>Start Date</th>
-                    <th>Teacher</th>
-                    <sec:authorize access="isAuthenticated()">
-                        <td>
-
-                        </td>
-                    </sec:authorize>
-                </tr>
-                </thead>
-                <tbody id="coursesList">
+                <div id = "coursesList">
                 <c:forEach var="item" items="${courses}">
-                    <tr>
-                        <td><input value="${item.id}" disabled /></td>
-                        <td><input value="${item.name}" disabled/></td>
-                        <td><input value="${item.startDate}" disabled/></td>
-                        <td><input value="${item.teacher.lastname}" disabled/></td>
-                        <sec:authorize access="isAuthenticated()">
-                        <td>
-                            <a class="btn btn-xs btn-success edit_course" id="" href="#" role="button">Редактировать</a>
-                        </td>
-                        </sec:authorize>
-
-                    </tr>
+                    <%--<a href="${pageContext.request.contextPath}/profile">--%>
+                    <a href="https://i.mycdn.me/image?id=804610547057&ts=00000000a600000226&plc=WEB&tkn=*67ht7wJA2wSO4acSdFqPasgmxnU&fn=sqr_288">
+                        <div class = "line">
+                            <div class = "cell"><input value="${item.name}" /></div>
+                            <div class = "cell"><input value="${item.teacher.lastname}" /></div>
+                            <div class = "cell"><input value="${item.startDate}" /></div>
+                            <div class = "cell"><input value="${item.endDate}" /></div>
+                            <%--<sec:authorize access="isAuthenticated()"><td>--%>
+                                <%--<a class="btn btn-xs btn-success edit_course" id="" href="#" role="button">Редактировать</a>--%>
+                                <%--</td>--%>
+                            <%--</sec:authorize>--%>
+                        </div>
+                    </a>
                 </c:forEach>
-                </tbody>
-            </table>
+            </div>
+            </div>
 
 
 
