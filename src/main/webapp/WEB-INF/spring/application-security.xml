@@ -7,8 +7,8 @@
 		http://www.springframework.org/schema/security/spring-security.xsd">
 
     <http use-expressions="true">
-        <intercept-url pattern="/user/*" access="hasRole('ROLE_USER')" />
-        <intercept-url pattern="/teacher/*" access="hasRole('ROLE_TEACHER')" />
+        <intercept-url pattern="/profile" access="hasRole('ROLE_USER')" />
+        <intercept-url pattern="/teachercourses" access="hasRole('ROLE_TEACHER')" />
         <form-login
                 login-page="/login"
                 authentication-failure-url="/login?error=true"
