@@ -33,7 +33,6 @@ public class MainController  {
             request = new GetEntityRequest(0,10);
         }
         PageDto<Course> courses = courseMainService.getPart(request);
-//        courseMainService.getAll().size();
         modelAndView.addObject("courses", courses.getData());
         modelAndView.addObject("numOfPages",
                 (courses.getRecordsTotal() % 10 == 0) ?
@@ -42,14 +41,19 @@ public class MainController  {
         return modelAndView;
     }
 
+    @RequestMapping(value = "/courseinfo", method = RequestMethod.GET)
+    public ModelAndView courseinfo(@RequestParam(value = "id") int id){
+        ModelAndView modelAndView = new ModelAndView("courseinfo");
+        modelAndView.addObject("id",id);
+        return modelAndView;
+    }
+
+
     @ResponseBody
     @RequestMapping(value = "/part", method = RequestMethod.POST)
     public PageDto<Course> mainAllNews(@RequestBody GetEntityRequest request){
-//        ModelAndView modelAndView = new ModelAndView("course.main");
-//        modelAndView.addObject("course", courseMainService.getPart(request));
         PageDto<Course> courses = courseMainService.getPart(request);
         return courses;
-        //return modelAndView;
     }
 
 
