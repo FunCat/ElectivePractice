@@ -2,6 +2,7 @@ package com.epam.electives.model;
 
 import lombok.Data;
 import lombok.NonNull;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -9,7 +10,6 @@ import java.util.Date;
 
 @Data
 @Entity
-//@Table(name = "courses")
 public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,6 +20,8 @@ public class Course {
     private UserProfile teacher;
     private Date startDate;
     private Date endDate;
+    @Type(type="text")
+    private String description;
     private Status status;
 
     public enum Status {

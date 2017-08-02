@@ -58,25 +58,3 @@ a{
     width: 300px;
     margin: 20px auto;
 }
-.headLine{
-    width: 100%;
-    font-size: 120%;
-    font-weight: 600;
-    overflow: hidden;
-    padding-bottom: 10px;
-}
-
-.line{
-    padding: 8px;
-    line-height: 1.666;
-    border-top: 1px solid #dddddd;
-    overflow: hidden;
-}
-.line:hover{
-    background-color: rgba(84, 84, 84, 0.13);;
-}
-
-.cell{
-    width: 25%;
-    float: left;
-}
