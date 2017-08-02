@@ -47,4 +47,8 @@ public class UserMainService {
     public UserProfile getById(long id){
         return userDao.findUserById(id);
     }
+
+    public void addUserToRole(UserProfile user){
+        userDao.addRoleToUser(user);
+    }
 }

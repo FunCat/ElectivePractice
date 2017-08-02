@@ -36,6 +36,7 @@
                 <div class="col-sm-4 col-lg-4">
                     <sec:authorize access="!isAuthenticated()">
                         <a href="<c:url value="/login" />"><div class="loginBtn" style="text-decoration: none;">Войти</div></a>
+                        <a href="${pageContext.request.contextPath}/registration"><div class="loginBtn" style="text-decoration: none;">Регистрация</div></a>
                     </sec:authorize>
                     <sec:authorize access="isAuthenticated()">
                         <a href="<c:url value="/logout" />"><div class="loginBtn" style="text-decoration: none;">Выйти</div></a>
