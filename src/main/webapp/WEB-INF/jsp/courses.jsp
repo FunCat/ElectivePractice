@@ -4,8 +4,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <jsp:include page="static/header.jsp"/>
-
-
             <h3>
                 <s:message code="Courses"/>
             </h3>
@@ -16,18 +14,9 @@
                     <div class = "cell">Teacher</div>
                     <div class = "cell">Start Date</div>
                     <div class = "cell">End Date</div>
-                    <%--<sec:authorize access="isAuthenticated()">--%>
-                        <%--<td>--%>
-                        <%--</td>--%>
-                    <%--</sec:authorize>--%>
                 </div>
-
                 <div id = "coursesList"></div>
-
             </div>
-
-
-
 
             <div class="text-center">
                <ul class="pagination">
