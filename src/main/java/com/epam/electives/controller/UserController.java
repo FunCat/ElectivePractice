@@ -121,35 +121,44 @@ public class UserController {
         return new ModelAndView("registration");
     }
 
-    @RequestMapping(value="/registration", method=RequestMethod.POST)
-    public ModelAndView userRegistration(@RequestParam("login") String login,
+    @RequestMapping(value="/registration_check", method=RequestMethod.POST, produces = "text/plain;charset=UTF-8")
+    @ResponseBody
+    public String userRegistrationCheck(@RequestParam("login") String login,
                                          @RequestParam("password") String password,
                                          @RequestParam("password2") String password2,
                                          @RequestParam("firstname") String firstname,
-                                         @RequestParam("middlename") String middlename,
+                                         @RequestParam("surname") String surname,
                                          @RequestParam("lastname") String lastname,
-                                         @RequestParam("birthday")Date birthday) {
+                                         @RequestParam("birthday") String birthday) {
 
-        if(login == "" || password=="" || password2=="" ||
-                firstname=="" || middlename=="" || lastname=="" || birthday ==null){
-            return userRegistration();
+        Date dateBirthday;
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        Date convertedCurrentDate = null;
+        try {
+            convertedCurrentDate = sdf.parse(birthday);
+        } catch (ParseException e) {
+            return "Неверный формат даты!";
         }
+        if(convertedCurrentDate == null) return "Неверный формат даты!";
 
         if(!password.equals(password2)){
-            return userRegistration();
+            return "Пароли не совпадают!";
         }
 
         UserProfile user = userMainService.getByLogin(login);
-        if(user !=null){
-            return userRegistration();
+        if(user != null){
+            return "Пользователь с таким логином уже существует!";
         }
+        user = new UserProfile();
         user.setLogin(login);
         user.setPassword(password);
         user.setName(firstname);
         user.setLastname(lastname);
-        user.setSurname(middlename);
-        user.setBirthday(birthday);
+        user.setSurname(surname);
+        user.setBirthday(convertedCurrentDate);
+        user.setEnabled(true);
         userMainService.saveOrUpdate(user);
-        return new ModelAndView("profile");
+        userMainService.addUserToRole(user);
+        return "Успешная регистрация!";
     }
 }

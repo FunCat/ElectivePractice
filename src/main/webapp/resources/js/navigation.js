@@ -1,7 +1,3 @@
-/**
- * Created by rusamaha on 7/22/17.
- */
-
 var curPage = 0;
 var curInterval = 10;
 
@@ -9,7 +5,7 @@ var a = {
     start: curPage,
     length: curInterval
 };
-//
+
 $(document).bind('DOMSubtreeModified', function () {
     if (curPage == 0) {
         $(".pagination li:first").addClass('disabled')

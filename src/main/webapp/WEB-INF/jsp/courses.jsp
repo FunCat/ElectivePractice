@@ -40,3 +40,4 @@
 </div>
 
 <jsp:include page="static/footer.jsp"/>
+<script src='<c:url value="/resources/js/navigation.js"/>'></script>

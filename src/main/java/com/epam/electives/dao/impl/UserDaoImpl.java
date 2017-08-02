@@ -105,4 +105,12 @@ public class UserDaoImpl implements UserDao {
         criteria.setProjection(Projections.property("authority"));
         return criteria.list();
     }
+
+    @Override
+    public void addRoleToUser(UserProfile user) {
+        UserRole role = new UserRole();
+        role.setUser(user);
+        role.setAuthority("ROLE_USER");
+        getCurrentSession().saveOrUpdate(role);
+    }
 }
