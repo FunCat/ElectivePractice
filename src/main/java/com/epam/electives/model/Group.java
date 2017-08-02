@@ -3,6 +3,7 @@ package com.epam.electives.model;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Created by rusamaha on 7/29/17.
@@ -12,13 +13,17 @@ import javax.persistence.*;
 @Entity
 @Table(name = "CourseGroup")
 public class Group {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+
+    @EmbeddedId
+    GroupId groupId;
+    private Long grade;
+    private String review;
+}
+
+@Embeddable
+class GroupId implements Serializable{
     @ManyToOne
     private UserProfile student;
     @ManyToOne
     private Course course;
-    private Long grade;
-    private String review;
 }

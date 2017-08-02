@@ -13,7 +13,6 @@ import java.util.Date;
 
 @Data
 @Entity
-//@Table(name = "UserProfile")
 public class UserProfile {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
