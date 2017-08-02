@@ -32,23 +32,23 @@
 			<table>
 				<tr>
 					<td>Name:</td>
-					<td><input type="text" class="userName" value="${userName}" /></td>
+					<td><input type="text" class="userName" value="${userProfile.name}" /></td>
 				</tr>
 				<tr>
 					<td>Lastname:</td>
-					<td><input type="text" class="userLastname" value="${userLastname}" /></td>
+					<td><input type="text" class="userLastname" value="${userProfile.lastname}" /></td>
 				</tr>
 				<tr>
 					<td>Middlename:</td>
-					<td><input type="text" class="userSurname" value="${userSurname}" /></td>
+					<td><input type="text" class="userSurname" value="${userProfile.surname}" /></td>
 				</tr>
 				<tr>
 					<td>Login:</td>
-					<td><input type="text" class="userLogin" value="${userLogin}" /></td>
+					<td><input type="text" class="userLogin" value="${userProfile.login}" /></td>
 				</tr>
 				<tr>
 					<td>Birthday:</td>
-					<td><input type="text" class="userBirthday" value="${userBirthday}" /></td>
+					<td><input type="text" class="userBirthday" value="${userProfile.birthday}" /></td>
 				</tr>
 				<tr>
 					<td colspan="2"><input type="button" value="Edit" class="editBtnProfile myMediumBtn"></td>

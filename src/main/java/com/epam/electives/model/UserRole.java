@@ -14,4 +14,5 @@ public class UserRole {
     @ManyToOne
     private UserProfile user;
     private String authority;
+    private String testfield;
 }

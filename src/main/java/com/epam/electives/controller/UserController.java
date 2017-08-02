@@ -37,11 +37,7 @@ public class UserController {
         if(login != null) {
             UserProfile user = userMainService.getByLogin(login);
             ModelAndView modelAndView = new ModelAndView("profile");
-            modelAndView.addObject("userName", user.getName());
-            modelAndView.addObject("userLastname", user.getLastname());
-            modelAndView.addObject("userSurname", user.getSurname());
-            modelAndView.addObject("userLogin", user.getLogin());
-            modelAndView.addObject("userBirthday", user.getOnlyDate());
+            modelAndView.addObject("userProfile", user);
             return modelAndView;
         }
         return new ModelAndView("login");

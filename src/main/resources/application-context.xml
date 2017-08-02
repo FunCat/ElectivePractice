@@ -43,7 +43,7 @@
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
           p:driverClassName="org.postgresql.Driver"
           p:url="jdbc:postgresql://localhost:5432/electives"
-          p:username="postgres"
-          p:password="epam"/>
+          p:username="rusamaha"
+          p:password=""/>
 
 </beans>
