@@ -32,23 +32,23 @@
 			<table>
 				<tr>
 					<td>Name:</td>
-					<td><input type="text" class="userName" value="${userProfile.name}" /></td>
+					<td><input type="text" class="userName" value="${userProfile.name}" placeholder="Ivan" /></td>
 				</tr>
 				<tr>
 					<td>Lastname:</td>
-					<td><input type="text" class="userLastname" value="${userProfile.lastname}" /></td>
+					<td><input type="text" class="userLastname" value="${userProfile.lastname}" placeholder="Ivanov" /></td>
 				</tr>
 				<tr>
 					<td>Middlename:</td>
-					<td><input type="text" class="userSurname" value="${userProfile.surname}" /></td>
+					<td><input type="text" class="userSurname" value="${userProfile.surname}" placeholder="Ivanovich" /></td>
 				</tr>
 				<tr>
 					<td>Login:</td>
-					<td><input type="text" class="userLogin" value="${userProfile.login}" /></td>
+					<td><input type="text" class="userLogin" value="${userProfile.login}" placeholder="ivan" /></td>
 				</tr>
 				<tr>
 					<td>Birthday:</td>
-					<td><input type="text" class="userBirthday" value="${userProfile.birthday}" /></td>
+					<td><input type="text" class="userBirthday" pattern="(0[1-9]|[12][0-9]|3[01])[-/.](0[1-9]|1[012])[-/.](19|20)\d\d" value="${userProfile.birthday}" placeholder="01/01/1990" /></td>
 				</tr>
 				<tr>
 					<td colspan="2"><input type="button" value="Edit" class="editBtnProfile myMediumBtn"></td>

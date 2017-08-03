@@ -61,3 +61,10 @@ a{
 .result{
     text-align: center;
 }
+.td_min_width{
+    min-width: 100px;
+}
+.requiredFiled{
+    color: red;
+    font-size: 180%;
+}

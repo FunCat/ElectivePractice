@@ -14,10 +14,9 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-/**
- * Created by Crash on 22.07.2017.
- */
 @Controller
 public class UserController {
     @Autowired
@@ -111,12 +110,28 @@ public class UserController {
     }
 
 
-
+    /**
+     * Show page with form registration.
+     *
+     * @return Page with form registration.
+     */
     @RequestMapping("/registration")
     public ModelAndView userRegistration(){
         return new ModelAndView("registration");
     }
 
+    /**
+     * Check the validity of the registration data.
+     *
+     * @param login user login.
+     * @param password user password.
+     * @param password2 repeat user password.
+     * @param firstname user firstname.
+     * @param surname user surname.
+     * @param lastname user lastname.
+     * @param birthday user birthday.
+     * @return String with response.
+     */
     @RequestMapping(value="/registration_check", method=RequestMethod.POST, produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public String userRegistrationCheck(@RequestParam("login") String login,
@@ -126,6 +141,12 @@ public class UserController {
                                          @RequestParam("surname") String surname,
                                          @RequestParam("lastname") String lastname,
                                          @RequestParam("birthday") String birthday) {
+
+        if(!Pattern.matches("(0[1-9]|[12][0-9]|3[01])[-/.](0[1-9]|1[012])[-/.](19|20)\\d\\d", birthday))
+            return "Неверный формат даты!<br/> дд/мм/гггг";
+
+        if(!Pattern.matches("(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}", password))
+            return "Ошибка в требовании к паролю!<br/> Минимум 8 символов. Обязательно наличие 1 буквы и 1 числа.";
 
         Date dateBirthday;
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
