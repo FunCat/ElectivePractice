@@ -3,7 +3,6 @@ package com.epam.electives.model;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 /**
  * Created by rusamaha on 7/29/17.

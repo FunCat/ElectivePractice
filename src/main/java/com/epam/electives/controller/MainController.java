@@ -54,11 +54,11 @@ public class MainController  {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String login = auth.getName();
         if(!login.equals("anonymousUser")) {
-            for(UserProfile user: courseMainService.getStudentsFromCourse(course)){
-                if(user.getLogin().equals(login)) courseContainsUser = true;
+            for (UserProfile user : courseMainService.getStudentsFromCourse(course)) {
+                if (user.getLogin().equals(login)) courseContainsUser = true;
             }
-            modelAndView.addObject("userAlreadyRegistredForCourse", courseContainsUser);
         }
+        modelAndView.addObject("userAlreadyRegistredForCourse", courseContainsUser);
         return modelAndView;
     }
 
