@@ -44,7 +44,7 @@ public class MainController  {
     @RequestMapping(value = "/courseinfo", method = RequestMethod.GET)
     public ModelAndView courseinfo(@RequestParam(value = "id") int id){
         ModelAndView modelAndView = new ModelAndView("courseinfo");
-        modelAndView.addObject("id",id);
+        modelAndView.addObject("course",courseMainService.getById(id));
         return modelAndView;
     }
 
