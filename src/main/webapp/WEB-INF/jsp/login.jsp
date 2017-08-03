@@ -1,25 +1,26 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="s" uri="/WEB-INF/tld/spring.tld" %>
 
 <jsp:include page="static/header.jsp"/>
 
-<div class="container loginBlock" style="width: 300px;">
+<div class="container loginBlock" style="width: 350px;">
     <div class="title_page_wrap">
-        <span class="title_page">Login</span>
+        <span class="title_page"><s:message code="SignIn" /></span>
     </div>
     <form:form action="${pageContext.request.contextPath}/login" method="POST">
         <table>
             <tr>
-                <td>Login:</td>
+                <td style="min-width: 100px"><s:message code="Login" />:</td>
                 <td><input class="userLogin" type="text" name="username"/></td>
             </tr>
             <tr>
-                <td>Password:</td>
+                <td><s:message code="Password" />:</td>
                 <td><input class="userPassword" type="password" name="password"/></td>
             </tr>
             <tr>
-                <td colspan="2" style="text-align: center"><input class="myMediumBtn" type="submit" value="Login"/></td>
+                <td colspan="2" style="text-align: center"><input class="myMediumBtn" type="submit" value="<s:message code="SignIn" />"/></td>
             </tr>
         </table>
     </form:form>
