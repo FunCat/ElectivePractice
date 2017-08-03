@@ -3,6 +3,7 @@ package com.epam.electives.dao;
 import com.epam.electives.dto.GetEntityRequest;
 import com.epam.electives.dto.PageDto;
 import com.epam.electives.model.Course;
+import com.epam.electives.model.UserProfile;
 
 import java.util.List;
 
@@ -20,4 +21,5 @@ public interface CourseDao {
 
     List<Course> findN(int n);
 
+    List<UserProfile> findStudentsByCourse(Course course);
 }

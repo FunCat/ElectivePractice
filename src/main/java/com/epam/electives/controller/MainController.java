@@ -3,6 +3,7 @@ package com.epam.electives.controller;
 import com.epam.electives.dto.GetEntityRequest;
 import com.epam.electives.dto.PageDto;
 import com.epam.electives.model.Course;
+import com.epam.electives.model.UserProfile;
 import com.epam.electives.services.CourseMainService;
 import com.epam.electives.services.UserMainService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,11 +47,17 @@ public class MainController  {
     @RequestMapping(value = "/courseinfo", method = RequestMethod.GET)
     public ModelAndView courseinfo(@RequestParam(value = "id") int id){
         ModelAndView modelAndView = new ModelAndView("courseinfo");
-        modelAndView.addObject("course",courseMainService.getById(id));
+        Course course = courseMainService.getById(id);
+        boolean courseContainsUser = false;
+        modelAndView.addObject("course",course);
+
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String login = auth.getName();
         if(!login.equals("anonymousUser")) {
-            modelAndView.addObject("user", userMainService.getByLogin(login));
+            for(UserProfile user: courseMainService.getStudentsFromCourse(course)){
+                if(user.getLogin().equals(login)) courseContainsUser = true;
+            }
+            modelAndView.addObject("userAlreadyRegistredForCourse", courseContainsUser);
         }
         return modelAndView;
     }

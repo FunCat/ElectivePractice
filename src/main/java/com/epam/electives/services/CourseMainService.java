@@ -4,6 +4,7 @@ import com.epam.electives.dao.CourseDao;
 import com.epam.electives.dto.GetEntityRequest;
 import com.epam.electives.dto.PageDto;
 import com.epam.electives.model.Course;
+import com.epam.electives.model.UserProfile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -46,5 +47,9 @@ public class CourseMainService {
 
     public Course getById(long id){
         return courseDao.findCourseById(id);
+    }
+
+    public List<UserProfile> getStudentsFromCourse(Course course){
+        return courseDao.findStudentsByCourse(course);
     }
 }

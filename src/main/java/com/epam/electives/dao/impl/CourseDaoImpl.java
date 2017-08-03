@@ -5,6 +5,8 @@ import com.epam.electives.dao.CourseDao;
 import com.epam.electives.dto.GetEntityRequest;
 import com.epam.electives.dto.PageDto;
 import com.epam.electives.model.Course;
+import com.epam.electives.model.Group;
+import com.epam.electives.model.UserProfile;
 import lombok.extern.log4j.Log4j;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -83,4 +85,9 @@ public class CourseDaoImpl implements CourseDao {
         return new PageDto<>(records, totalRecordsCount);
     }
 
+    @Override
+    List<UserProfile> findStudentsByCourse(Course course){
+        Criteria criteria = getCurrentSession().createCriteria(Group.class);
+        return criteria.add(Restrictions.eq("course", course)).list();
+    }
 }

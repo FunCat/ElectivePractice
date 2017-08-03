@@ -2,6 +2,7 @@
   Created by Crash
   Date: 02.08.2017
 --%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
@@ -17,8 +18,16 @@
 </sec:authorize>
 
     <sec:authorize access="isAuthenticated() && hasRole('ROLE_USER')">
-
-        <div><a class='myMediumBtn' href= "http://i.playground.ru/i/89/48/62/10/pix/image.jpg"  role="button">Записаться</a></div>
+        <c:choose>
+            <c:when test="${userAlreadyRegistredForCourse == 'true'}">
+                <div><a class='myMediumBtn' href= "http://i.playground.ru/i/89/48/62/10/pix/image.jpg"  role="button">Отписаться</a></div>
+                <br />
+            </c:when>
+            <c:otherwise>
+                <div><a class='myMediumBtn' href= "http://i.playground.ru/i/89/48/62/10/pix/image.jpg"  role="button">Записаться</a></div>
+                <br />
+            </c:otherwise>
+        </c:choose>
     </sec:authorize>
 
 </div>
