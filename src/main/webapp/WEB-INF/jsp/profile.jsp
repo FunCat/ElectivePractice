@@ -5,7 +5,7 @@
 
 <jsp:include page="static/header.jsp"/>
 
-    <div class="">
+    <div class="container">
 		<div class="col-md-2">
 			<p class="lead text-muted"><s:message code="Menu" /></p>
             <ul class="nav nav-tabs nav-stacked">
@@ -49,6 +49,9 @@
 				</tr>
 			</table>
 			<div class="resultProfile"></div>
+			<div>
+				<a class="deleteAccount" href="${pageContext.request.contextPath}/deleteaccount"><s:message code="DeleteAccount" /></a>
+			</div>
 		</div>
 
 		<div class="col-md-5">

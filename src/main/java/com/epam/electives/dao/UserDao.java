@@ -36,4 +36,6 @@ public interface UserDao {
     List<String> getUserRoles(String login);
 
     void addRoleToUser(UserProfile user);
+
+    void deleteUserByLogin(String login);
 }

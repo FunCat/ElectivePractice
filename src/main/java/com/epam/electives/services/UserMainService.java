@@ -51,4 +51,8 @@ public class UserMainService {
     public void addUserToRole(UserProfile user){
         userDao.addRoleToUser(user);
     }
+
+    public void deleteUserByLogin(String login){
+        userDao.deleteUserByLogin(login);
+    }
 }
