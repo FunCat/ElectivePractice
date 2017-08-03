@@ -5,27 +5,17 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <jsp:include page="static/header.jsp"/>
-
-Language : <a href="?lang=en">English</a>|<a href="?lang=ru">Russian</a>
-
-<h2>
-    <%--welcome.springmvc : <spring:message code="Courses" text="default text" />--%>
-</h2>
-
-Current Locale : ${pageContext.response.locale}
-
-
-
-<h3>
-    <s:message code="Courses"/>
-</h3>
+<div class="col-sm-4 col-lg-4">
+    <h3><s:message code="Courses"/></h3>
+</div>
 
 <table class="table table-striped" data-effect="fade">
-    <thead>                <tr>
-        <th>Course Name</th>
-        <th>Teacher</th>
-        <th>Start Date</th>
-        <th>End Date</th>
+    <thead>
+    <tr>
+        <th><s:message code="Course_Name"/></th>
+        <th><s:message code="Course_Teacher" /></th>
+        <th><s:message code="Start_Date"/></th>
+        <th><s:message code="End_Date"/></th>
         <th> </th>
     </tr>
     </thead>
