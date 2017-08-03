@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="s" uri="/WEB-INF/tld/spring.tld" %>
 
 <jsp:include page="static/header.jsp"/>
 
@@ -26,7 +27,7 @@
 
 		<div class="col-md-5">
 	        <div class="title_page_wrap">
-	            <span class="title_page">Edit your account:</span>
+	            <span class="title_page"><s:message code="Edit_your_account"/></span>
 	        </div>
 
 			<table>
@@ -59,7 +60,7 @@
 
 		<div class="col-md-5">
 			<div class="title_page_wrap">
-				<span class="title_page">Change password:</span>
+				<span class="title_page"><s:message code="Change_password" /></span>
 			</div>
 			<table>
 				<tr>
