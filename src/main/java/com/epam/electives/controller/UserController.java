@@ -1,5 +1,8 @@
 package com.epam.electives.controller;
 
+import com.epam.electives.dto.GetEntityRequest;
+import com.epam.electives.dto.PageDto;
+import com.epam.electives.model.Course;
 import com.epam.electives.model.UserProfile;
 import com.epam.electives.services.CourseMainService;
 import com.epam.electives.services.UserMainService;
@@ -195,6 +198,24 @@ public class UserController {
         return "Успешная регистрация!";
     }
 
+    @RequestMapping(value = "/usercourses")
+    public ModelAndView userCourses(Principal username) {
+        String login = username.getName();
+        if(login != null) {
+            UserProfile user = userMainService.getByLogin(login);
+            ModelAndView modelAndView = new ModelAndView("usercourses");
+            return modelAndView;
+        }
+        return new ModelAndView("login");
+    }
+    @ResponseBody
+    @RequestMapping(value = "/partuser", method = RequestMethod.POST)
+    public PageDto<Course> getUserCourses(Principal login,
+                                            @RequestBody GetEntityRequest request){
+        UserProfile user = userMainService.getByLogin(login.getName());
+        PageDto<Course> courses = userMainService.getPartUser(request,user);
+        return courses;
+    }
     /**
      * Makes user account disabled.
      *
