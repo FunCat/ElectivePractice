@@ -1,20 +1,21 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="s" uri="/WEB-INF/tld/spring.tld" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+<%--<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <jsp:include page="static/header.jsp"/>
-
-<h3>
-    <s:message code="Courses"/>
-</h3>
+<div class="col-sm-4 col-lg-4">
+    <h3><s:message code="Courses"/></h3>
+</div>
 
 <table class="table table-striped" data-effect="fade">
-    <thead>                <tr>
-        <th>Course Name</th>
-        <th>Teacher</th>
-        <th>Start Date</th>
-        <th>End Date</th>
+    <thead>
+    <tr>
+        <th><s:message code="Course_Name"/></th>
+        <th><s:message code="Course_Teacher" /></th>
+        <th><s:message code="Start_Date"/></th>
+        <th><s:message code="End_Date"/></th>
         <th> </th>
     </tr>
     </thead>

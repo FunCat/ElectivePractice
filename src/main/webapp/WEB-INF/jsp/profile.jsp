@@ -11,7 +11,7 @@
 
 <jsp:include page="static/header.jsp"/>
 
-    <div class="container">
+    <div class="">
 		<div class="col-md-2">
 			<p class="lead text-muted">Меню</p>
             <ul class="nav nav-tabs nav-stacked">

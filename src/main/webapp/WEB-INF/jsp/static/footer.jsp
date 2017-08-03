@@ -18,7 +18,7 @@
             href="https://bootstrapmade.com/">BootstrapMade</a>
     </div>
 </footer>
-</div>
+
 </div>
 </body>
 </html>
