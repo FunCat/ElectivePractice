@@ -13,7 +13,7 @@
 
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 
-    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Comfortaa" rel="stylesheet">
 
     <%--<link href='https://fonts.googleapis.com/css?family=Lato:400,300,400italic,700,900' rel='stylesheet'--%>
           <%--type='text/css'>--%>
@@ -33,12 +33,12 @@
         </div>
         <div class="col-sm-4 col-lg-4">
             <sec:authorize access="!isAuthenticated()">
-                <a href="<c:url value="/login" />"><div class="loginBtn" style="text-decoration: none;">Войти</div></a>
-                <a href="${pageContext.request.contextPath}/registration"><div class="loginBtn" style="text-decoration: none;">Регистрация</div></a>
+                <a href="<c:url value="/login" />"><div class="loginBtn" style="text-decoration: none;"><s:message code="SignIn" /></div></a>
+                <a href="${pageContext.request.contextPath}/registration"><div class="loginBtn" style="text-decoration: none;"><s:message code="Registration" /></div></a>
             </sec:authorize>
             <sec:authorize access="isAuthenticated()">
-                <a href="<c:url value="/logout" />"><div class="loginBtn" style="text-decoration: none;">Выйти</div></a>
-                <a href="${pageContext.request.contextPath}/profile"><div class="loginBtn" style="text-decoration: none;">Профиль</div></a>
+                <a href="<c:url value="/logout" />"><div class="loginBtn" style="text-decoration: none;"><s:message code="SignOut" /></div></a>
+                <a href="${pageContext.request.contextPath}/profile"><div class="loginBtn" style="text-decoration: none;"><s:message code="Profile" /></div></a>
             </sec:authorize>
         </div>
 

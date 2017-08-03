@@ -10,7 +10,6 @@ a{
     font-size: 110%;
     text-align: center;
     padding: 10px;
-    width: 120px;
     border-radius: 15px;
     float: right;
     margin-top: 30px;
@@ -62,7 +61,7 @@ a{
     text-align: center;
 }
 .td_min_width{
-    min-width: 100px;
+    min-width: 200px;
 }
 .requiredFiled{
     color: red;
