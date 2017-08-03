@@ -17,6 +17,7 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.hibernate.criterion.Projections.rowCount;
@@ -86,8 +87,13 @@ public class CourseDaoImpl implements CourseDao {
     }
 
     @Override
-    List<UserProfile> findStudentsByCourse(Course course){
+    public List<UserProfile> findStudentsByCourse(Course course){
         Criteria criteria = getCurrentSession().createCriteria(Group.class);
-        return criteria.add(Restrictions.eq("course", course)).list();
+        List<Group> groups = criteria.add(Restrictions.eq("course", course)).list();
+        List<UserProfile> result = new ArrayList<UserProfile>();
+        for(Group group : groups){
+            result.add(group.getGroupId().getStudent());
+        }
+        return result;
     }
 }

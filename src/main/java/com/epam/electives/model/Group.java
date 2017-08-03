@@ -19,11 +19,3 @@ public class Group {
     private Long grade;
     private String review;
 }
-
-@Embeddable
-class GroupId implements Serializable{
-    @ManyToOne
-    private UserProfile student;
-    @ManyToOne
-    private Course course;
-}
