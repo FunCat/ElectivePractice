@@ -1,14 +1,14 @@
 -- Add USERS
 
 INSERT INTO userprofile (birthday, name, lastname, surname, login, password, enabled)
-VALUES ('1987-11-5', 'Leonardo', 'Stewart', '', 'leonardo.stewart',  'Carrots/*891', TRUE),
-  ('1985-12-2', 'Ashley', 'Fowler', '', 'ashley.fowler',  'Network-+3259', TRUE),
-  ('1992-8-12', 'Peter', 'Austin', '', 'peter.austin',  'Knock.+6885', TRUE),
-  ('1987-10-12', 'Eleanor', 'Peterson', '', 'eleanor.peterson',  'Pomegranates.+6987', TRUE),
-  ('1994-7-20', 'UserI', 'UserF', 'UserO', 'user',  'user', TRUE),
-  ('1986-11-12', 'James', 'James', '', 'james',  'james', TRUE),
-  ('1986-11-12', 'James', 'James', '', 'james2',  'james2', TRUE),
-  ('1986-11-12', 'Ivan', 'Ivanov', '', 'admin',  'admin', TRUE);
+VALUES ('1987-11-5', 'Leonardo', 'Stewart', '', 'leonardo.stewart',  '$2a$10$yRCzn0qEFVqDHVx51Q1m1ubJ3ACTCD3uGX0Bb/CMz3ixlikI3YCiC', TRUE),
+  ('1985-12-2', 'Ashley', 'Fowler', '', 'ashley.fowler',  '$2a$10$A8nsPeT21iJrC4YjdUOqNOcxjDYHz47xIucZdxWgG7PIb9RQo4lRO', TRUE),
+  ('1992-8-12', 'Peter', 'Austin', '', 'peter.austin',  '$2a$10$9z.u2UeuiTe/BUmyVxydA.B0TJDGzlFjm17OygHZosHzaa5efT1MC', TRUE),
+  ('1987-10-12', 'Eleanor', 'Peterson', '', 'eleanor.peterson',  '$2a$10$.KQJsOCdpjEv7/qdlxefzeqf./lXjGeJZSpn9fUrzYeraganB9Nj6', TRUE),
+  ('1994-7-20', 'UserI', 'UserF', 'UserO', 'user',  '$2a$10$MCeEsGqxrjVvVzEr1EBqKe6tKlhQ2V74h/2oePK/a7ZEBO2wHPvyq', TRUE),
+  ('1986-11-12', 'James', 'James', '', 'james',  '$2a$10$BNETRswfFpHsz0pK1dHWJehgqhaa1jdJaRGnGgXOfgiATBscVmJke', TRUE),
+  ('1986-11-12', 'James', 'James', '', 'james2',  '$2a$10$TXZmiXv4d5ltp3RgqZI3Qu4dUCcokrAdYDYHBA4k6V0sp4eeEnp02', TRUE),
+  ('1986-11-12', 'Ivan', 'Ivanov', '', 'admin',  '$2a$10$xxS1WJjCKuofc7NZn7U9SeToGXdA93f.wr7bd31cMm6tEVjHDSI86', TRUE);
 
 -- Add COURSES
 

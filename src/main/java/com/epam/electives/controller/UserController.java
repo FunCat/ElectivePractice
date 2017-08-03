@@ -4,6 +4,7 @@ import com.epam.electives.model.UserProfile;
 import com.epam.electives.services.CourseMainService;
 import com.epam.electives.services.UserMainService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -156,19 +157,28 @@ public class UserController {
         } catch (ParseException e) {
             return "Неверный формат даты!";
         }
-        if(convertedCurrentDate == null) return "Неверный формат даты!";
+        if(convertedCurrentDate == null)
+            return "Неверный формат даты!";
 
         if(!password.equals(password2)){
             return "Пароли не совпадают!";
         }
 
         UserProfile user = userMainService.getByLogin(login);
-        if(user != null){
+        if(user != null)
             return "Пользователь с таким логином уже существует!";
-        }
+
         user = new UserProfile();
         user.setLogin(login);
-        user.setPassword(password);
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String hashedPassword = password;
+        int i = 0;
+        while (i < 10) {
+            hashedPassword = passwordEncoder.encode(password);
+            i++;
+        }
+
+        user.setPassword(hashedPassword);
         user.setName(firstname);
         user.setLastname(lastname);
         user.setSurname(surname);
