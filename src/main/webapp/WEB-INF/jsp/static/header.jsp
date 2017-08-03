@@ -50,6 +50,8 @@
                 <s:message code="Cur_Language"/> : ${pageContext.response.locale}
             </div>
         </div>
+    </div> <!-- /container -->
+
             <%--<nav class="navbar navbar-inverse" role="navigation">--%>
                 <%--<!-- Brand and toggle get grouped for better mobile display -->--%>
                 <%--<div class="navbar-header">--%>

@@ -1,6 +1,6 @@
 -- Add USERS
 
-INSERT INTO userprofile (birthday, name, lastname, surname, login, password, enabled)
+INSERT INTO userprofile (birthday, firstname, lastname, surname, login, password, enabled)
 VALUES ('1987-11-5', 'Leonardo', 'Stewart', '', 'leonardo.stewart',  'Carrots/*891', TRUE),
   ('1985-12-2', 'Ashley', 'Fowler', '', 'ashley.fowler',  'Network-+3259', TRUE),
   ('1992-8-12', 'Peter', 'Austin', '', 'peter.austin',  'Knock.+6885', TRUE),

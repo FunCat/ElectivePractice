@@ -32,7 +32,7 @@
 			<table>
 				<tr>
 					<td>Name:</td>
-					<td><input type="text" class="userName" value="${userProfile.name}" /></td>
+					<td><input type="text" class="userName" value="${userProfile.firstname}" /></td>
 				</tr>
 				<tr>
 					<td>Lastname:</td>

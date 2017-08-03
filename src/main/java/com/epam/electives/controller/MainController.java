@@ -4,6 +4,7 @@ import com.epam.electives.dto.GetEntityRequest;
 import com.epam.electives.dto.PageDto;
 import com.epam.electives.model.Course;
 import com.epam.electives.services.CourseMainService;
+import com.epam.electives.services.UserMainService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,7 +18,8 @@ import java.util.Date;
 @Controller
 @RequestMapping("/")
 public class MainController  {
-
+    @Autowired
+    UserMainService userMainService;
     @Autowired
     CourseMainService courseMainService;
 
@@ -45,6 +47,11 @@ public class MainController  {
     public ModelAndView courseinfo(@RequestParam(value = "id") int id){
         ModelAndView modelAndView = new ModelAndView("courseinfo");
         modelAndView.addObject("course",courseMainService.getById(id));
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String login = auth.getName();
+        if(!login.equals("anonymousUser")) {
+            modelAndView.addObject("user", userMainService.getByLogin(login));
+        }
         return modelAndView;
     }
 

@@ -4,7 +4,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 
-</div> <!-- /container -->
+
 <footer class="footer text-center">
     <p>Made by Trainees from EPAM</p>
     <div class="credits">

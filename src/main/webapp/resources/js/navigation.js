@@ -85,8 +85,10 @@ $(".pagination .page").click(function () {
                     "<td>" + value.teacher.lastname + "</td>" +
                     "<td>" + new Date(value.startDate).toDateString().slice(0,10) + "</td>" +
                     "<td>" + new Date(value.endDate).toDateString().slice(0,10) + "</td>" +
-                    "<td>" + "<a class='myMediumBtn' href='https://avatanplus.com/files/resources/mid/5791db7e03bbf15611c1643f.png'" +
-                        " role='button'>Подробнее</a>" + "</td>" +
+                    "<td>" +
+                    "<a class='myMediumBtn' href='"+contextPath+"/courseinfo?id=" +
+                    value.id + "' role='button'>Подробнее</a>" +
+                    "</td>" +
                     "</tr>")
             });
         }

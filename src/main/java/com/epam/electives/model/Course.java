@@ -5,6 +5,8 @@ import lombok.NonNull;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 
@@ -23,6 +25,11 @@ public class Course {
     @Type(type="text")
     private String description;
     private Status status;
+
+    public String dateToString(Date date){
+        SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+        return format.format(date);
+    }
 
     public enum Status {
         ACTIVE,

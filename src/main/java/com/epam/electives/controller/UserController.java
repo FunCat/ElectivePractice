@@ -63,7 +63,7 @@ public class UserController {
                                         @RequestParam("userlogin") String userlogin,
                                         @RequestParam("birthday") String birthday) {
         UserProfile user = userMainService.getByLogin(login.getName());
-        user.setName(firstname);
+        user.setFirstname(firstname);
         user.setLastname(lastname);
         user.setSurname(middlename);
         user.setLogin(userlogin);
@@ -148,7 +148,7 @@ public class UserController {
         user = new UserProfile();
         user.setLogin(login);
         user.setPassword(password);
-        user.setName(firstname);
+        user.setFirstname(firstname);
         user.setLastname(lastname);
         user.setSurname(surname);
         user.setBirthday(convertedCurrentDate);
