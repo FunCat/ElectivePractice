@@ -1,9 +1,20 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="s" uri="/WEB-INF/tld/spring.tld" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+<%--<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <jsp:include page="static/header.jsp"/>
+
+Language : <a href="?lang=en">English</a>|<a href="?lang=ru">Russian</a>
+
+<h2>
+    <%--welcome.springmvc : <spring:message code="Courses" text="default text" />--%>
+</h2>
+
+Current Locale : ${pageContext.response.locale}
+
+
 
 <h3>
     <s:message code="Courses"/>
