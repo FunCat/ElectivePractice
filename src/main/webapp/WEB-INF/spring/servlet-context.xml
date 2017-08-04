@@ -28,11 +28,18 @@
         <property name="suffix" value=".jsp" />
     </bean>
 
-    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource" >
-        <property name="basename" value="i18n.messages"/>
+    <!--Сообщения клиентской части -->
+    <bean id="messageSource" class="com.epam.electives.support.CustomBundleMessageSource">
+        <property name="basename" value="classpath:i18n/messages"/>
         <property name="defaultEncoding" value="UTF-8"/>
-        <property name="fallbackToSystemLocale" value="false" />  // for MS Windows
+        <property name="fallbackToSystemLocale" value="false" />  <!-- for MS Windows -->
     </bean>
+
+    <!--<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource" >-->
+        <!--<property name="basename" value="i18n.messages"/>-->
+        <!--<property name="defaultEncoding" value="UTF-8"/>-->
+        <!--<property name="fallbackToSystemLocale" value="false" />  &lt;!&ndash; for MS Windows &ndash;&gt;-->
+    <!--</bean>-->
 
     <bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
         <property name="defaultLocale" value="en"/>

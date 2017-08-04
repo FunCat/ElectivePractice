@@ -17,7 +17,7 @@ function getCoursesPage() {
                     "<td>" + value.endDate + "</td>" +
                     "<td>" +
                     "<a class='myMediumBtn' href='"+contextPath+"/courseinfo?id=" + value.id + "'role='button'>" +
-                    i18nStrings["More"] + "qwe" +
+                    i18nStrings["More"] +
                     "</a>" +
                     "</td>" +
                     "</tr>")
