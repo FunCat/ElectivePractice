@@ -1,8 +1,10 @@
 package com.epam.electives.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.NonNull;
 import org.hibernate.annotations.Type;
+import org.springframework.context.i18n.LocaleContextHolder;
 
 import javax.persistence.*;
 import java.text.SimpleDateFormat;
@@ -20,7 +22,9 @@ public class Course {
     private String name;
     @ManyToOne
     private UserProfile teacher;
+    @JsonFormat(pattern = "dd MMM yy")
     private Date startDate;
+    @JsonFormat(pattern = "dd MMM yy")
     private Date endDate;
     @Type(type="text")
     private String description;
