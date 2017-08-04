@@ -104,6 +104,10 @@ a{
     padding: 10px;
     margin: 10px 0px;
 }
+.description textarea{
+    width: 100%;
+    border: none;
+}
 .deleteAccount{
     color: red;
     margin-top: 10px;

@@ -7,14 +7,18 @@ import com.epam.electives.model.UserProfile;
 import com.epam.electives.services.CourseMainService;
 import com.epam.electives.services.UserMainService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 
 import java.util.Date;
+import java.util.Locale;
 
 @Controller
 @RequestMapping("/")
@@ -23,6 +27,9 @@ public class MainController  {
     UserMainService userMainService;
     @Autowired
     CourseMainService courseMainService;
+
+    @Autowired
+    private MessageSource messageSource;
 
     @RequestMapping
     public ModelAndView start(){
@@ -72,10 +79,10 @@ public class MainController  {
 
 
     @RequestMapping(value="/login")
-    public ModelAndView login(@RequestParam(value = "error",required = false) String error) {
+    public ModelAndView login(@RequestParam(value = "error",required = false) String error, Locale locale) {
         ModelAndView model = new ModelAndView();
         if (error != null) {
-            model.addObject("error", "Invalid username or password!");
+            model.addObject("error", messageSource.getMessage("ErrorSignIn", null, locale));
         }
 
         model.setViewName("login");

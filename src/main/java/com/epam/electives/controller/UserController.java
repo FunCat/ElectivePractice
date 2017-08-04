@@ -7,8 +7,12 @@ import com.epam.electives.model.UserProfile;
 import com.epam.electives.services.CourseMainService;
 import com.epam.electives.services.UserMainService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Local;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +27,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 import java.util.regex.Pattern;
 
 @Controller
@@ -31,6 +36,9 @@ public class UserController {
     UserMainService userMainService;
     @Autowired
     CourseMainService courseMainService;
+
+    @Autowired
+    private MessageSource messageSource;
 
     /**
      * Return page with user profile.
@@ -41,13 +49,10 @@ public class UserController {
     @RequestMapping(value = "/profile")
     public ModelAndView userProfile(Principal username) {
         String login = username.getName();
-//        if(login != null) {
-            UserProfile user = userMainService.getByLogin(login);
-            ModelAndView modelAndView = new ModelAndView("profile");
-            modelAndView.addObject("userProfile", user);
-            return modelAndView;
-//        }
-//        return new ModelAndView("login");
+        UserProfile user = userMainService.getByLogin(login);
+        ModelAndView modelAndView = new ModelAndView("profile");
+        modelAndView.addObject("userProfile", user);
+        return modelAndView;
     }
 
     /**
@@ -68,9 +73,10 @@ public class UserController {
                                         @RequestParam("lastname") String lastname,
                                         @RequestParam("middlename") String middlename,
                                         @RequestParam("userlogin") String userlogin,
-                                        @RequestParam("birthday") String birthday) {
+                                        @RequestParam("birthday") String birthday,
+                                        Locale locale) {
 
-        if (checkDateFormat(birthday)) return "Неверный формат даты!<br/> дд/мм/гггг";
+        if (checkDateFormat(birthday)) return messageSource.getMessage("ErrorFormatDate", null, locale);
 
         UserProfile user = userMainService.getByLogin(login.getName());
         user.setFirstname(firstname);
@@ -83,13 +89,13 @@ public class UserController {
             date = formatter.parse(birthday);
         } catch (ParseException e) {
             e.printStackTrace();
-            return "Неправильно указана дата рождения!";
+            return messageSource.getMessage("ErrorFormatDate", null, locale);
         }
         user.setBirthday(date);
         UserProfile checking = userMainService.saveOrUpdate(user);
         if(checking != null)
-            return "Обновление прошло успешно!";
-        return "Возникли неполадки попробуйте чуть позже!";
+            return messageSource.getMessage("SuccessUpdate", null, locale);
+        return messageSource.getMessage("ErrorSomething", null, locale);
     }
 
     /**
@@ -106,21 +112,22 @@ public class UserController {
     public String  userEditProfile(Principal login,
                                    @RequestParam("nowpassword") String nowPassword,
                                    @RequestParam("newpassword") String newPassword,
-                                   @RequestParam("newpassword2") String newPassword2) {
+                                   @RequestParam("newpassword2") String newPassword2,
+                                   Locale locale) {
         UserProfile user = userMainService.getByLogin(login.getName());
         if(!checkPassword(nowPassword, user.getPassword()))
-            return "Неверный старый пароль!";
+            return messageSource.getMessage("NotMatchNowPassword", null, locale);
 
-        if (checkPasswordFormat(newPassword)) return "Ошибка в требовании к паролю!<br/> Минимум 8 символов. Обязательно наличие 1 буквы и 1 числа.";
+        if (checkPasswordFormat(newPassword)) return messageSource.getMessage("ErrorFormatPassword", null, locale);
 
         if(!newPassword.equals(newPassword2))
-            return "Новые пароли не совпадают!";
+            return messageSource.getMessage("NotMatchesPassword", null, locale);
 
         user.setPassword(bcryptPassword(newPassword));
         UserProfile checking = userMainService.saveOrUpdate(user);
         if(checking != null)
-            return "Обновление прошло успешно!";
-        return "Возникли неполадки попробуйте чуть позже!";
+            return messageSource.getMessage("SuccessUpdate", null, locale);
+        return messageSource.getMessage("ErrorSomething", null, locale);
     }
 
 
@@ -149,16 +156,17 @@ public class UserController {
     @RequestMapping(value="/registration_check", method=RequestMethod.POST, produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public String userRegistrationCheck(@RequestParam("login") String login,
-                                         @RequestParam("password") String password,
-                                         @RequestParam("password2") String password2,
-                                         @RequestParam("firstname") String firstname,
-                                         @RequestParam("surname") String surname,
-                                         @RequestParam("lastname") String lastname,
-                                         @RequestParam("birthday") String birthday) {
+                                        @RequestParam("password") String password,
+                                        @RequestParam("password2") String password2,
+                                        @RequestParam("firstname") String firstname,
+                                        @RequestParam("surname") String surname,
+                                        @RequestParam("lastname") String lastname,
+                                        @RequestParam("birthday") String birthday,
+                                        Locale locale) {
 
-        if (checkDateFormat(birthday)) return "Неверный формат даты!<br/> дд/мм/гггг";
+        if (checkDateFormat(birthday)) return messageSource.getMessage("ErrorFormatDate", null, locale);
 
-        if (checkPasswordFormat(password)) return "Ошибка в требовании к паролю!<br/> Минимум 8 символов. Обязательно наличие 1 буквы и 1 числа.";
+        if (checkPasswordFormat(password)) return messageSource.getMessage("ErrorFormatPassword", null, locale);
 
         Date dateBirthday;
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -166,18 +174,18 @@ public class UserController {
         try {
             convertedCurrentDate = sdf.parse(birthday);
         } catch (ParseException e) {
-            return "Неверный формат даты!";
+            return messageSource.getMessage("ErrorFormatDate", null, locale);
         }
         if(convertedCurrentDate == null)
-            return "Неверный формат даты!";
+            return messageSource.getMessage("ErrorFormatDate", null, locale);
 
         if(!password.equals(password2)){
-            return "Пароли не совпадают!";
+            return messageSource.getMessage("NotMatchesPassword", null, locale);
         }
 
         UserProfile user = userMainService.getByLogin(login);
         if(user != null)
-            return "Пользователь с таким логином уже существует!";
+            return messageSource.getMessage("LoginIsUsed", null, locale);
 
         user = new UserProfile();
         user.setLogin(login);
@@ -189,17 +197,35 @@ public class UserController {
         user.setEnabled(true);
         userMainService.saveOrUpdate(user);
         userMainService.addUserToRole(user);
-        return "Успешная регистрация!";
+        return messageSource.getMessage("SuccessRegistration", null, locale);
     }
 
+    /**
+     * Check for the correct password format.
+     *
+     * @param password user password.
+     * @return True if password format is correct or False.
+     */
     private boolean checkPasswordFormat(@RequestParam("password") String password) {
         return !Pattern.matches("(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}", password);
     }
 
+    /**
+     * Check for the correct birthday format.
+     *
+     * @param birthday user birthday.
+     * @return True if birthday format is correct or False.
+     */
     private boolean checkDateFormat(@RequestParam("birthday") String birthday) {
         return !Pattern.matches("(0[1-9]|[12][0-9]|3[01])[-/.](0[1-9]|1[012])[-/.](19|20)\\d\\d", birthday);
     }
 
+    /**
+     * Returns page with user courses.
+     *
+     * @param username object from java.security that represent user login.
+     * @return Page with user courses.
+     */
     @RequestMapping(value = "/usercourses")
     public ModelAndView userCourses(Principal username) {
         String login = username.getName();
@@ -210,6 +236,14 @@ public class UserController {
         }
         return new ModelAndView("login");
     }
+
+    /**
+     * Returns the list of courses in which the recorded user.
+     *
+     * @param login object from java.security that represent user login.
+     * @param request for pagination.
+     * @return The list of courses in which the recorded user.
+     */
     @ResponseBody
     @RequestMapping(value = "/partuser", method = RequestMethod.POST)
     public PageDto<Course> getUserCourses(Principal login,
