@@ -122,4 +122,28 @@ public class CourseDaoImpl implements CourseDao {
         }
         return result;
     }
+
+    @Override
+    public PageDto<Course> findCoursesByStudent(GetEntityRequest request, UserProfile userProfile){
+        Criteria criteria = getCurrentSession().createCriteria(Group.class);
+        List<Group> groups = criteria.add(Restrictions.eq("groupId.student.id",userProfile.getId())).list();
+        List<Course> courses = new ArrayList<>();
+        for(Group group : groups){
+            courses.add(group.getGroupId().getCourse());
+        }
+        Criteria criteria2 = getCurrentSession().createCriteria(Course.class);
+        for(Course course: courses) {
+            criteria2.add(Restrictions.eq("id", course.getId()));
+        }
+        Long totalRecordsCount = (Long) criteria2.setProjection(rowCount()).uniqueResult();
+        criteria2.setProjection(null)
+                .setResultTransformer(Criteria.ROOT_ENTITY);
+        criteria2.addOrder(org.hibernate.criterion.Order.asc("id"));
+        if (request.getStart() != null)
+            criteria2.setFirstResult(request.getStart());
+        if (request.getLength() != null)
+            criteria2.setMaxResults(request.getLength());
+        List<Course> result = criteria2.list();
+        return new PageDto<>(result,totalRecordsCount);
+    }
 }

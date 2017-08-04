@@ -67,3 +67,44 @@ a{
     color: red;
     font-size: 180%;
 }
+.headInfo{
+    overflow: hidden;
+}
+.leftBlockInfo{
+    float: left;
+}
+.nameCourseInfo{
+    margin-bottom: 0px;
+}
+.teacherCourseInfo{
+    margin: 0px;
+    font-size: 14px;
+}
+.rightBlockInfo{
+    float: right;
+}
+.calendar{
+    overflow: hidden;
+    border-radius: 20px;
+    margin-top: 40px;
+}
+.pageCalendar{
+    float: left;
+    text-align: center;
+    padding: 10px;
+}
+.separator{
+    float: left;
+    margin: 8px 10px;
+    font-size: 20px;
+}
+.description{
+    border: 1px solid #a99898;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px 0px;
+}
+.deleteAccount{
+    color: red;
+    margin-top: 10px;
+}
