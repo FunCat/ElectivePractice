@@ -5,19 +5,16 @@ import com.epam.electives.dto.PageDto;
 import com.epam.electives.model.Course;
 import com.epam.electives.model.UserProfile;
 import com.epam.electives.services.CourseMainService;
+import com.epam.electives.services.GroupMainService;
 import com.epam.electives.services.UserMainService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
-
-import java.util.Date;
+import java.security.Principal;
 import java.util.Locale;
 
 @Controller
@@ -27,6 +24,8 @@ public class MainController  {
     UserMainService userMainService;
     @Autowired
     CourseMainService courseMainService;
+    @Autowired
+    GroupMainService groupMainService;
 
     @Autowired
     private MessageSource messageSource;
@@ -52,7 +51,7 @@ public class MainController  {
     }
 
     @RequestMapping(value = "/courseinfo", method = RequestMethod.GET)
-    public ModelAndView courseinfo(@RequestParam(value = "id") int id){
+    public ModelAndView courseinfo(@RequestParam(value = "id") long id){
         ModelAndView modelAndView = new ModelAndView("courseinfo");
         Course course = courseMainService.getById(id);
         boolean courseContainsUser = false;
@@ -71,23 +70,26 @@ public class MainController  {
 
     @RequestMapping(value = "/subscribe", method = RequestMethod.GET)
     @ResponseBody
-    public boolean subscribe(@RequestParam(value = "courseid") int id){
+    public boolean subscribe(Principal login,@RequestParam(value = "courseid") long courseId){
         boolean success = false;
-        Course course = courseMainService.getById(id);
+        Course course = courseMainService.getById(courseId);
         if(course.getStatus()== Course.Status.ACTIVE ){
-
+            UserProfile user = userMainService.getByLogin(login.getName());
+            success = groupMainService.addUserToCourse(user, course);
         }
-        return true;
+        return success;
     }
 
     @RequestMapping(value = "/unsubscribe", method = RequestMethod.GET)
     @ResponseBody
-    public boolean unsubscribe(@RequestParam(value = "courseid") int id){
+    public boolean unsubscribe(Principal login,@RequestParam(value = "courseid") long courseId){
         boolean success = false;
-        Course course = courseMainService.getById(id);
+        Course course = courseMainService.getById(courseId);
         if(course.getStatus()== Course.Status.ACTIVE ){
+            UserProfile user = userMainService.getByLogin(login.getName());
+            success = groupMainService.removeUserFromCourse(user, course);
         }
-        return true;
+        return success;
     }
 
 

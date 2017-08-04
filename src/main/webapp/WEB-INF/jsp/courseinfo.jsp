@@ -6,7 +6,6 @@
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@ taglib prefix="s" uri="/WEB-INF/tld/spring.tld" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="s" uri="/WEB-INF/tld/spring.tld" %>
 
 <jsp:include page="static/header.jsp"/>
 <div class = "container">
@@ -37,7 +36,7 @@
     <sec:authorize access="isAuthenticated() && hasRole('ROLE_USER')">
     <div id = "subdiv">
         <c:choose>
-            <c:when test="${!userAlreadyRegistredForCourse == 'true'}">
+            <c:when test="${userAlreadyRegistredForCourse == 'true'}">
                 <div id = "unsubscribe" class='myMediumBtn' onclick="unsubscribe()">Отписаться</div>
             </c:when>
             <c:otherwise>
