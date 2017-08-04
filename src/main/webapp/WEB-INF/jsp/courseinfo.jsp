@@ -33,7 +33,7 @@
         <div><a class="myMediumBtn" href= "${pageContext.request.contextPath}/login"  role="button">Записаться</a></div>
     </sec:authorize>
 
-    <sec:authorize access="isAuthenticated() && hasRole('ROLE_USER')">
+    <sec:authorize access="hasRole('ROLE_USER')">
     <div id = "subdiv">
         <c:choose>
             <c:when test="${userAlreadyRegistredForCourse == 'true'}">
@@ -45,7 +45,12 @@
         </c:choose>
     </div>
     </sec:authorize>
-    <div id = "subscribeResult"></div>
+
+    <sec:authorize access="hasRole('ROLE_TEACHER')">
+        <div><a class='myMediumBtn' href = "${pageContext.request.contextPath}/editcourse?courseid=${course.id}" role = "button">Редактировать</a></div>
+    </sec:authorize>
+
+<div id = "subscribeResult"></div>
 
 </div>
 <jsp:include page="static/footer.jsp"/>
