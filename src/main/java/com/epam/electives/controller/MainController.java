@@ -13,9 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
-import java.util.Date;
-
 @Controller
 @RequestMapping("/")
 public class MainController  {
@@ -60,6 +57,27 @@ public class MainController  {
         }
         modelAndView.addObject("userAlreadyRegistredForCourse", courseContainsUser);
         return modelAndView;
+    }
+
+    @RequestMapping(value = "/subscribe", method = RequestMethod.GET)
+    @ResponseBody
+    public boolean subscribe(@RequestParam(value = "courseid") int id){
+        boolean success = false;
+        Course course = courseMainService.getById(id);
+        if(course.getStatus()== Course.Status.ACTIVE ){
+
+        }
+        return true;
+    }
+
+    @RequestMapping(value = "/unsubscribe", method = RequestMethod.GET)
+    @ResponseBody
+    public boolean unsubscribe(@RequestParam(value = "courseid") int id){
+        boolean success = false;
+        Course course = courseMainService.getById(id);
+        if(course.getStatus()== Course.Status.ACTIVE ){
+        }
+        return true;
     }
 
 
