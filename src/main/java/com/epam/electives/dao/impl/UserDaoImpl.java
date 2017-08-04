@@ -113,4 +113,11 @@ public class UserDaoImpl implements UserDao {
         role.setAuthority("ROLE_USER");
         getCurrentSession().saveOrUpdate(role);
     }
+
+    @Override
+    public void deleteUserByLogin(String login) {
+        UserProfile userProfile = findUserByLogin(login);
+        userProfile.setEnabled(false);
+        saveOrUpdate(userProfile);
+    }
 }

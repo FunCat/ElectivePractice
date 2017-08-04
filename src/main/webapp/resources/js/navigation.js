@@ -21,76 +21,29 @@ $(document).bind('DOMSubtreeModified', function () {
     $(".pagination #"+(curPage+1)).addClass("active");
 });
 
-$(document).ready(function(){
-    getCoursesPage();
-    console.log(numOfPages);
-})
+// $(document).ready(function(){
+//     getCoursesPage();
+//     console.log(numOfPages);
+// });
 
-$("#nextPage").click(function () {
+$("#nextPage").click(function (e) {
+    e.preventDefault(); // a href='#' without scroll
     if (curPage == numOfPages-1) return;
     a.start = ++curPage * curInterval;
     getCoursesPage();
 });
 
-$("#prevPage").click(function () {
+$("#prevPage").click(function (e) {
+    e.preventDefault(); // a href='#' without scroll
     if (curPage == 0) return;
     a.start = --curPage * curInterval;
     getCoursesPage();
 });
 
-function getCoursesPage() {
-    $.ajax({
-        contentType: 'application/json',
-        dataType: 'json',
-        type: 'POST',
-        data: JSON.stringify(a),
-        url: contextPath + "/part",
-        success: function (response) {
-            $("#coursesList").html("");
-            $.each(response.data, function (index, value) {
-                console.log(index, value);
-                $("#coursesList").append("<tr>" +
-                    "<td>" + value.name + "</td>" +
-                    "<td>" + value.teacher.lastname + "</td>" +
-                    "<td>" + new Date(value.startDate).toDateString().slice(0,10) + "</td>" +
-                    "<td>" + new Date(value.endDate).toDateString().slice(0,10) + "</td>" +
-                    "<td>" +
-                    "<a class='myMediumBtn' href='"+contextPath+"/courseinfo?id=" +
-                    value.id + "' role='button'>Подробнее</a>" +
-                    "</td>" +
-                    "</tr>")
-
-            });
-        }
-    });
-}
-
-$(".pagination .page").click(function () {
+$(".pagination .page").click(function (e) {
+    e.preventDefault();   // a href='#' without scroll
     a.start = ($(this).attr('id') - 1) * 10;
     curPage = $(this).attr('id') - 1;
 
-    $.ajax({
-        contentType: 'application/json',
-        dataType: 'json',
-        type: 'POST',
-        data: JSON.stringify(a),
-        url: contextPath + "/part",
-        success: function (response) {
-            // console.log(response);
-            $("#coursesList").html("");
-            $.each(response.data, function (index, value) {
-                console.log(index, value);
-                $("#coursesList").append("<tr>" +
-                    "<td>" + value.name + "</td>" +
-                    "<td>" + value.teacher.lastname + "</td>" +
-                    "<td>" + new Date(value.startDate).toDateString().slice(0,10) + "</td>" +
-                    "<td>" + new Date(value.endDate).toDateString().slice(0,10) + "</td>" +
-                    "<td>" +
-                    "<a class='myMediumBtn' href='"+contextPath+"/courseinfo?id=" +
-                    value.id + "' role='button'>Подробнее</a>" +
-                    "</td>" +
-                    "</tr>")
-            });
-        }
-    });
+    getCoursesPage();
 });

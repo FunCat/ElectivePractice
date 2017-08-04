@@ -104,3 +104,7 @@ a{
     padding: 10px;
     margin: 10px 0px;
 }
+.deleteAccount{
+    color: red;
+    margin-top: 10px;
+}

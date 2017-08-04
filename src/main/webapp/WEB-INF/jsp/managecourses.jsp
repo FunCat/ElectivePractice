@@ -1,9 +1,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="s" uri="/WEB-INF/tld/spring.tld" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%--<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <jsp:include page="static/header.jsp"/>
 <div class="col-sm-4 col-lg-4">
@@ -21,18 +21,17 @@
     </tr>
     </thead>
     <tbody id="coursesList">
-
-        <c:forEach var="item" items="${courses}">
-            <tr>
-                <td>${item.name}</td>
-                <td>${item.teacher.lastname}</td>
-                <td><fmt:formatDate pattern="dd MMM yy" value="${item.startDate}" /></td>
-                <td><fmt:formatDate pattern="dd MMM yy" value="${item.endDate}" /></td>
-                <td>
-                    <a class='myMediumBtn' href="${pageContext.request.contextPath}/courseinfo?id=${item.id}" role='button'>Подробнее</a>
-                </td>
-            </tr>
-        </c:forEach>
+    <c:forEach var="item" items="${courses}">
+        <tr>
+            <td>${item.name}</td>
+            <td>${item.teacher.lastname}</td>
+            <td><fmt:formatDate pattern="dd MMM yy" value="${item.startDate}" /></td>
+            <td><fmt:formatDate pattern="dd MMM yy" value="${item.endDate}" /></td>
+            <td>
+                <a class='myMediumBtn' href="${pageContext.request.contextPath}/courseinfo?id=${item.id}" role='button'>Подробнее</a>
+            </td>
+        </tr>
+    </c:forEach>
     </tbody>
 </table>
 
@@ -53,6 +52,7 @@
 
 </div>
 
+
 <jsp:include page="static/footer.jsp"/>
-<script src='<c:url value="/resources/js/allCourses.js"/>'></script>
+<script src='<c:url value="/resources/js/teacherCourses.js"/>'></script>
 <script src='<c:url value="/resources/js/navigation.js"/>'></script>

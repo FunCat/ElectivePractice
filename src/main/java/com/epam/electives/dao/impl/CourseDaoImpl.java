@@ -11,6 +11,7 @@ import com.epam.electives.model.UserProfile;
 import lombok.extern.log4j.Log4j;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
@@ -58,6 +59,30 @@ public class CourseDaoImpl implements CourseDao {
     }
 
     @Override
+    public PageDto<Course> findByTeacher(GetEntityRequest request, UserProfile userProfile){
+        Criteria criteria = getCurrentSession().createCriteria(Course.class);
+
+        criteria.add(Restrictions.eq("teacher", userProfile));
+
+        Long totalRecordsCount = (Long) criteria.setProjection(rowCount()).uniqueResult();
+
+        criteria.setProjection(null)
+                .setResultTransformer(Criteria.ROOT_ENTITY);
+
+        criteria.addOrder(org.hibernate.criterion.Order.asc("id"));
+
+        if (request.getStart() != null)
+            criteria.setFirstResult(request.getStart());
+
+        if (request.getLength() != null)
+            criteria.setMaxResults(request.getLength());
+
+        List<Course> records = criteria.list();
+
+        return new PageDto<>(records, totalRecordsCount);
+    }
+
+    @Override
     public void saveOrUpdate(Course course) {
         getCurrentSession().saveOrUpdate(course);
     }
@@ -74,7 +99,7 @@ public class CourseDaoImpl implements CourseDao {
         criteria.setProjection(null)
                 .setResultTransformer(Criteria.ROOT_ENTITY);
 
-        criteria.addOrder(org.hibernate.criterion.Order.asc("id"));
+        criteria.addOrder(Order.asc("id"));
 
         if (request.getStart() != null)
             criteria.setFirstResult(request.getStart());
@@ -96,5 +121,19 @@ public class CourseDaoImpl implements CourseDao {
             result.add(group.getGroupId().getStudent());
         }
         return result;
+    }
+
+    @Override
+    public PageDto<Course> findCoursesByStudent(GetEntityRequest request, UserProfile userProfile){
+        Criteria criteria = getCurrentSession().createCriteria(Group.class);
+        List<Group> groups = criteria.add(Restrictions.eq("groupId.student.id",userProfile.getId())).list();
+        List<Course> courses = new ArrayList<>();
+        for(Group group : groups){
+            courses.add(group.getGroupId().getCourse());
+        }
+        Long totalRecordsCount = new Long(courses.size());
+        Integer size = (request.getStart() + request.getLength() > courses.size()) ? courses.size() : request.getStart() + request.getLength();
+        List<Course> result = courses.subList(request.getStart(), size);
+        return new PageDto<>(result,totalRecordsCount);
     }
 }
