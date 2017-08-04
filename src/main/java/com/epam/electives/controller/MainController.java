@@ -24,8 +24,8 @@ public class MainController  {
     @Autowired
     CourseMainService courseMainService;
 
-    @RequestMapping(method = RequestMethod.GET)
-    public ModelAndView start(Model model){
+    @RequestMapping
+    public ModelAndView start(){
         return courses(null);
     }
 

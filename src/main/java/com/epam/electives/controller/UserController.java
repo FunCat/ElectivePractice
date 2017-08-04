@@ -34,13 +34,13 @@ public class UserController {
     @RequestMapping(value = "/profile")
     public ModelAndView userProfile(Principal username) {
         String login = username.getName();
-        if(login != null) {
+//        if(login != null) {
             UserProfile user = userMainService.getByLogin(login);
             ModelAndView modelAndView = new ModelAndView("profile");
             modelAndView.addObject("userProfile", user);
             return modelAndView;
-        }
-        return new ModelAndView("login");
+//        }
+//        return new ModelAndView("login");
     }
 
     /**
