@@ -29,6 +29,8 @@ $(document).ready(function(){
                     if (data == "Успешная регистрация!") {
                         window.location.href = contextPath + "/login";
                     }
+                    $(".userPassword").val("");
+                    $(".userPassword2").val("");
                     $(".result").html(data);
                 }
             });
