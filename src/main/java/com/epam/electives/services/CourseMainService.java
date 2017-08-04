@@ -52,4 +52,8 @@ public class CourseMainService {
     public List<UserProfile> getStudentsFromCourse(Course course){
         return courseDao.findStudentsByCourse(course);
     }
+
+    public PageDto<Course> getByTeacher(GetEntityRequest request, UserProfile userProfile){
+        return courseDao.findByTeacher(request, userProfile);
+    }
 }
