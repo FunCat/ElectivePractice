@@ -31,8 +31,6 @@ public class UserController {
     UserMainService userMainService;
     @Autowired
     CourseMainService courseMainService;
-    @Autowired
-    MainController mainController;
 
     /**
      * Return page with user profile.
@@ -71,6 +69,9 @@ public class UserController {
                                         @RequestParam("middlename") String middlename,
                                         @RequestParam("userlogin") String userlogin,
                                         @RequestParam("birthday") String birthday) {
+
+        if (checkDateFormat(birthday)) return "Неверный формат даты!<br/> дд/мм/гггг";
+
         UserProfile user = userMainService.getByLogin(login.getName());
         user.setFirstname(firstname);
         user.setLastname(lastname);
@@ -107,12 +108,15 @@ public class UserController {
                                    @RequestParam("newpassword") String newPassword,
                                    @RequestParam("newpassword2") String newPassword2) {
         UserProfile user = userMainService.getByLogin(login.getName());
-        if(!user.getPassword().equals(nowPassword))
+        if(!checkPassword(nowPassword, user.getPassword()))
             return "Неверный старый пароль!";
+
+        if (checkPasswordFormat(newPassword)) return "Ошибка в требовании к паролю!<br/> Минимум 8 символов. Обязательно наличие 1 буквы и 1 числа.";
+
         if(!newPassword.equals(newPassword2))
             return "Новые пароли не совпадают!";
 
-        user.setPassword(newPassword);
+        user.setPassword(bcryptPassword(newPassword));
         UserProfile checking = userMainService.saveOrUpdate(user);
         if(checking != null)
             return "Обновление прошло успешно!";
@@ -152,11 +156,9 @@ public class UserController {
                                          @RequestParam("lastname") String lastname,
                                          @RequestParam("birthday") String birthday) {
 
-        if(!Pattern.matches("(0[1-9]|[12][0-9]|3[01])[-/.](0[1-9]|1[012])[-/.](19|20)\\d\\d", birthday))
-            return "Неверный формат даты!<br/> дд/мм/гггг";
+        if (checkDateFormat(birthday)) return "Неверный формат даты!<br/> дд/мм/гггг";
 
-        if(!Pattern.matches("(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}", password))
-            return "Ошибка в требовании к паролю!<br/> Минимум 8 символов. Обязательно наличие 1 буквы и 1 числа.";
+        if (checkPasswordFormat(password)) return "Ошибка в требовании к паролю!<br/> Минимум 8 символов. Обязательно наличие 1 буквы и 1 числа.";
 
         Date dateBirthday;
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -179,15 +181,7 @@ public class UserController {
 
         user = new UserProfile();
         user.setLogin(login);
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        String hashedPassword = password;
-        int i = 0;
-        while (i < 10) {
-            hashedPassword = passwordEncoder.encode(password);
-            i++;
-        }
-
-        user.setPassword(hashedPassword);
+        user.setPassword(bcryptPassword(password));
         user.setFirstname(firstname);
         user.setLastname(lastname);
         user.setSurname(surname);
@@ -196,6 +190,14 @@ public class UserController {
         userMainService.saveOrUpdate(user);
         userMainService.addUserToRole(user);
         return "Успешная регистрация!";
+    }
+
+    private boolean checkPasswordFormat(@RequestParam("password") String password) {
+        return !Pattern.matches("(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}", password);
+    }
+
+    private boolean checkDateFormat(@RequestParam("birthday") String birthday) {
+        return !Pattern.matches("(0[1-9]|[12][0-9]|3[01])[-/.](0[1-9]|1[012])[-/.](19|20)\\d\\d", birthday);
     }
 
     @RequestMapping(value = "/usercourses")
@@ -217,10 +219,45 @@ public class UserController {
         return courses;
     }
     /**
-     * Makes user account disabled.
+     * Password hashing in bcrypt script with the strength of 10
+     *
+     * @param password user password
+     * @return hashing password
+     */
+    private String bcryptPassword(@RequestParam("password") String password) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String hashedPassword = password;
+        int i = 0;
+        while (i < 10) {
+            hashedPassword = passwordEncoder.encode(password);
+            i++;
+        }
+        System.out.println(hashedPassword);
+        return hashedPassword;
+    }
+
+    /**
+     * Check that stored password matches with
+     *
+     * @param password_plaintext user password
+     * @param stored_hash stored password in DB
+     * @return true if password matches or false if not
+     */
+    public static boolean checkPassword(String password_plaintext, String stored_hash) {
+        boolean password_verified = false;
+
+        if(null == stored_hash || !stored_hash.startsWith("$2a$"))
+            throw new java.lang.IllegalArgumentException("Invalid hash provided for comparison");
+
+        password_verified = BCrypt.checkpw(password_plaintext, stored_hash);
+
+        return(password_verified);
+    }
+
+    /**
+     * Makes user account disabled and redirect on courses page.
      *
      * @param user user login.
-     * @return Return the main courses page.
      */
     @RequestMapping(value = "/deleteaccount")
     public void deleteAccount(Principal user, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws IOException {

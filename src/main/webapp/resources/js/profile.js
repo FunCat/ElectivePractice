@@ -1,6 +1,6 @@
 $(document).ready(function(){
     $(".editBtnProfile").on("click", function (){
-        $.post('/ElectiveEPAM/edit_profile',
+        $.post(contextPath + '/edit_profile',
             {
                 firstname: $(".userName").val(),
                 lastname: $(".userLastname").val(),
@@ -16,7 +16,7 @@ $(document).ready(function(){
     });
 
     $(".editBtnPassword").on("click", function (){
-        $.post('/ElectiveEPAM/edit_password',
+        $.post(contextPath + '/edit_password',
             {
                 nowpassword: $(".nowPassword").val(),
                 newpassword: $(".newPassword").val(),
@@ -24,6 +24,9 @@ $(document).ready(function(){
             },
             function (data) {
                 $(".resultPassword").empty();
+                $(".nowPassword").val("");
+                $(".newPassword").val("");
+                $(".newPassword2").val("");
                 $(".resultPassword").html(data);
             }
         );

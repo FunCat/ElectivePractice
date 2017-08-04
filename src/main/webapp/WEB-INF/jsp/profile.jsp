@@ -42,7 +42,7 @@
 				</tr>
 				<tr>
 					<td><s:message code="Birthday" />:</td>
-					<td><input type="text" class="userBirthday" pattern="(0[1-9]|[12][0-9]|3[01])[-/.](0[1-9]|1[012])[-/.](19|20)\d\d" value="${userProfile.birthday}" placeholder="01/01/1990" /></td>
+					<td><input type="text" class="userBirthday" pattern="(0[1-9]|[12][0-9]|3[01])[-/.](0[1-9]|1[012])[-/.](19|20)\d\d" value="${userProfile.onlyDate}" placeholder="01/01/1990" /></td>
 				</tr>
 				<tr>
 					<td colspan="2"><input type="button" value="<s:message code="Edit" />" class="editBtnProfile myMediumBtn"></td>
