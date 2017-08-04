@@ -8,10 +8,7 @@ import com.epam.electives.services.CourseMainService;
 import com.epam.electives.services.UserMainService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
@@ -45,6 +42,7 @@ public class CourseController {
                         courses.getRecordsTotal() / 10 + 1);
         return modelAndView;
     }
+
     @ResponseBody
     @RequestMapping(value = "/teacher/part")
     public PageDto<Course> partByTeacher(Principal login, @RequestBody(required = false) GetEntityRequest request){
@@ -54,4 +52,18 @@ public class CourseController {
         }
         return courseMainService.getByTeacher(request, userProfile);
     }
+
+    @RequestMapping(value = "/editcourse")
+    public ModelAndView editCourse(Principal login, @RequestParam("courseid") int courseid){
+        ModelAndView modelAndView = new ModelAndView("editcourse");
+        UserProfile userProfile = userMainService.getByLogin(login.getName());
+        Course course = courseMainService.getById(courseid);
+
+        if(!userProfile.equals(course.getTeacher())){
+            return new ModelAndView("404");
+        }
+        modelAndView.addObject(course);
+        return modelAndView;
+    }
+
 }
