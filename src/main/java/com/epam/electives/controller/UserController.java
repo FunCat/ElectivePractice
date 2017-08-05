@@ -1,21 +1,28 @@
 package com.epam.electives.controller;
 
+import com.epam.electives.dto.GetEntityRequest;
+import com.epam.electives.dto.PageDto;
+import com.epam.electives.model.Course;
 import com.epam.electives.model.UserProfile;
 import com.epam.electives.services.CourseMainService;
 import com.epam.electives.services.UserMainService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.util.UrlPathHelper;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.security.Principal;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Controller
@@ -24,6 +31,8 @@ public class UserController {
     UserMainService userMainService;
     @Autowired
     CourseMainService courseMainService;
+    @Autowired
+    MainController mainController;
 
     /**
      * Return page with user profile.
@@ -187,5 +196,37 @@ public class UserController {
         userMainService.saveOrUpdate(user);
         userMainService.addUserToRole(user);
         return "Успешная регистрация!";
+    }
+
+    @RequestMapping(value = "/usercourses")
+    public ModelAndView userCourses(Principal username) {
+        String login = username.getName();
+        if(login != null) {
+            UserProfile user = userMainService.getByLogin(login);
+            ModelAndView modelAndView = new ModelAndView("usercourses");
+            return modelAndView;
+        }
+        return new ModelAndView("login");
+    }
+    @ResponseBody
+    @RequestMapping(value = "/partuser", method = RequestMethod.POST)
+    public PageDto<Course> getUserCourses(Principal login,
+                                            @RequestBody GetEntityRequest request){
+        UserProfile user = userMainService.getByLogin(login.getName());
+        PageDto<Course> courses = userMainService.getPartUser(request,user);
+        return courses;
+    }
+    /**
+     * Makes user account disabled.
+     *
+     * @param user user login.
+     * @return Return the main courses page.
+     */
+    @RequestMapping(value = "/deleteaccount")
+    public void deleteAccount(Principal user, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws IOException {
+        String login = user.getName();
+        userMainService.deleteUserByLogin(login);
+        SecurityContextHolder.getContext().setAuthentication(null);
+        httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + "/courses");
     }
 }

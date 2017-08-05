@@ -8,14 +8,33 @@
 
 <jsp:include page="static/header.jsp"/>
 <div class = "container">
-<h1>${course.name}</h1>
-<div><h3>${course.teacher.firstname} ${course.teacher.lastname}</h3></div>
-<div><h4>${course.dateToString(course.startDate)} ${course.dateToString(course.endDate)} </h4></div>
-<p>${course.description}</p>
+    <div class="headInfo">
+        <div class="leftBlockInfo">
+            <h1 class="nameCourseInfo">${course.name}</h1>
+            <div class="teacherName"><h3 class="teacherCourseInfo">${course.teacher.firstname} ${course.teacher.lastname}</h3></div>
+        </div>
+        <div class="rightBlockInfo">
+            <div class="calendar">
+                <div class="pageCalendar">
+                    03 Августа
+                </div>
+                <div class="separator">-</div>
+                <div class="pageCalendar">
+                    03 Августа
+                </div>
+                <%--<h4>${course.dateToString(course.startDate)} ${course.dateToString(course.endDate)} </h4>--%>
+            </div>
 
-<sec:authorize access="!isAuthenticated()">
-    <div><a class="myMediumBtn" href= "${pageContext.request.contextPath}/login"  role="button">Записаться</a></div>
-</sec:authorize>
+        </div>
+    </div>
+
+
+
+    <div class="description">${course.description}</div>
+
+    <sec:authorize access="!isAuthenticated()">
+        <div><a class="myMediumBtn" href= "${pageContext.request.contextPath}/login"  role="button">Записаться</a></div>
+    </sec:authorize>
 
     <sec:authorize access="isAuthenticated() && hasRole('ROLE_USER')">
         <c:choose>

@@ -1,8 +1,10 @@
 package com.epam.electives.services;
 
+import com.epam.electives.dao.CourseDao;
 import com.epam.electives.dao.UserDao;
 import com.epam.electives.dto.GetEntityRequest;
 import com.epam.electives.dto.PageDto;
+import com.epam.electives.model.Course;
 import com.epam.electives.model.UserProfile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,8 @@ import java.util.List;
 public class UserMainService {
     @Autowired
     UserDao userDao;
+    @Autowired
+    CourseDao courseDao;
 
     public List<UserProfile> getAll(){
         return userDao.findAll();
@@ -50,5 +54,14 @@ public class UserMainService {
 
     public void addUserToRole(UserProfile user){
         userDao.addRoleToUser(user);
+    }
+
+    public PageDto<Course> getPartUser(GetEntityRequest request, UserProfile userProfile){
+
+        PageDto<Course> courses = courseDao.findCoursesByStudent(request, userProfile);
+        return courses;
+    }
+    public void deleteUserByLogin(String login){
+        userDao.deleteUserByLogin(login);
     }
 }

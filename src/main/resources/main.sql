@@ -38,3 +38,7 @@ VALUES  ('ROLE_USER', 5),
         ('ROLE_USER', 8),
         ('ROLE_TEACHER', 8),
         ('ROLE_ADMIN', 8);
+
+-- Test MyCourses Page (add more records later)
+INSERT INTO coursegroup (grade, review, course_id, student_id)
+VALUES (5,'test review', 1, 5);
