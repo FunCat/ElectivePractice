@@ -6,14 +6,13 @@
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@ taglib prefix="s" uri="/WEB-INF/tld/spring.tld" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="s" uri="/WEB-INF/tld/spring.tld" %>
 
 <jsp:include page="static/header.jsp"/>
 <div class = "container">
     <div class="headInfo">
         <div class="leftBlockInfo">
             <h1 class="nameCourseInfo">${course.name}</h1>
-            <div class="teacherName"><h3 class="teacherCourseInfo">${course.teacher.firstname} ${course.teacher.lastname}</h3></div>
+            <div class="teacherName"><h3 class="teacherCourseInfo"><a href="${pageContext.request.contextPath}/teacher?id=${course.teacher.id}">${course.teacher.firstname} ${course.teacher.lastname}</a></h3></div>
         </div>
         <div class="rightBlockInfo">
             <div class="calendar">

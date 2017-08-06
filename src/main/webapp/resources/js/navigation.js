@@ -21,11 +21,6 @@ $(document).bind('DOMSubtreeModified', function () {
     $(".pagination #"+(curPage+1)).addClass("active");
 });
 
-// $(document).ready(function(){
-//     getCoursesPage();
-//     console.log(numOfPages);
-// });
-
 $("#nextPage").click(function (e) {
     e.preventDefault(); // a href='#' without scroll
     if (curPage == numOfPages-1) return;
@@ -44,6 +39,32 @@ $(".pagination .page").click(function (e) {
     e.preventDefault();   // a href='#' without scroll
     a.start = ($(this).attr('id') - 1) * 10;
     curPage = $(this).attr('id') - 1;
-
     getCoursesPage();
 });
+
+function getCoursesPageDefault(url) {
+    $.ajax({
+        contentType: 'application/json',
+        dataType: 'json',
+        type: 'POST',
+        data: JSON.stringify(a),
+        url: contextPath + url,
+        success: function (response) {
+            $("#coursesList").html("");
+            $.each(response.data, function (index, value) {
+                console.log(index, value);
+                $("#coursesList").append("<tr>" +
+                    "<td>" + value.name + "</td>" +
+                    "<td><a href='" + contextPath + "/teacher?id=" + value.teacher.id + "'>" + value.teacher.firstname + " " + value.teacher.lastname + "</a></td>" +
+                    "<td>" + value.startDate + "</td>" +
+                    "<td>" + value.endDate + "</td>" +
+                    "<td>" +
+                    "<a class='myMediumBtn' href='"+contextPath+"/courseinfo?id=" +
+                    value.id + "'>Подробнее</a>" +
+                    "</td>" +
+                    "</tr>")
+
+            });
+        }
+    });
+}

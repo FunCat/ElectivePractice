@@ -6,9 +6,17 @@
 		http://www.springframework.org/schema/security
 		http://www.springframework.org/schema/security/spring-security.xsd">
 
+
     <http use-expressions="true">
+
+        <access-denied-handler error-page="/403" />
+
         <intercept-url pattern="/profile" access="hasRole('ROLE_USER')" />
-        <intercept-url pattern="/teachercourses" access="hasRole('ROLE_TEACHER')" />
+        <intercept-url pattern="/usercourses" access="hasRole('ROLE_USER')" />
+
+        <intercept-url pattern="/teacher/managecourses" access="hasRole('ROLE_TEACHER')" />
+        <intercept-url pattern="/editcourse" access="hasRole('ROLE_TEACHER')" />
+
         <form-login
                 login-page="/login"
                 authentication-failure-url="/login?error=true"

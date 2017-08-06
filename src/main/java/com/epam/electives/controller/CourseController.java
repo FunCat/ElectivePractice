@@ -13,10 +13,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
 
-/**
- * Created by rusamaha on 7/31/17.
- */
-
 @Controller
 @RequestMapping("/")
 public class CourseController {
@@ -63,6 +59,29 @@ public class CourseController {
             return new ModelAndView("404");
         }
         modelAndView.addObject(course);
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "teacher")
+    public ModelAndView teacherCourses(@RequestParam("id") int teacherId, @RequestBody(required = false) GetEntityRequest request){
+        UserProfile teacher = userMainService.getById(teacherId);
+        ModelAndView modelAndView = new ModelAndView("teacher");
+        if(request == null) {
+            request = new GetEntityRequest(0,10);
+        }
+        PageDto<Course> courses = partByTeacher(new Principal() {
+            @Override
+            public String getName() {
+                return teacher.getLogin();
+            }
+        }, request);
+        modelAndView.addObject("courses", courses.getData());
+        modelAndView.addObject("teacher", teacher);
+
+        modelAndView.addObject("numOfPages",
+                (courses.getRecordsTotal() % 10 == 0) ?
+                        courses.getRecordsTotal() / 10 :
+                        courses.getRecordsTotal() / 10 + 1);
         return modelAndView;
     }
 

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 
+import java.security.Principal;
 import java.util.Date;
 import java.util.Locale;
 
@@ -108,5 +109,18 @@ public class MainController  {
 
         model.setViewName("login");
         return model;
+    }
+
+    @RequestMapping(value = "/404")
+    public ModelAndView errorPage(){
+        return new ModelAndView("404");
+    }
+
+    @RequestMapping(value = "/403")
+    public ModelAndView errorAccessDenied(Principal user){
+        ModelAndView modelAndView = new ModelAndView("403");
+        UserProfile userProfile = userMainService.getByLogin(user.getName());
+        modelAndView.addObject(userProfile);
+        return modelAndView;
     }
 }

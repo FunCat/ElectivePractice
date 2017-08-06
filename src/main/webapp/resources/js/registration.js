@@ -1,7 +1,3 @@
-var registrationData = {
-
-};
-
 $(document).ready(function(){
     $("#registrationBtn").on("click", function(){
 

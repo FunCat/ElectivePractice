@@ -5,22 +5,22 @@
 
 
 
-<footer class="footer text-center">
-    <p>Made by Trainees from EPAM</p>
-    <div class="credits">
-        <!--
-            All the links in the footer should remain intact.
-            You can delete the links only if you purchased the pro version.
-            Licensing information: https://bootstrapmade.com/license/
-            Purchase the pro version form: https://bootstrapmade.com/buy/?theme=Techie
-        -->
-        <a href="https://bootstrapmade.com/">Bootstrap Themes</a> by <a
-            href="https://bootstrapmade.com/">BootstrapMade</a>
-    </div>
-</footer>
+            <footer class="footer text-center">
+                <p>Made by Trainees from EPAM</p>
+                <div class="credits">
+                    <!--
+                        All the links in the footer should remain intact.
+                        You can delete the links only if you purchased the pro version.
+                        Licensing information: https://bootstrapmade.com/license/
+                        Purchase the pro version form: https://bootstrapmade.com/buy/?theme=Techie
+                    -->
+                    <a href="https://bootstrapmade.com/">Bootstrap Themes</a> by <a
+                        href="https://bootstrapmade.com/">BootstrapMade</a>
+                </div>
+            </footer>
 
-</div>
-</body>
+        </div>
+    </body>
 </html>
 <script>
     var contextPath = "${pageContext.request.contextPath}";
