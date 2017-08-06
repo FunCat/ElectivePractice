@@ -131,19 +131,9 @@ public class CourseDaoImpl implements CourseDao {
         for(Group group : groups){
             courses.add(group.getGroupId().getCourse());
         }
-        Criteria criteria2 = getCurrentSession().createCriteria(Course.class);
-        for(Course course: courses) {
-            criteria2.add(Restrictions.eq("id", course.getId()));
-        }
-        Long totalRecordsCount = (Long) criteria2.setProjection(rowCount()).uniqueResult();
-        criteria2.setProjection(null)
-                .setResultTransformer(Criteria.ROOT_ENTITY);
-        criteria2.addOrder(org.hibernate.criterion.Order.asc("id"));
-        if (request.getStart() != null)
-            criteria2.setFirstResult(request.getStart());
-        if (request.getLength() != null)
-            criteria2.setMaxResults(request.getLength());
-        List<Course> result = criteria2.list();
+        Long totalRecordsCount = new Long(courses.size());
+        Integer size = (request.getStart() + request.getLength() > courses.size()) ? courses.size() : request.getStart() + request.getLength();
+        List<Course> result = courses.subList(request.getStart(), size);
         return new PageDto<>(result,totalRecordsCount);
     }
 }

@@ -4,6 +4,7 @@
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+<%@ taglib prefix="s" uri="/WEB-INF/tld/spring.tld" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <jsp:include page="static/header.jsp"/>
@@ -16,19 +17,15 @@
         <div class="rightBlockInfo">
             <div class="calendar">
                 <div class="pageCalendar">
-                    03 Августа
+                    ${course.dateToString(course.startDate)}
                 </div>
                 <div class="separator">-</div>
                 <div class="pageCalendar">
-                    03 Августа
+                    ${course.dateToString(course.endDate)}
                 </div>
-                <%--<h4>${course.dateToString(course.startDate)} ${course.dateToString(course.endDate)} </h4>--%>
             </div>
-
         </div>
     </div>
-
-
 
     <div class="description">${course.description}</div>
 
@@ -36,18 +33,27 @@
         <div><a class="myMediumBtn" href= "${pageContext.request.contextPath}/login"  role="button">Записаться</a></div>
     </sec:authorize>
 
-    <sec:authorize access="isAuthenticated() && hasRole('ROLE_USER')">
+    <sec:authorize access="hasRole('ROLE_USER')">
+    <div id = "subdiv">
         <c:choose>
             <c:when test="${userAlreadyRegistredForCourse == 'true'}">
-                <div><a class='myMediumBtn' href= "http://i.playground.ru/i/89/48/62/10/pix/image.jpg"  role="button">Отписаться</a></div>
-                <br />
+                <div id = "unsubscribe" class='myMediumBtn' onclick="unsubscribe()">Отписаться</div>
             </c:when>
             <c:otherwise>
-                <div><a class='myMediumBtn' href= "http://i.playground.ru/i/89/48/62/10/pix/image.jpg"  role="button">Записаться</a></div>
-                <br />
+                <div id = "subscribe" class='myMediumBtn' onclick="subscribe()">Записаться</div>
             </c:otherwise>
         </c:choose>
+    </div>
     </sec:authorize>
+
+    <sec:authorize access="hasRole('ROLE_TEACHER')">
+        <div><a class='myMediumBtn' href = "${pageContext.request.contextPath}/editcourse?courseid=${course.id}" role = "button">Редактировать</a></div>
+    </sec:authorize>
+
+<div id = "subscribeResult"></div>
 
 </div>
 <jsp:include page="static/footer.jsp"/>
+
+<script> var id = "${course.id}";</script>
+<script src='<c:url value="/resources/js/subscribe.js"/>'></script>
