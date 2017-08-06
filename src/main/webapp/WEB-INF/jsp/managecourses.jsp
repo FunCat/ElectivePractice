@@ -7,7 +7,7 @@
 
 <jsp:include page="static/header.jsp"/>
 <div class="col-sm-4 col-lg-4">
-    <h3><s:message code="Courses"/></h3>
+    <h3><s:message code="Manage_Courses"/></h3>
 </div>
 <div style="clear: both;" ></div>
 
@@ -20,6 +20,8 @@
         </sec:authorize>
         <li><a href="${pageContext.request.contextPath}/user/profile"><s:message code="Edit_your_account" /></a></li>
     </ul>
+
+
 </div>
 <div  class="col-md-10" >
 
@@ -41,17 +43,17 @@
                 <td><fmt:formatDate pattern="dd MMM yy" value="${item.startDate}" /></td>
                 <td><fmt:formatDate pattern="dd MMM yy" value="${item.endDate}" /></td>
                 <td>
-                    <a class='myMediumBtn' href="${pageContext.request.contextPath}/courseinfo?id=${item.id}" role='button'>Подробнее</a>
-                </td>
-                <td>
-                    <a class='myMediumBtn' href="${pageContext.request.contextPath}/courseinfo?id=${item.id}" role='button'>Подробнее</a>
+                    <a class="btn btn-primary btn-sm" href="${pageContext.request.contextPath}/courseinfo?id=${item.id}" role='button'><s:message code="More" /></a>
+                    <a class="btn btn-danger btn-sm"  href="${pageContext.request.contextPath}/courseinfo?id=${item.id}" role='button'><s:message code="Delete" /></a>
                 </td>
             </tr>
 
         </c:forEach>
         </tbody>
     </table>
-
+    <div class="text-left">
+        <a class="btn btn-primary" href="#"><s:message code="Add_Course" /></a>
+    </div>
     <div class="text-center">
         <ul class="pagination">
             <li class="">

@@ -41,4 +41,8 @@ VALUES  ('ROLE_USER', 5),
 
 -- Test MyCourses Page (add more records later)
 INSERT INTO coursegroup (grade, review, course_id, student_id)
-VALUES (5,'test review', 1, 5);
+VALUES  (5,'test review1', 1, 5),
+        (5,'test review2', 1, 2),
+        (4,'test review3', 1, 3),
+        (3,'test review4', 1, 4),
+        (0,'test review5', 1, 1);
