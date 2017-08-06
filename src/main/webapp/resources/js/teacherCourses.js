@@ -16,7 +16,12 @@ function getCoursesPage() {
                     "<td>" + value.startDate + "</td>" +
                     "<td>" + value.endDate + "</td>" +
                     "<td>" +
-                    "<a class='myMediumBtn' href='"+contextPath+"/courseinfo?id=" + value.id + "'role='button'>Подробнее</a>" +
+                    "<a class='btn btn-primary btn-sm' href='"+contextPath+"/courseinfo?id=" + value.id + "'role='button'>" +
+                    i18nStrings["More"] +
+                    "</a> " +
+                    "<a class='btn btn-danger btn-sm' href='"+contextPath+"/courseinfo?id=" + value.id + "'role='button'>" +
+                    i18nStrings["Delete"] +
+                    "</a>" +
                     "</td>" +
                     "</tr>")
 

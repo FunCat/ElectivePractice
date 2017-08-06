@@ -1,3 +1,6 @@
+body {
+    font-size: 14px;
+}
 input[disabled] {
     background-color: transparent;
     border: none;

@@ -4,6 +4,7 @@ import com.epam.electives.dao.CourseDao;
 import com.epam.electives.dto.GetEntityRequest;
 import com.epam.electives.dto.PageDto;
 import com.epam.electives.model.Course;
+import com.epam.electives.model.Group;
 import com.epam.electives.model.UserProfile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -56,4 +57,8 @@ public class CourseMainService {
     public PageDto<Course> getByTeacher(GetEntityRequest request, UserProfile userProfile){
         return courseDao.findByTeacher(request, userProfile);
     }
+    public PageDto<Group> getPartOfStudentsByCourse(GetEntityRequest request, Long id){
+        return courseDao.getPartOfStudentsByCourse(request, id);
+    }
+
 }

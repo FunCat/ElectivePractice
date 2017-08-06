@@ -10,9 +10,11 @@ import com.epam.electives.model.GroupId;
 import com.epam.electives.model.UserProfile;
 import lombok.extern.log4j.Log4j;
 import org.hibernate.Criteria;
+import org.hibernate.FetchMode;
 import org.hibernate.Session;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.sql.JoinType;
 import org.springframework.stereotype.Repository;
 
 
@@ -125,6 +127,10 @@ public class CourseDaoImpl implements CourseDao {
 
     @Override
     public PageDto<Course> findCoursesByStudent(GetEntityRequest request, UserProfile userProfile){
+
+//        Criteria criteria = getCurrentSession().createCriteria(Course.class);
+//        criteria.createAlias() // join TODO
+
         Criteria criteria = getCurrentSession().createCriteria(Group.class);
         List<Group> groups = criteria.add(Restrictions.eq("groupId.student.id",userProfile.getId())).list();
         List<Course> courses = new ArrayList<>();
@@ -134,6 +140,31 @@ public class CourseDaoImpl implements CourseDao {
         Long totalRecordsCount = new Long(courses.size());
         Integer size = (request.getStart() + request.getLength() > courses.size()) ? courses.size() : request.getStart() + request.getLength();
         List<Course> result = courses.subList(request.getStart(), size);
+        return new PageDto<>(result,totalRecordsCount);
+    }
+
+    @Override
+    public PageDto<Group> getPartOfStudentsByCourse(GetEntityRequest request, Long id){
+        Criteria criteria = getCurrentSession().createCriteria(Group.class);
+//        criteria.createAlias("groupId","group", JoinType.INNER_JOIN);
+//        criteria.createAlias("groupId.student","student", JoinType.INNER_JOIN);  // join with UserProfile table (2-arg is alias)
+        criteria.setFetchMode("groupId.student", FetchMode.JOIN);
+        criteria.add(Restrictions.eq("groupId.course.id", id));
+
+        Long totalRecordsCount = (Long) criteria.setProjection(rowCount()).uniqueResult();
+
+//         Сбрасываем, чтобы использовать снова.
+        criteria.setProjection(null)
+                .setResultTransformer(Criteria.ROOT_ENTITY);
+
+//        criteria.addOrder(Order.asc("groupId.student.lastname"));
+
+        if (request.getStart() != null)
+            criteria.setFirstResult(request.getStart());
+        if (request.getLength() != null)
+            criteria.setMaxResults(request.getLength());
+        List<Group> result = criteria.list();
+
         return new PageDto<>(result,totalRecordsCount);
     }
 }

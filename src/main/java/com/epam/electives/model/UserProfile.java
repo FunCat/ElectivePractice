@@ -21,6 +21,7 @@ public class UserProfile {
     private String lastname;
     private String surname;
     private Date birthday;
+    @Column(unique = true)
     private String login;
     private String password;
     private boolean enabled;

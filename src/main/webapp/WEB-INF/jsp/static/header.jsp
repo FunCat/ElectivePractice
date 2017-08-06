@@ -6,10 +6,12 @@
 <html lang="en">
 <head>
     <title>Electives Courses</title>
-    <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/style.css" />"/>
+
     <!-- Bootstrap css -->
     <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/bootstrap.min.css" />"/>
     <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/bootstrap.techie.css" />"/>
+
+    <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/style.css" />"/>
 
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 
@@ -44,6 +46,8 @@
 
         <div class="col-sm-12 col-lg-12">
             <div class="text-right">
+                <%--<a href="${requestScope['javax.servlet.forward.query_string']}?lang=en">English</a>
+                | <a href="${requestScope['javax.servlet.forward.query_string']}?lang=ru">Russian</a>--%>
                 <a href="?lang=en">English</a> | <a href="?lang=ru">Russian</a>
             </div>
             <div class="text-right">

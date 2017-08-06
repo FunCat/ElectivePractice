@@ -5,6 +5,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@ taglib prefix="s" uri="/WEB-INF/tld/spring.tld" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <jsp:include page="static/header.jsp"/>
@@ -51,7 +52,58 @@
     </sec:authorize>
 
 <div id = "subscribeResult"></div>
+    <sec:authorize access="hasRole('ROLE_TEACHER')">
 
+        <div class="col-sm-4 col-lg-4">
+            <h3><s:message code="Students"/></h3>
+        </div>
+
+        <table class="table table-striped" data-effect="fade">
+            <thead>
+            <tr>
+                <th><s:message code="Firstname"/></th>
+                <th><s:message code="Lastname" /></th>
+                <th><s:message code="Rating"/></th>
+                <th><s:message code="Review"/></th>
+                    <%--<th><s:message code="End_Date"/></th>--%>
+                <th> </th>
+            </tr>
+            </thead>
+            <tbody id="coursesList">
+
+            <c:forEach var="item" items="${group}">
+                <tr>
+                    <td>${item.groupId.student.firstname}</td>
+                    <td>${item.groupId.student.lastname}</td>
+                    <td><input type="text" disabled value="${item.grade}" /></td>
+                    <td><input type="text" disabled value="${item.review}" /></td>
+                    <td>
+                        <a class="btn btn-danger btn-sm" href="/ElectiveEPAM/courseinfo?id=1" role="button"><s:message code="Edit" /></a>
+                        <a class="btn btn-danger btn-sm hidden" href="/ElectiveEPAM/courseinfo?id=1" role="button"><s:message code="Save" /></a>
+                    </td>
+                </tr>
+            </c:forEach>
+            </tbody>
+        </table>
+
+        <div class="text-center">
+            <ul class="pagination">
+                <li class="">
+                    <a href="#" id="prevPage">«</a>
+                </li>
+                <c:forEach var="i" begin="1" end="${numOfPages}">
+                    <li class="page" id="${i}" >
+                        <a href="#" ><c:out value="${i}"/></a>
+                    </li>
+                </c:forEach>
+                <li class="">
+                    <a href="#" id="nextPage">»</a>
+                </li>
+            </ul>
+
+        </div>
+
+    </sec:authorize>
 </div>
 <jsp:include page="static/footer.jsp"/>
 
