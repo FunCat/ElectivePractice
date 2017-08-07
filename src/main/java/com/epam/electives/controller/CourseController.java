@@ -84,9 +84,8 @@ public class CourseController {
 
     @ResponseBody
     @RequestMapping(value = "/editgroup", method = RequestMethod.POST)
-    public boolean editGroup(@RequestBody Group group){
-
-        return groupMainService.editGradeReview(group);
+    public void editGroup(@RequestBody Group group){
+        groupMainService.editGradeReview(group);
     }
 
 

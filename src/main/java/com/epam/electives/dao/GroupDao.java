@@ -7,5 +7,5 @@ import com.epam.electives.model.UserProfile;
 public interface GroupDao {
     boolean insertUserIntoGroup(UserProfile user, Course course);
     boolean deleteUserFromGroup(UserProfile user, Course course);
-    boolean editGradeReview(Group group);
+    void editGradeReview(Group group);
 }

@@ -53,8 +53,7 @@ import javax.transaction.Transactional;
         }
 
         @Override
-        public boolean editGradeReview(Group group) {
+        public void editGradeReview(Group group) {
             getCurrentSession().saveOrUpdate(group);
-            return true;
         }
     }

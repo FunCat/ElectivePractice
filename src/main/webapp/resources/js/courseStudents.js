@@ -13,13 +13,13 @@ function getCoursesPage() {
                 $("#studentList").append("<tr>" +
                     "<td>" + value.groupId.student.firstname + "</td>" +
                     "<td>" + value.groupId.student.lastname + "</td>" +
-                    "<td><input type='text' id='grade_'"+index +" disabled value="+value.grade+" /></td>" +
-                    "<td><input type='text' id='review_'"+index+" disabled value="+value.review+" /></td>" +
+                    "<td><input type='text' id='grade_"+index +"' disabled value="+value.grade+" /></td>" +
+                    "<td><input type='text' id='review_"+index+"' disabled value="+value.review+" /></td>" +
                     "<td>" +
                     "<a href='#' class='btn btn-warning btn-sm edit' attr_id="+index+" role='button'>"+
                     i18nStrings["Edit"] +
                     "</a>"+
-                    "<a href='#' class='btn btn-danger btn-sm hidden save' attr_id="+index+" role='button'>"+
+                    "<a href='#' class='btn btn-danger btn-sm hidden save' student_id=" + value.groupId.student.id + "  attr_id="+index+" role='button'>"+
                     i18nStrings["Save"] +
                     "</a>" +
                     "</td>" +
@@ -30,7 +30,8 @@ function getCoursesPage() {
     });
 }
 $(document).ready(function () {
-    $(".edit").click(function (e) {
+    $(document).on("click",".edit",function(e) {
+    // $(".edit").click(function (e) {
         e.preventDefault();
         $(this).addClass('hidden');
         $(this).next('.save').removeClass('hidden');
@@ -39,7 +40,7 @@ $(document).ready(function () {
         $('#review_'+$(this).attr('attr_id')).removeAttr('disabled');
 
     });
-    $(".save").click(function (e) {
+    $(document).on("click",".save",function(e) {
         e.preventDefault();
         $(this).addClass('hidden');
         $(this).prev('.edit').removeClass('hidden');
@@ -59,7 +60,7 @@ $(document).ready(function () {
         console.log(group);
         $.ajax({
             contentType: 'application/json',
-            dataType: 'json',
+            // dataType: 'json',
             type: 'POST',
             data: JSON.stringify(group),
             url: contextPath + "/editgroup",
@@ -68,9 +69,11 @@ $(document).ready(function () {
                 $(".result").html("");
 
                 $(".result").html(data);
+            },
+            error:function (data) {
+                alert("Error");
             }
         })
-
     })
 });
 

@@ -23,8 +23,8 @@ public class GroupMainService {
         return groupDao.deleteUserFromGroup(user,course);
     }
 
-    public boolean editGradeReview(Group group){
-        return groupDao.editGradeReview(group);
+    public void editGradeReview(Group group){
+        groupDao.editGradeReview(group);
     }
 }
 
