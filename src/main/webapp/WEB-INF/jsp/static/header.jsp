@@ -46,9 +46,7 @@
 
         <div class="col-sm-12 col-lg-12">
             <div class="text-right">
-                <%--<a href="${requestScope['javax.servlet.forward.query_string']}?lang=en">English</a>
-                | <a href="${requestScope['javax.servlet.forward.query_string']}?lang=ru">Russian</a>--%>
-                <a href="?lang=en">English</a> | <a href="?lang=ru">Russian</a>
+                <a href="" id="en_locale">English</a> | <a id="ru_locale" >Russian</a>
             </div>
             <div class="text-right">
                 <s:message code="Cur_Language"/> : ${pageContext.response.locale}

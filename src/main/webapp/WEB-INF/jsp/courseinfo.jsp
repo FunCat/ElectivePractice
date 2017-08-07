@@ -40,10 +40,10 @@
         <div id="subdiv">
             <c:choose>
                 <c:when test="${userAlreadyRegistredForCourse == 'true'}">
-                    <div id="unsubscribe" class='myMediumBtn' onclick="unsubscribe()">Отписаться</div>
+                    <div id="unsubscribe" class='myMediumBtn' onclick="unsubscribe()"><s:message code="Unsubscribe"/></div>
                 </c:when>
                 <c:otherwise>
-                    <div id="subscribe" class='myMediumBtn' onclick="subscribe()">Записаться</div>
+                    <div id="subscribe" class='myMediumBtn' onclick="subscribe()"><s:message code="Subscribe"/></div>
                 </c:otherwise>
             </c:choose>
         </div>
@@ -51,7 +51,7 @@
 
     <sec:authorize access="hasRole('ROLE_TEACHER')">
         <div><a class='myMediumBtn' href="${pageContext.request.contextPath}/editcourse?courseid=${course.id}"
-                role="button">Редактировать</a></div>
+                role="button"><s:message code="Edit"/></a></div>
     </sec:authorize>
 
     <div id="subscribeResult"></div>
@@ -87,7 +87,6 @@
                         <a href="#" class="btn btn-danger btn-sm hidden save" student_id="${item.groupId.student.id}" attr_id="${loop.index}" role="button">
                             <s:message code="Save"/>
                         </a>
-
                     </td>
                 </tr>
             </c:forEach>
@@ -108,7 +107,6 @@
                     <a href="#" id="nextPage">»</a>
                 </li>
             </ul>
-
         </div>
 
     </sec:authorize>
