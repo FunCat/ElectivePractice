@@ -8,6 +8,7 @@ import com.epam.electives.model.UserProfile;
 import com.epam.electives.services.CourseMainService;
 import com.epam.electives.services.GroupMainService;
 import com.epam.electives.services.UserMainService;
+import com.epam.electives.support.I18nUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.security.core.Authentication;
@@ -34,6 +35,9 @@ public class MainController  {
 
     @Autowired
     private MessageSource messageSource;
+
+    @Autowired
+    I18nUtil i18nUtil;
 
     @RequestMapping
     public ModelAndView start(){
@@ -72,6 +76,8 @@ public class MainController  {
         modelAndView.addObject("userAlreadyRegistredForCourse", courseContainsUser);
 
         if(!httpServletRequest.isUserInRole("ROLE_TEACHER")) return modelAndView;
+
+        modelAndView.addObject("i18nKeys", i18nUtil.getKeys());
 
         if(request == null) {
             request = new GetEntityRequest(0,10);

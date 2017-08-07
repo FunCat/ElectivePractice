@@ -51,4 +51,10 @@ import javax.transaction.Transactional;
             getCurrentSession().delete(group);
             return true;
         }
-}
+
+        @Override
+        public boolean editGradeReview(Group group) {
+            getCurrentSession().saveOrUpdate(group);
+            return true;
+        }
+    }

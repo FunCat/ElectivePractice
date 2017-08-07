@@ -8,6 +8,10 @@ VALUES ('1987-11-5', 'Leonardo', 'Stewart', '', 'leonardo.stewart',  '$2a$10$yRC
   ('1994-7-20', 'UserI', 'UserF', 'UserO', 'user',  '$2a$10$MCeEsGqxrjVvVzEr1EBqKe6tKlhQ2V74h/2oePK/a7ZEBO2wHPvyq', TRUE),
   ('1986-11-12', 'James', 'James', '', 'james',  '$2a$10$BNETRswfFpHsz0pK1dHWJehgqhaa1jdJaRGnGgXOfgiATBscVmJke', TRUE),
   ('1986-11-12', 'James', 'Bond', '', 'james2',  '$2a$10$TXZmiXv4d5ltp3RgqZI3Qu4dUCcokrAdYDYHBA4k6V0sp4eeEnp02', TRUE),
+  ('1967-06-07', 'Dave', 'Navarro', '', 'dave', '$2a$10$AekFuYQQv6LtNdifmjLQ3eQ377XSQgJlWmdv2Mcu0M1MsqJZSZ0Uq', TRUE),
+  ('1967-06-07', 'Tom', 'Morello', '', 'tom', '$2a$10$LLTTsuHWP8/QihVuNTmSD.Fsfme/.mVU1mhFI/jC87tm2JrKA.xzO', TRUE),
+  ('1967-06-07', 'Wes', 'Borland', '', 'wes', '$2a$10$3O8MFTNA9TfFa2MOgL8YQO3dyM3j6t2MzcQiKFnXjiBroKctmpOwm', TRUE),
+  ('1970-05-03', 'John', 'Frusciante', '', 'john','$2a$10$vYz/l.ME5I0q9X50/AjLM.ilVanrX1AbfJkv.q.qjgcAyAtaEbfyy', TRUE),
   ('1986-11-12', 'Ivan', 'Ivanov', '', 'admin',  '$2a$10$xxS1WJjCKuofc7NZn7U9SeToGXdA93f.wr7bd31cMm6tEVjHDSI86', TRUE);
 
 -- Add COURSES

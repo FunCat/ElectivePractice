@@ -2,6 +2,7 @@ package com.epam.electives.services;
 
 import com.epam.electives.dao.GroupDao;
 import com.epam.electives.model.Course;
+import com.epam.electives.model.Group;
 import com.epam.electives.model.UserProfile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,10 @@ public class GroupMainService {
 
     public boolean removeUserFromCourse(UserProfile user, Course course){
         return groupDao.deleteUserFromGroup(user,course);
+    }
+
+    public boolean editGradeReview(Group group){
+        return groupDao.editGradeReview(group);
     }
 }
 

@@ -1,5 +1,6 @@
 package com.epam.electives.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -23,6 +24,7 @@ public class UserProfile {
     private Date birthday;
     @Column(unique = true)
     private String login;
+    @JsonIgnore
     private String password;
     private boolean enabled;
 
