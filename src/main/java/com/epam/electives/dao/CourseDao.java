@@ -26,4 +26,6 @@ public interface CourseDao {
     List<UserProfile> findStudentsByCourse(Course course);
 
     PageDto<Course> findCoursesByStudent (GetEntityRequest request, UserProfile userProfile);
+
+    PageDto<Course> getCoursesByTag (String tag, GetEntityRequest request);
 }

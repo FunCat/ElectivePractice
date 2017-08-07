@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 @RequestMapping("/")
@@ -83,6 +84,15 @@ public class CourseController {
                         courses.getRecordsTotal() / 10 :
                         courses.getRecordsTotal() / 10 + 1);
         return modelAndView;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/coursestag")
+    public PageDto<Course> partByTeacher(@RequestParam("term") String tag, @RequestBody(required = false) GetEntityRequest request){
+        if(request == null) {
+            request = new GetEntityRequest(0,10);
+        }
+        return courseMainService.getCoursesByTag(tag, request);
     }
 
 }

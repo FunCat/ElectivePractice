@@ -112,3 +112,16 @@ a{
     color: red;
     margin-top: 10px;
 }
+
+.pagination li{
+    position: relative;
+    float: left;
+    padding: 4px 12px;
+    line-height: 1.666;
+    text-decoration: none;
+    color: #009688;
+    background-color: #efefef;
+    margin-right: 10px;
+    border-radius: 2px;
+    color: #555555;
+}

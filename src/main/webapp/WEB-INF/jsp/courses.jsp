@@ -9,6 +9,11 @@
         <h3><s:message code="Courses"/></h3>
     </div>
 
+    <div class="ui-widget">
+        <label for="tags">Tags: </label>
+        <input id="tags">
+    </div>
+
     <table class="table table-striped" data-effect="fade">
         <thead>
         <tr>
@@ -53,8 +58,16 @@
 
 <jsp:include page="static/footer.jsp"/>
 <script src='<c:url value="/resources/js/navigation.js"/>'></script>
+<script src='<c:url value="/resources/js/jquery-ui.min.js"/>'></script>
 <script>
     function getCoursesPage() {
-        getCoursesPageDefault("/part");
+        getCoursesPageDefaultPagination("/coursestag?term=" + $("#tags").val());
     }
+
+    $(document).ready(function(){
+        $( "#tags" ).change(function(){
+            a.start = 0;
+            getCoursesPageDefaultPagination("/coursestag?term=" + $("#tags").val());
+        });
+    })
 </script>

@@ -11,6 +11,8 @@
     <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/bootstrap.min.css" />"/>
     <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/bootstrap.techie.css" />"/>
 
+    <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/jquery-ui.min.css" />"/>
+
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 
     <link href="https://fonts.googleapis.com/css?family=Comfortaa" rel="stylesheet">
