@@ -24,7 +24,7 @@ $(document).bind('DOMSubtreeModified', function () {
 $(document).ready(function(){
     getCoursesPage();
     console.log(numOfPages);
-})
+});
 
 $("#nextPage").click(function () {
     if (curPage == numOfPages-1) return;
