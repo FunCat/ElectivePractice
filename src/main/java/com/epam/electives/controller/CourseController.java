@@ -10,11 +10,16 @@ import com.epam.electives.services.GroupMainService;
 import com.epam.electives.services.UserMainService;
 import com.epam.electives.support.I18nUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by rusamaha on 7/31/17.
@@ -35,6 +40,9 @@ public class CourseController {
 
     @Autowired
     I18nUtil i18nUtil;
+
+    @Autowired
+    private MessageSource messageSource;
 
     @RequestMapping(value = "/teacher/managecourses")
     public ModelAndView courses(Principal login, @RequestBody(required = false) GetEntityRequest request) {
@@ -107,6 +115,86 @@ public class CourseController {
         ModelAndView modelAndView = new ModelAndView("deletecourse");
 
         return modelAndView;
+    }
+
+    @RequestMapping(value= "/save_course", method=RequestMethod.POST, produces = "text/plain;charset=UTF-8")
+    @ResponseBody
+    public String  userEditProfile(Principal login,
+                                   @RequestParam("idcourse") int idCourse,
+                                   @RequestParam("namecourse") String nameCourse,
+                                   @RequestParam("startdatecourse") String startDateCourse,
+                                   @RequestParam("enddatecourse") String endDateCourse,
+                                   @RequestParam("descriptionCourse") String descriptionCourse,
+                                   Locale locale) {
+        Course course = courseMainService.getById(idCourse);
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        Date startDate = null;
+        try {
+            startDate = sdf.parse(startDateCourse);
+        } catch (ParseException e) {
+            return messageSource.getMessage("ErrorFormatDate", null, locale);
+        }
+
+        Date endDate = null;
+        try {
+            endDate = sdf.parse(endDateCourse);
+        } catch (ParseException e) {
+            return messageSource.getMessage("ErrorFormatDate", null, locale);
+        }
+
+        course.setName(nameCourse);
+        course.setStartDate(startDate);
+        course.setEndDate(endDate);
+        course.setDescription(descriptionCourse);
+
+        courseMainService.saveOrUpdate(course);
+
+        return messageSource.getMessage("SuccessUpdateCourse", null, locale);
+    }
+
+    @RequestMapping(value = "/addcourse")
+    public ModelAndView addCourse(){
+        ModelAndView modelAndView = new ModelAndView("addcourse");
+        return modelAndView;
+    }
+
+    @RequestMapping(value= "/add_new_course", method=RequestMethod.POST, produces = "text/plain;charset=UTF-8")
+    @ResponseBody
+    public String  addNewCourse(Principal login,
+                                   @RequestParam("namecourse") String nameCourse,
+                                   @RequestParam("startdatecourse") String startDateCourse,
+                                   @RequestParam("enddatecourse") String endDateCourse,
+                                   @RequestParam("descriptionCourse") String descriptionCourse,
+                                   Locale locale) {
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        Date startDate = null;
+        try {
+            startDate = sdf.parse(startDateCourse);
+        } catch (ParseException e) {
+            return messageSource.getMessage("ErrorFormatDate", null, locale);
+        }
+
+        Date endDate = null;
+        try {
+            endDate = sdf.parse(endDateCourse);
+        } catch (ParseException e) {
+            return messageSource.getMessage("ErrorFormatDate", null, locale);
+        }
+
+        Course course = new Course();
+        UserProfile userProfile = userMainService.getByLogin(login.getName());
+
+        course.setName(nameCourse);
+        course.setStartDate(startDate);
+        course.setEndDate(endDate);
+        course.setDescription(descriptionCourse);
+        course.setTeacher(userProfile);
+
+        courseMainService.saveOrUpdate(course);
+
+        return messageSource.getMessage("SuccessUpdateCourse", null, locale);
     }
 
 }

@@ -43,7 +43,7 @@
         </tbody>
     </table>
     <div class="text-left">
-        <a class="btn btn-primary" href="#"><s:message code="Add_Course" /></a>
+        <a class="btn btn-primary" href="${pageContext.request.contextPath}/addcourse"><s:message code="Add_Course" /></a>
     </div>
     <div class="text-center">
         <ul class="pagination">

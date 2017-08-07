@@ -6,28 +6,27 @@
 
 <jsp:include page="static/header.jsp"/>
 <div class = "container">
-    <h1 class="nameCourseInfo"><s:message code="EditCourse" /></h1>
-    <input type="hidden" class="idCourse" value="${course.id}" />
+    <h1 class="nameCourseInfo"><s:message code="Add_Course" /></h1>
     <table>
         <tr>
             <td class="td_min_width"><s:message code="Course_Name" />:</td>
-            <td><input class="nameCourse" type="text" value="${course.name}" /></td>
+            <td><input class="nameCourse" type="text"  placeholder="Course name"/></td>
         </tr>
         <tr>
             <td><s:message code="Start_Date" />:</td>
-            <td><input class="startDateCourse" type="text" value="<fmt:formatDate pattern="dd MMM yyyy" value="${course.startDate}" />" /></td>
+            <td><input class="startDateCourse" type="text" placeholder="01/01/2017" /></td>
         </tr>
         <tr>
             <td><s:message code="End_Date" />:</td>
-            <td><input class="endDateCourse" type="text" value="<fmt:formatDate pattern="dd MMM yyyy" value="${course.endDate}" />" /></td>
+            <td><input class="endDateCourse" type="text" placeholder="01/01/2017" /></td>
         </tr>
     </table>
 
     <div class="description">
-        <textarea class="descriptionCourse" rows="10">${course.description}</textarea>
+        <textarea class="descriptionCourse" rows="10" placeholder="Describe your course..." ></textarea>
     </div>
 
-    <div id="saveCourse" class='myMediumBtn' style="float: right;"><s:message code="Save" /></div>
+    <div id="addCourse" class='myMediumBtn' style="float: right;"><s:message code="Add_Course" /></div>
     <div id="resultRequest"></div>
 
 </div>
