@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="s" uri="/WEB-INF/tld/spring.tld" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <jsp:include page="static/header.jsp"/>
 
@@ -28,6 +29,17 @@
             </tr>
             </thead>
             <tbody id="coursesList">
+            <c:forEach var="item" items="${courses}">
+                <tr>
+                    <td>${item.name}</td>
+                    <td>${item.teacher.lastname}</td>
+                    <td><fmt:formatDate pattern="dd MMM yy" value="${item.startDate}" /></td>
+                    <td><fmt:formatDate pattern="dd MMM yy" value="${item.endDate}" /></td>
+                    <td>
+                        <a class='myMediumBtn' href="${pageContext.request.contextPath}/courseinfo?id=${item.id}" role='button'>Подробнее</a>
+                    </td>
+                </tr>
+            </c:forEach>
             </tbody>
         </table>
     </div>

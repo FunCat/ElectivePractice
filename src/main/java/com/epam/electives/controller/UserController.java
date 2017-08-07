@@ -9,6 +9,7 @@ import com.epam.electives.services.UserMainService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -200,12 +201,23 @@ public class UserController {
         return !Pattern.matches("(0[1-9]|[12][0-9]|3[01])[-/.](0[1-9]|1[012])[-/.](19|20)\\d\\d", birthday);
     }
 
+
+
     @RequestMapping(value = "/usercourses")
-    public ModelAndView userCourses(Principal username) {
+    public ModelAndView userCourses(Principal username,@RequestBody(required = false) GetEntityRequest request) {
         String login = username.getName();
         if(login != null) {
             UserProfile user = userMainService.getByLogin(login);
+            if(request == null) {
+                request = new GetEntityRequest(0,10);
+            }
+            PageDto<Course> courses = userMainService.getPartUser(request,user);
             ModelAndView modelAndView = new ModelAndView("usercourses");
+            modelAndView.addObject("numOfPages",
+                    (courses.getRecordsTotal() % 10 == 0) ?
+                            courses.getRecordsTotal() / 10 :
+                            courses.getRecordsTotal() / 10 + 1);
+
             return modelAndView;
         }
         return new ModelAndView("login");
