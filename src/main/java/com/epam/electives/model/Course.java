@@ -31,7 +31,7 @@ public class Course {
     private Status status;
 
     public String dateToString(Date date){
-        SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         return format.format(date);
     }
 

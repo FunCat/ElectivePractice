@@ -56,7 +56,6 @@
 <jsp:include page="static/i18n.jsp"/>
 <jsp:include page="static/footer.jsp"/>
 <script src='<c:url value="/resources/js/pagination.js"/>'></script>
-<script src='<c:url value="/resources/js/jquery-ui.min.js"/>'></script>
 <script>
     function getCoursesPage() {
         getCoursesPageDefaultPagination("/coursestag?term=" + $("#tags").val());

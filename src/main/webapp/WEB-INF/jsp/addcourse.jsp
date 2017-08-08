@@ -30,5 +30,7 @@
     <div id="resultRequest"></div>
 
 </div>
+
+<jsp:include page="static/i18n.jsp"/>
 <jsp:include page="static/footer.jsp"/>
 <script src='<c:url value="/resources/js/editcourse.js"/>'></script>

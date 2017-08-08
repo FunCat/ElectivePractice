@@ -4,7 +4,7 @@ $(document).ready(function(){
         if($(".userLogin").val() == "" || $(".userPassword").val() == "" || $(".userPassword2").val() == "" ||
             $(".userName").val() == "" || $(".userLastname").val() == "" || $(".userBirthday").val() == ""){
             $(".result").html("");
-            $(".result").html("Не все обязательные поля заполнены!");
+            $(".result").html(i18nStrings["NotAllRequiredField"]);
         }
         else {
             $.ajax({

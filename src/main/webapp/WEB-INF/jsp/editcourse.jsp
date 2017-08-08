@@ -15,11 +15,11 @@
         </tr>
         <tr>
             <td><s:message code="Start_Date" />:</td>
-            <td><input class="startDateCourse" type="text" value="<fmt:formatDate pattern="dd MMM yyyy" value="${course.startDate}" />" /></td>
+            <td><input class="startDateCourse" type="text" value="<fmt:formatDate pattern="dd/MM/yyyy" value="${course.startDate}" />" /></td>
         </tr>
         <tr>
             <td><s:message code="End_Date" />:</td>
-            <td><input class="endDateCourse" type="text" value="<fmt:formatDate pattern="dd MMM yyyy" value="${course.endDate}" />" /></td>
+            <td><input class="endDateCourse" type="text" value="<fmt:formatDate pattern="dd/MM/yyyy" value="${course.endDate}" />" /></td>
         </tr>
     </table>
 
@@ -31,5 +31,7 @@
     <div id="resultRequest"></div>
 
 </div>
+
+<jsp:include page="static/i18n.jsp"/>
 <jsp:include page="static/footer.jsp"/>
 <script src='<c:url value="/resources/js/editcourse.js"/>'></script>

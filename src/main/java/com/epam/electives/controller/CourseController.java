@@ -34,6 +34,8 @@ public class CourseController {
     @Autowired
     UserMainService userMainService;
     @Autowired
+    UserController userController;
+    @Autowired
     GroupMainService groupMainService;
     @Autowired
     I18nUtil i18nUtil;
@@ -97,6 +99,7 @@ public class CourseController {
         if (!userProfile.equals(course.getTeacher())) {
             return new ModelAndView("static/404");
         }
+        modelAndView.addObject("i18nKeys", i18nUtil.getKeys());
         modelAndView.addObject(course);
         return modelAndView;
     }
@@ -118,6 +121,9 @@ public class CourseController {
                                   Locale locale) {
         Course course = courseMainService.getById(idCourse);
 
+        if (!userController.checkDateFormat(startDateCourse)) return messageSource.getMessage("ErrorFormatDate", null, locale);
+        if (!userController.checkDateFormat(endDateCourse)) return messageSource.getMessage("ErrorFormatDate", null, locale);
+
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         Date startDate = null;
         try {
@@ -132,6 +138,9 @@ public class CourseController {
         } catch (ParseException e) {
             return messageSource.getMessage("ErrorFormatDate", null, locale);
         }
+
+        if(endDate.before(startDate))
+            return messageSource.getMessage("EndDateBeforeStartDate", null, locale);
 
         course.setName(nameCourse);
         course.setStartDate(startDate);
@@ -146,6 +155,7 @@ public class CourseController {
     @RequestMapping(value = "/addcourse")
     public ModelAndView addCourse() {
         ModelAndView modelAndView = new ModelAndView("addcourse");
+        modelAndView.addObject("i18nKeys", i18nUtil.getKeys());
         return modelAndView;
     }
 
@@ -157,6 +167,9 @@ public class CourseController {
                                @RequestParam("enddatecourse") String endDateCourse,
                                @RequestParam("descriptionCourse") String descriptionCourse,
                                Locale locale) {
+
+        if (!userController.checkDateFormat(startDateCourse)) return messageSource.getMessage("ErrorFormatDate", null, locale);
+        if (!userController.checkDateFormat(endDateCourse)) return messageSource.getMessage("ErrorFormatDate", null, locale);
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         Date startDate = null;
@@ -172,6 +185,9 @@ public class CourseController {
         } catch (ParseException e) {
             return messageSource.getMessage("ErrorFormatDate", null, locale);
         }
+
+        if(endDate.before(startDate))
+            return messageSource.getMessage("EndDateBeforeStartDate", null, locale);
 
         Course course = new Course();
         UserProfile userProfile = userMainService.getByLogin(login.getName());
