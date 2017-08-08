@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    $(".editBtnProfile").on("click", function (){
+    $(".editBtnProfile").click(function (){
         $.post(contextPath + '/edit_profile',
             {
                 firstname: $(".userName").val(),
@@ -15,7 +15,7 @@ $(document).ready(function(){
         );
     });
 
-    $(".editBtnPassword").on("click", function (){
+    $(".editBtnPassword").click(function (){
         $.post(contextPath + '/edit_password',
             {
                 nowpassword: $(".nowPassword").val(),

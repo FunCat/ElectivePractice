@@ -7,36 +7,29 @@ var a = {
 };
 
 $(document).bind('DOMSubtreeModified', function () {
-    if (curPage == 0) {
-        $(".pagination li:first").addClass('disabled')
+    if (curPage === 0) {
+        $(".pagination li:first").addClass('disabled');
     } else {
-        $(".pagination li:first").removeClass('disabled')
+        $(".pagination li:first").removeClass('disabled');
     }
-    if (curPage == numOfPages-1) {
-        $(".pagination li:last").addClass('disabled')
+    if (curPage === numOfPages-1) {
+        $(".pagination li:last").addClass('disabled');
     } else {
-        $(".pagination li:last").removeClass('disabled')
+        $(".pagination li:last").removeClass('disabled');
     }
     $(".pagination .page").removeClass("active");
     $(".pagination #"+(curPage+1)).addClass("active");
 });
 
-$("#nextPage").click(function (e) {
-    e.preventDefault(); // a href='#' without scroll
-    if (curPage == numOfPages-1) return;
-    a.start = ++curPage * curInterval;
-    getCoursesPage();
+$("#nextPage").click(function () {
+    nextPage();
 });
 
-$("#prevPage").click(function (e) {
-    e.preventDefault(); // a href='#' without scroll
-    if (curPage == 0) return;
-    a.start = --curPage * curInterval;
-    getCoursesPage();
+$("#prevPage").click(function () {
+    prevPage();
 });
 
-$(".pagination .page").click(function (e) {
-    e.preventDefault();   // a href='#' without scroll
+$(".pagination .page").click(function () {
     a.start = ($(this).attr('id') - 1) * 10;
     curPage = $(this).attr('id') - 1;
     getCoursesPage();
@@ -103,12 +96,12 @@ function getCoursesPageDefaultPagination(url) {
 
             console.log("CurPage = " + curPage + " numOfPages = " + Math.floor(numOfPages-1) + " totalRecords = " + totalRecords);
 
-            if (curPage == 0) {
+            if (curPage === 0) {
                 $(".pagination li:first").addClass('disabled')
             } else {
                 $(".pagination li:first").removeClass('disabled')
             }
-            if (curPage == Math.floor(numOfPages-1)) {
+            if (curPage === Math.floor(numOfPages-1)) {
                 $(".pagination li:last").addClass('disabled')
             } else {
                 $(".pagination li:last").removeClass('disabled')
@@ -120,13 +113,13 @@ function getCoursesPageDefaultPagination(url) {
 }
 
 function nextPage(){
-    if (curPage == Math.floor(numOfPages-1)) return;
+    if (curPage === Math.floor(numOfPages-1)) return;
     a.start = ++curPage * curInterval;
     getCoursesPage();
 }
 
 function prevPage(){
-    if (curPage == 0) return;
+    if (curPage === 0) return;
     a.start = --curPage * curInterval;
     getCoursesPage();
 }
