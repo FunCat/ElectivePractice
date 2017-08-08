@@ -45,7 +45,7 @@
 					<td><input type="text" class="userBirthday" pattern="(0[1-9]|[12][0-9]|3[01])[-/.](0[1-9]|1[012])[-/.](19|20)\d\d" value="${userProfile.onlyDate}" placeholder="01/01/1990" /></td>
 				</tr>
 				<tr>
-					<td colspan="2"><input type="button" value="<s:message code="Edit" />" class="editBtnProfile myMediumBtn"></td>
+					<td colspan="2"><input type="button" value="<s:message code="Edit" />" class="editBtnProfile btn btn-primary btn-sm"></td>
 				</tr>
 			</table>
 			<div class="resultProfile"></div>
@@ -72,7 +72,7 @@
 					<td><input type="password" class="newPassword2" /></td>
 				</tr>
 				<tr>
-					<td colspan="2"><input type="button" value="<s:message code="Edit" />" class="editBtnPassword myMediumBtn"></td>
+					<td colspan="2"><input type="button" value="<s:message code="Edit" />" class="editBtnPassword btn btn-primary btn-sm"></td>
 				</tr>
 			</table>
 			<div class="resultPassword"></div>

@@ -57,6 +57,10 @@ public class CourseMainService {
     public PageDto<Course> getByTeacher(GetEntityRequest request, UserProfile userProfile){
         return courseDao.findByTeacher(request, userProfile);
     }
+
+    public PageDto<Course> getCoursesByTag(String tag, GetEntityRequest request){
+        return courseDao.getCoursesByTag(tag, request);
+    }
     public PageDto<Group> getPartOfStudentsByCourse(GetEntityRequest request, Long id){
         return courseDao.getPartOfStudentsByCourse(request, id);
     }

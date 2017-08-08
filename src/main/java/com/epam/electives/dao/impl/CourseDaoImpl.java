@@ -6,15 +6,14 @@ import com.epam.electives.dto.GetEntityRequest;
 import com.epam.electives.dto.PageDto;
 import com.epam.electives.model.Course;
 import com.epam.electives.model.Group;
-import com.epam.electives.model.GroupId;
 import com.epam.electives.model.UserProfile;
 import lombok.extern.log4j.Log4j;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
 import org.hibernate.Session;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
-import org.hibernate.sql.JoinType;
 import org.springframework.stereotype.Repository;
 
 
@@ -127,10 +126,6 @@ public class CourseDaoImpl implements CourseDao {
 
     @Override
     public PageDto<Course> findCoursesByStudent(GetEntityRequest request, UserProfile userProfile){
-
-//        Criteria criteria = getCurrentSession().createCriteria(Course.class);
-//        criteria.createAlias() // join TODO
-
         Criteria criteria = getCurrentSession().createCriteria(Group.class);
         List<Group> groups = criteria.add(Restrictions.eq("groupId.student.id",userProfile.getId())).list();
         List<Course> courses = new ArrayList<>();
@@ -166,5 +161,15 @@ public class CourseDaoImpl implements CourseDao {
         List<Group> result = criteria.list();
 
         return new PageDto<>(result,totalRecordsCount);
+    }
+
+    @Override
+    public PageDto<Course> getCoursesByTag(String tag, GetEntityRequest request) {
+        Criteria criteria = getCurrentSession().createCriteria(Course.class);
+        List<Course> courses = criteria.add(Restrictions.like("name", tag, MatchMode.ANYWHERE).ignoreCase()).list();
+        Long totalRecordsCount = new Long(courses.size());
+        Integer size = (request.getStart() + request.getLength() > courses.size()) ? courses.size() : request.getStart() + request.getLength();
+        List<Course> result = courses.subList(request.getStart(), size);
+        return new PageDto<>(result, totalRecordsCount);
     }
 }

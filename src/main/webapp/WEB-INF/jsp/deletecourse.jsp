@@ -33,4 +33,4 @@
 <jsp:include page="static/i18n.jsp"/>
 <jsp:include page="static/footer.jsp"/>
 <script src='<c:url value="/resources/js/teacherCourses.js"/>'></script>
-<script src='<c:url value="/resources/js/navigation.js"/>'></script>
+<script src='<c:url value="/resources/js/pagination.js"/>'></script>

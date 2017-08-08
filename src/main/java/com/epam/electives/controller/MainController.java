@@ -13,14 +13,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestWrapper;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import java.security.Principal;
+
 import java.util.Locale;
-import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
@@ -52,6 +50,7 @@ public class MainController  {
         }
         PageDto<Course> courses = courseMainService.getPart(request);
         modelAndView.addObject("courses", courses.getData());
+        modelAndView.addObject("i18nKeys", i18nUtil.getKeys());
         modelAndView.addObject("numOfPages",
                 (courses.getRecordsTotal() % 10 == 0) ?
                         courses.getRecordsTotal() / 10 :
@@ -134,5 +133,18 @@ public class MainController  {
 
         model.setViewName("login");
         return model;
+    }
+
+    @RequestMapping(value = "/404")
+    public ModelAndView errorPage(){
+        return new ModelAndView("static/404");
+    }
+
+    @RequestMapping(value = "/403")
+    public ModelAndView errorAccessDenied(Principal user){
+        ModelAndView modelAndView = new ModelAndView("static/403");
+        UserProfile userProfile = userMainService.getByLogin(user.getName());
+        modelAndView.addObject(userProfile);
+        return modelAndView;
     }
 }

@@ -1,5 +1,4 @@
 function subscribe(){
-        console.log("sub");
         $.ajax({
             contentType: 'application/json',
             dataType: 'json',
@@ -23,8 +22,6 @@ function subscribe(){
         });
 }
 function unsubscribe() {
-        console.log("unsub");
-
         $.ajax({
             contentType: 'application/json',
             dataType: 'json',
