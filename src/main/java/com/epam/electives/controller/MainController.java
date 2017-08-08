@@ -13,14 +13,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestWrapper;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import java.security.Principal;
+
 import java.util.Locale;
-import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
@@ -134,5 +132,18 @@ public class MainController  {
 
         model.setViewName("login");
         return model;
+    }
+
+    @RequestMapping(value = "/404")
+    public ModelAndView errorPage(){
+        return new ModelAndView("404");
+    }
+
+    @RequestMapping(value = "/403")
+    public ModelAndView errorAccessDenied(Principal user){
+        ModelAndView modelAndView = new ModelAndView("403");
+        UserProfile userProfile = userMainService.getByLogin(user.getName());
+        modelAndView.addObject(userProfile);
+        return modelAndView;
     }
 }

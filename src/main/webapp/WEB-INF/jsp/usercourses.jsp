@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="s" uri="/WEB-INF/tld/spring.tld" %>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <jsp:include page="static/header.jsp"/>
 
 <div class="">
@@ -21,6 +21,17 @@
             </tr>
             </thead>
             <tbody id="coursesList">
+                <c:forEach var="item" items="${courses}">
+                    <tr>
+                        <td>${item.name}</td>
+                        <td><a href="${pageContext.request.contextPath}/teacher?id=${item.teacher.id}">${item.teacher.firstname} ${item.teacher.lastname}</a></td>
+                        <td><fmt:formatDate pattern="dd MMM yyyy" value="${item.startDate}" /></td>
+                        <td><fmt:formatDate pattern="dd MMM yyyy" value="${item.endDate}" /></td>
+                        <td>
+                            <a class='myMediumBtn' href="${pageContext.request.contextPath}/courseinfo?id=${item.id}" role='button'>Подробнее</a>
+                        </td>
+                    </tr>
+                </c:forEach>
             </tbody>
         </table>
     </div>
@@ -42,5 +53,9 @@
 </div>
 
 <jsp:include page="static/footer.jsp"/>
-<script src='<c:url value="/resources/js/profile.js"/>'></script>
-<script src='<c:url value="/resources/js/usercourses.js"/>'></script>
+<script src='<c:url value="/resources/js/navigation.js"/>'></script>
+<script>
+    function getCoursesPage() {
+        getCoursesPageDefault("/partuser");
+    }
+</script>

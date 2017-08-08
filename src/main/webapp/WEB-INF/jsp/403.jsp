@@ -5,8 +5,9 @@
 
 <jsp:include page="static/header.jsp"/>
 
-<div class="container">
-    <h1><s:message code="404_ERROR" /></h1>
-</div>
+    <div class="container">
+        <h1><s:message code="403_ERROR" /></h1>
+        <h3><s:message code="Hi" /> ${userProfile.login}, <s:message code="MessageAccessDenied" /> </h3>
+    </div>
 
 <jsp:include page="static/footer.jsp"/>

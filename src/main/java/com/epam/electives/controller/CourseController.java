@@ -11,6 +11,7 @@ import com.epam.electives.services.UserMainService;
 import com.epam.electives.support.I18nUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -195,6 +196,38 @@ public class CourseController {
         courseMainService.saveOrUpdate(course);
 
         return messageSource.getMessage("SuccessUpdateCourse", null, locale);
+    }
+
+    @RequestMapping(value = "teacher")
+    public ModelAndView teacherCourses(@RequestParam("id") int teacherId, @RequestBody(required = false) GetEntityRequest request){
+        UserProfile teacher = userMainService.getById(teacherId);
+        ModelAndView modelAndView = new ModelAndView("teacher");
+        if(request == null) {
+            request = new GetEntityRequest(0,10);
+        }
+        PageDto<Course> courses = partByTeacher(new Principal() {
+            @Override
+            public String getName() {
+                return teacher.getLogin();
+            }
+        }, request);
+        modelAndView.addObject("courses", courses.getData());
+        modelAndView.addObject("teacher", teacher);
+
+        modelAndView.addObject("numOfPages",
+                (courses.getRecordsTotal() % 10 == 0) ?
+                        courses.getRecordsTotal() / 10 :
+                        courses.getRecordsTotal() / 10 + 1);
+        return modelAndView;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/coursestag")
+    public PageDto<Course> partByTeacher(@RequestParam("term") String tag, @RequestBody(required = false) GetEntityRequest request){
+        if(request == null) {
+            request = new GetEntityRequest(0,10);
+        }
+        return courseMainService.getCoursesByTag(tag, request);
     }
 
 }

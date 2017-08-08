@@ -31,7 +31,7 @@
 <div class="container">
     <div class="row">
         <div class="col-sm-8 col-lg-8">
-            <h1>Electives</h1>
+            <h1><a href="${pageContext.request.contextPath}/" style="text-decoration: none;">Electives</a></h1>
         </div>
         <div class="col-sm-4 col-lg-4">
             <sec:authorize access="!isAuthenticated()">

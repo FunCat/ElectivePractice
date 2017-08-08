@@ -7,17 +7,13 @@ import com.epam.electives.model.UserProfile;
 import com.epam.electives.services.CourseMainService;
 import com.epam.electives.services.UserMainService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cglib.core.Local;
 import org.springframework.context.MessageSource;
-import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.util.UrlPathHelper;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -29,6 +25,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 import java.util.regex.Pattern;
+
 
 @Controller
 public class UserController {
@@ -75,8 +72,7 @@ public class UserController {
                                         @RequestParam("userlogin") String userlogin,
                                         @RequestParam("birthday") String birthday,
                                         Locale locale) {
-
-        if (checkDateFormat(birthday)) return messageSource.getMessage("ErrorFormatDate", null, locale);
+        if (!checkDateFormat(birthday)) return messageSource.getMessage("ErrorFormatDate", null, locale);
 
         UserProfile user = userMainService.getByLogin(login.getName());
         user.setFirstname(firstname);
@@ -114,11 +110,12 @@ public class UserController {
                                    @RequestParam("newpassword") String newPassword,
                                    @RequestParam("newpassword2") String newPassword2,
                                    Locale locale) {
+
         UserProfile user = userMainService.getByLogin(login.getName());
         if(!checkPassword(nowPassword, user.getPassword()))
             return messageSource.getMessage("NotMatchNowPassword", null, locale);
 
-        if (checkPasswordFormat(newPassword)) return messageSource.getMessage("ErrorFormatPassword", null, locale);
+        if (!checkPasswordFormat(newPassword)) return messageSource.getMessage("ErrorFormatPassword", null, locale);
 
         if(!newPassword.equals(newPassword2))
             return messageSource.getMessage("NotMatchesPassword", null, locale);
@@ -159,14 +156,14 @@ public class UserController {
                                         @RequestParam("password") String password,
                                         @RequestParam("password2") String password2,
                                         @RequestParam("firstname") String firstname,
-                                        @RequestParam("surname") String surname,
                                         @RequestParam("lastname") String lastname,
+                                        @RequestParam("surname") String surname,
                                         @RequestParam("birthday") String birthday,
                                         Locale locale) {
 
-        if (checkDateFormat(birthday)) return messageSource.getMessage("ErrorFormatDate", null, locale);
+        if (!checkDateFormat(birthday)) return messageSource.getMessage("ErrorFormatDate", null, locale);
 
-        if (checkPasswordFormat(password)) return messageSource.getMessage("ErrorFormatPassword", null, locale);
+        if (!checkPasswordFormat(password)) return messageSource.getMessage("ErrorFormatPassword", null, locale);
 
         Date dateBirthday;
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -206,8 +203,8 @@ public class UserController {
      * @param password user password.
      * @return True if password format is correct or False.
      */
-    private boolean checkPasswordFormat(@RequestParam("password") String password) {
-        return !Pattern.matches("(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}", password);
+    boolean checkPasswordFormat(@RequestParam("password") String password) {
+        return Pattern.matches("(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}", password);
     }
 
     /**
@@ -216,8 +213,8 @@ public class UserController {
      * @param birthday user birthday.
      * @return True if birthday format is correct or False.
      */
-    private boolean checkDateFormat(@RequestParam("birthday") String birthday) {
-        return !Pattern.matches("(0[1-9]|[12][0-9]|3[01])[-/.](0[1-9]|1[012])[-/.](19|20)\\d\\d", birthday);
+    boolean checkDateFormat(@RequestParam("birthday") String birthday) {
+        return Pattern.matches("(0[1-9]|[12][0-9]|3[01])[-/.](0[1-9]|1[012])[-/.](19|20)\\d\\d", birthday);
     }
 
     /**
@@ -227,14 +224,22 @@ public class UserController {
      * @return Page with user courses.
      */
     @RequestMapping(value = "/usercourses")
-    public ModelAndView userCourses(Principal username) {
+    public ModelAndView userCourses(Principal username, @RequestBody(required = false) GetEntityRequest request) {
         String login = username.getName();
-        if(login != null) {
-            UserProfile user = userMainService.getByLogin(login);
-            ModelAndView modelAndView = new ModelAndView("usercourses");
-            return modelAndView;
+        UserProfile user = userMainService.getByLogin(login);
+        ModelAndView modelAndView = new ModelAndView("usercourses");
+        if(request == null) {
+            request = new GetEntityRequest(0,10);
         }
-        return new ModelAndView("login");
+        PageDto<Course> courses = getUserCourses(username, request);
+        modelAndView.addObject("courses", courses.getData());
+
+        modelAndView.addObject("numOfPages",
+                (courses.getRecordsTotal() % 10 == 0) ?
+                        courses.getRecordsTotal() / 10 :
+                        courses.getRecordsTotal() / 10 + 1);
+
+        return modelAndView;
     }
 
     /**
@@ -252,13 +257,14 @@ public class UserController {
         PageDto<Course> courses = userMainService.getPartUser(request,user);
         return courses;
     }
+
     /**
      * Password hashing in bcrypt script with the strength of 10
      *
      * @param password user password
      * @return hashing password
      */
-    private String bcryptPassword(@RequestParam("password") String password) {
+    String bcryptPassword(@RequestParam("password") String password) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String hashedPassword = password;
         int i = 0;
@@ -300,4 +306,6 @@ public class UserController {
         SecurityContextHolder.getContext().setAuthentication(null);
         httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + "/courses");
     }
+
+
 }

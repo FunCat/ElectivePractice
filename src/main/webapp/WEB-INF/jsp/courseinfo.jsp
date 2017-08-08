@@ -13,9 +13,7 @@
     <div class="headInfo">
         <div class="leftBlockInfo">
             <h1 class="nameCourseInfo">${course.name}</h1>
-            <div class="teacherName">
-                <h3 class="teacherCourseInfo">${course.teacher.firstname} ${course.teacher.lastname}</h3>
-            </div>
+            <div class="teacherName"><h3 class="teacherCourseInfo">${course.teacher.firstname} ${course.teacher.lastname}</h3></div>
         </div>
         <div class="rightBlockInfo">
             <div class="calendar">
