@@ -141,7 +141,7 @@ public class CourseDaoImpl implements CourseDao {
     @Override
     public PageDto<Course> getCoursesByTag(String tag, GetEntityRequest request) {
         Criteria criteria = getCurrentSession().createCriteria(Course.class);
-        List<Course> courses = criteria.add(Restrictions.like("name", tag, MatchMode.START).ignoreCase()).list();
+        List<Course> courses = criteria.add(Restrictions.like("name", tag, MatchMode.ANYWHERE).ignoreCase()).list();
         Long totalRecordsCount = new Long(courses.size());
         Integer size = (request.getStart() + request.getLength() > courses.size()) ? courses.size() : request.getStart() + request.getLength();
         List<Course> result = courses.subList(request.getStart(), size);

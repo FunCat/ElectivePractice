@@ -9,9 +9,10 @@
         <h3><s:message code="Courses"/></h3>
     </div>
 
-    <div class="ui-widget">
-        <label for="tags">Tags: </label>
-        <input id="tags">
+    <div class="col-sm-8 col-lg-8">
+        <div class="wrap_search_box">
+            <input id="tags" placeholder="<s:message code="SearchByNameCourse" />...">
+        </div>
     </div>
 
     <table class="table table-striped" data-effect="fade">
@@ -41,17 +42,11 @@
 
     <div class="text-center">
         <ul class="pagination">
-            <li class="">
-                <a href="#" id="prevPage">«</a>
-            </li>
+            <li id='prevPage' onclick='prevPage()'>«</li>
             <c:forEach var="i" begin="1" end="${numOfPages}">
-                <li class="page" id="${i}" >
-                    <a href="#" ><c:out value="${i}"/></a>
-                </li>
+                <li class='page' id="${i}"  onclick='numPage(this)'>${i}</li>
             </c:forEach>
-            <li class="">
-                <a href="#" id="nextPage">»</a>
-            </li>
+            <li id='nextPage' onclick='nextPage()'>»</li>
         </ul>
 
     </div>

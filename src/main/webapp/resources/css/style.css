@@ -125,3 +125,40 @@ a{
     border-radius: 2px;
     color: #555555;
 }
+.pagination li:hover{
+    color: #ffffff;
+    background-color: #009688;
+    border-color: #009688;
+    cursor: pointer;
+}
+.pagination > li:first-child,
+.pagination > li:first-child {
+    margin-left: 0;
+}
+.pagination > .active,
+.pagination > .active,
+.pagination > .active,
+.pagination > .active,
+.pagination > .active,
+.pagination > .active {
+    z-index: 2;
+    color: #ffffff;
+    background-color: #009688;
+    border-color: #009688;
+    cursor: default;
+}
+.pagination > .disabled,
+.pagination > .disabled,
+.pagination > .disabled,
+.pagination > .disabled,
+.pagination > .disabled,
+.pagination > .disabled {
+    color: #777777;
+    background-color: #efefef;
+    border-color: #dddddd;
+    cursor: not-allowed;
+}
+.wrap_search_box{
+    margin: 20px 0px 5px 0px;
+    float: right;
+}

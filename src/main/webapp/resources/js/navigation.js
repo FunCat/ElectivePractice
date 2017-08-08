@@ -77,7 +77,7 @@ function getCoursesPageDefaultPagination(url) {
         data: JSON.stringify(a),
         url: contextPath + url,
         success: function (response) {
-            console.log("CurPage = " + curPage);
+
             $("#coursesList").html("");
             $(".pagination").html("");
             $.each(response.data, function (index, value) {
@@ -95,17 +95,20 @@ function getCoursesPageDefaultPagination(url) {
             });
             var totalRecords = response.recordsTotal;
             numOfPages = (totalRecords % 10 == 0) ? totalRecords / 10 : totalRecords / 10 + 1;
-            $(".pagination").append("<li id='prevPage' onclick='prevPage()'>«</li>");
+            $(".pagination").append("<li class = '' id='prevPage' onclick='prevPage()'>«</li>");
             for(var i = 1; i < numOfPages; i++){
                 $(".pagination").append("<li class='page' id='" + i + "'  onclick='numPage(this)'>" + i + "</li>");
             }
-            $(".pagination").append("<li id='nextPage' onclick='nextPage()'>»</li>");
+            $(".pagination").append("<li class='' id='nextPage' onclick='nextPage()'>»</li>");
+
+            console.log("CurPage = " + curPage + " numOfPages = " + Math.floor(numOfPages-1) + " totalRecords = " + totalRecords);
+
             if (curPage == 0) {
                 $(".pagination li:first").addClass('disabled')
             } else {
                 $(".pagination li:first").removeClass('disabled')
             }
-            if (curPage == numOfPages-1) {
+            if (curPage == Math.floor(numOfPages-1)) {
                 $(".pagination li:last").addClass('disabled')
             } else {
                 $(".pagination li:last").removeClass('disabled')
@@ -117,8 +120,7 @@ function getCoursesPageDefaultPagination(url) {
 }
 
 function nextPage(){
-    console.log("curPage = " + curPage);
-    if (curPage == numOfPages-1) return;
+    if (curPage == Math.floor(numOfPages-1)) return;
     a.start = ++curPage * curInterval;
     getCoursesPage();
 }
