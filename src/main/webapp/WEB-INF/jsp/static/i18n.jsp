@@ -6,6 +6,6 @@
 <script type="text/javascript">
     var i18nStrings = [];
     <c:forEach var="i18nKey" items="${i18nKeys}">
-    i18nStrings["${i18nKey}"] = '<spring:message code="${i18nKey}"  javaScriptEscape='true'/>';
+        i18nStrings["${i18nKey}"] = '<spring:message code="${i18nKey}"  javaScriptEscape='true'/>';
     </c:forEach>
 </script>

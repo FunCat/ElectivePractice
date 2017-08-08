@@ -11,7 +11,6 @@ import com.epam.electives.services.UserMainService;
 import com.epam.electives.support.I18nUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
-import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -32,16 +31,12 @@ public class CourseController {
 
     @Autowired
     CourseMainService courseMainService;
-
     @Autowired
     UserMainService userMainService;
-
     @Autowired
     GroupMainService groupMainService;
-
     @Autowired
     I18nUtil i18nUtil;
-
     @Autowired
     private MessageSource messageSource;
 
@@ -53,9 +48,7 @@ public class CourseController {
         }
         PageDto<Course> courses = partByTeacher(login, request);
         modelAndView.addObject("courses", courses.getData());
-
         modelAndView.addObject("i18nKeys", i18nUtil.getKeys());
-
         modelAndView.addObject("numOfPages",
                 (courses.getRecordsTotal() % 10 == 0) ?
                         courses.getRecordsTotal() / 10 :
@@ -65,7 +58,7 @@ public class CourseController {
 
     @ResponseBody
     @RequestMapping(value = "/teacher/part")
-    public PageDto<Course> partByTeacher(Principal login, @RequestBody(required = false) GetEntityRequest request){
+    public PageDto<Course> partByTeacher(Principal login, @RequestBody(required = false) GetEntityRequest request) {
         UserProfile userProfile = userMainService.getByLogin(login.getName());
         if (request == null) {
             request = new GetEntityRequest(0, 10);
@@ -75,15 +68,13 @@ public class CourseController {
 
 
     /**
-     *
-     * @param id courseId
+     * @param id      courseId
      * @param request
      * @return
      */
     @ResponseBody
     @RequestMapping(value = "/course/students")
-    public PageDto<Group> partGroupByTeacher(@RequestParam(value = "id") Long id, @RequestBody(required = false) GetEntityRequest request){
-
+    public PageDto<Group> partGroupByTeacher(@RequestParam(value = "id") Long id, @RequestBody(required = false) GetEntityRequest request) {
         if (request == null) {
             request = new GetEntityRequest(0, 10);
         }
@@ -93,19 +84,18 @@ public class CourseController {
 
     @ResponseBody
     @RequestMapping(value = "/editgroup", method = RequestMethod.POST)
-    public void editGroup(@RequestBody Group group){
+    public void editGroup(@RequestBody Group group) {
         groupMainService.editGradeReview(group);
     }
 
 
     @RequestMapping(value = "/editcourse")
-    public ModelAndView editCourse(Principal login, @RequestParam("courseid") int courseid){
+    public ModelAndView editCourse(Principal login, @RequestParam("courseid") int courseid) {
         ModelAndView modelAndView = new ModelAndView("editcourse");
         UserProfile userProfile = userMainService.getByLogin(login.getName());
         Course course = courseMainService.getById(courseid);
-
-        if(!userProfile.equals(course.getTeacher())){
-            return new ModelAndView("404");
+        if (!userProfile.equals(course.getTeacher())) {
+            return new ModelAndView("static/404");
         }
         modelAndView.addObject(course);
         return modelAndView;
@@ -114,19 +104,18 @@ public class CourseController {
     @RequestMapping(value = "/teacher/deletecourse", method = RequestMethod.GET)
     public ModelAndView deleteCourses(Principal login, @RequestParam(value = "id") int id) {
         ModelAndView modelAndView = new ModelAndView("deletecourse");
-
         return modelAndView;
     }
 
-    @RequestMapping(value= "/save_course", method=RequestMethod.POST, produces = "text/plain;charset=UTF-8")
+    @RequestMapping(value = "/save_course", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
     @ResponseBody
-    public String  userEditProfile(Principal login,
-                                   @RequestParam("idcourse") int idCourse,
-                                   @RequestParam("namecourse") String nameCourse,
-                                   @RequestParam("startdatecourse") String startDateCourse,
-                                   @RequestParam("enddatecourse") String endDateCourse,
-                                   @RequestParam("descriptionCourse") String descriptionCourse,
-                                   Locale locale) {
+    public String userEditProfile(Principal login,
+                                  @RequestParam("idcourse") int idCourse,
+                                  @RequestParam("namecourse") String nameCourse,
+                                  @RequestParam("startdatecourse") String startDateCourse,
+                                  @RequestParam("enddatecourse") String endDateCourse,
+                                  @RequestParam("descriptionCourse") String descriptionCourse,
+                                  Locale locale) {
         Course course = courseMainService.getById(idCourse);
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -155,19 +144,19 @@ public class CourseController {
     }
 
     @RequestMapping(value = "/addcourse")
-    public ModelAndView addCourse(){
+    public ModelAndView addCourse() {
         ModelAndView modelAndView = new ModelAndView("addcourse");
         return modelAndView;
     }
 
-    @RequestMapping(value= "/add_new_course", method=RequestMethod.POST, produces = "text/plain;charset=UTF-8")
+    @RequestMapping(value = "/add_new_course", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
     @ResponseBody
-    public String  addNewCourse(Principal login,
-                                   @RequestParam("namecourse") String nameCourse,
-                                   @RequestParam("startdatecourse") String startDateCourse,
-                                   @RequestParam("enddatecourse") String endDateCourse,
-                                   @RequestParam("descriptionCourse") String descriptionCourse,
-                                   Locale locale) {
+    public String addNewCourse(Principal login,
+                               @RequestParam("namecourse") String nameCourse,
+                               @RequestParam("startdatecourse") String startDateCourse,
+                               @RequestParam("enddatecourse") String endDateCourse,
+                               @RequestParam("descriptionCourse") String descriptionCourse,
+                               Locale locale) {
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         Date startDate = null;
@@ -199,11 +188,11 @@ public class CourseController {
     }
 
     @RequestMapping(value = "teacher")
-    public ModelAndView teacherCourses(@RequestParam("id") int teacherId, @RequestBody(required = false) GetEntityRequest request){
+    public ModelAndView teacherCourses(@RequestParam("id") int teacherId, @RequestBody(required = false) GetEntityRequest request) {
         UserProfile teacher = userMainService.getById(teacherId);
         ModelAndView modelAndView = new ModelAndView("teacher");
-        if(request == null) {
-            request = new GetEntityRequest(0,10);
+        if (request == null) {
+            request = new GetEntityRequest(0, 10);
         }
         PageDto<Course> courses = partByTeacher(new Principal() {
             @Override
@@ -211,9 +200,10 @@ public class CourseController {
                 return teacher.getLogin();
             }
         }, request);
+
         modelAndView.addObject("courses", courses.getData());
         modelAndView.addObject("teacher", teacher);
-
+        modelAndView.addObject("i18nKeys", i18nUtil.getKeys());
         modelAndView.addObject("numOfPages",
                 (courses.getRecordsTotal() % 10 == 0) ?
                         courses.getRecordsTotal() / 10 :
@@ -223,9 +213,9 @@ public class CourseController {
 
     @ResponseBody
     @RequestMapping(value = "/coursestag")
-    public PageDto<Course> partByTeacher(@RequestParam("term") String tag, @RequestBody(required = false) GetEntityRequest request){
-        if(request == null) {
-            request = new GetEntityRequest(0,10);
+    public PageDto<Course> partByTeacher(@RequestParam("term") String tag, @RequestBody(required = false) GetEntityRequest request) {
+        if (request == null) {
+            request = new GetEntityRequest(0, 10);
         }
         return courseMainService.getCoursesByTag(tag, request);
     }

@@ -50,6 +50,7 @@ public class MainController  {
         }
         PageDto<Course> courses = courseMainService.getPart(request);
         modelAndView.addObject("courses", courses.getData());
+        modelAndView.addObject("i18nKeys", i18nUtil.getKeys());
         modelAndView.addObject("numOfPages",
                 (courses.getRecordsTotal() % 10 == 0) ?
                         courses.getRecordsTotal() / 10 :
@@ -136,12 +137,12 @@ public class MainController  {
 
     @RequestMapping(value = "/404")
     public ModelAndView errorPage(){
-        return new ModelAndView("404");
+        return new ModelAndView("static/404");
     }
 
     @RequestMapping(value = "/403")
     public ModelAndView errorAccessDenied(Principal user){
-        ModelAndView modelAndView = new ModelAndView("403");
+        ModelAndView modelAndView = new ModelAndView("static/403");
         UserProfile userProfile = userMainService.getByLogin(user.getName());
         modelAndView.addObject(userProfile);
         return modelAndView;

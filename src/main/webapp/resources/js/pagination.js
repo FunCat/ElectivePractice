@@ -59,8 +59,8 @@ function getCoursesPageDefault(url) {
                     "<td>" + value.startDate + "</td>" +
                     "<td>" + value.endDate + "</td>" +
                     "<td>" +
-                    "<a class='myMediumBtn' href='"+contextPath+"/courseinfo?id=" +
-                    value.id + "'>Подробнее</a>" +
+                    "<a class='btn btn-primary btn-sm' href='"+contextPath+"/courseinfo?id=" +
+                    value.id + "'>" + i18nStrings["More"] + "</a>" +
                     "</td>" +
                     "</tr>")
 
@@ -88,8 +88,8 @@ function getCoursesPageDefaultPagination(url) {
                     "<td>" + value.startDate + "</td>" +
                     "<td>" + value.endDate + "</td>" +
                     "<td>" +
-                    "<a class='myMediumBtn' href='"+contextPath+"/courseinfo?id=" +
-                    value.id + "'>Подробнее</a>" +
+                    "<a class='btn btn-primary btn-sm' href='" + contextPath + "/courseinfo?id=" +
+                    value.id + "'>" + i18nStrings["More"] + "</a>" +
                     "</td>" +
                     "</tr>")
             });

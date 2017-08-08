@@ -6,6 +6,7 @@ import com.epam.electives.model.Course;
 import com.epam.electives.model.UserProfile;
 import com.epam.electives.services.CourseMainService;
 import com.epam.electives.services.UserMainService;
+import com.epam.electives.support.I18nUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -33,9 +34,10 @@ public class UserController {
     UserMainService userMainService;
     @Autowired
     CourseMainService courseMainService;
-
     @Autowired
     private MessageSource messageSource;
+    @Autowired
+    I18nUtil i18nUtil;
 
     /**
      * Return page with user profile.
@@ -233,7 +235,7 @@ public class UserController {
         }
         PageDto<Course> courses = getUserCourses(username, request);
         modelAndView.addObject("courses", courses.getData());
-
+        modelAndView.addObject("i18nKeys", i18nUtil.getKeys());
         modelAndView.addObject("numOfPages",
                 (courses.getRecordsTotal() % 10 == 0) ?
                         courses.getRecordsTotal() / 10 :

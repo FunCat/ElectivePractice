@@ -25,7 +25,7 @@
                     <td><fmt:formatDate pattern="dd MMM yyyy" value="${item.startDate}" /></td>
                     <td><fmt:formatDate pattern="dd MMM yyyy" value="${item.endDate}" /></td>
                     <td>
-                        <a class='myMediumBtn' href="${pageContext.request.contextPath}/courseinfo?id=${item.id}" role='button'>Подробнее</a>
+                        <a class='btn btn-primary btn-sm' href="${pageContext.request.contextPath}/courseinfo?id=${item.id}"><s:message code="More" /></a>
                     </td>
                 </tr>
             </c:forEach>
@@ -34,24 +34,21 @@
 
     <div class="text-center">
         <ul class="pagination">
-            <li class="">
-                <a href="#" id="prevPage">«</a>
-            </li>
+            <li class="" id="prevPage">«</li>
             <c:forEach var="i" begin="1" end="${numOfPages}">
                 <li class="page" id="${i}" >
-                    <a href="#" ><c:out value="${i}"/></a>
+                    <c:out value="${i}"/>
                 </li>
             </c:forEach>
-            <li class="">
-                <a href="#" id="nextPage">»</a>
-            </li>
+            <li class="" id="nextPage">»</li>
         </ul>
     </div>
 
 </div>
 
+<jsp:include page="static/i18n.jsp"/>
 <jsp:include page="static/footer.jsp"/>
-<script src='<c:url value="/resources/js/navigation.js"/>'></script>
+<script src='<c:url value="/resources/js/pagination.js"/>'></script>
 <script>
     function getCoursesPage() {
         getCoursesPageDefault("/teacher/part");

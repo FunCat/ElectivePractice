@@ -13,7 +13,8 @@
     <div class="headInfo">
         <div class="leftBlockInfo">
             <h1 class="nameCourseInfo">${course.name}</h1>
-            <div class="teacherName"><h3 class="teacherCourseInfo">${course.teacher.firstname} ${course.teacher.lastname}</h3></div>
+            <div class="teacherName"><h3
+                    class="teacherCourseInfo">${course.teacher.firstname} ${course.teacher.lastname}</h3></div>
         </div>
         <div class="rightBlockInfo">
             <div class="calendar">
@@ -31,25 +32,32 @@
     <div class="description">${course.description}</div>
 
     <sec:authorize access="!isAuthenticated()">
-        <div><a class="myMediumBtn" href="${pageContext.request.contextPath}/login" role="button">Записаться</a></div>
+        <div><a class="myMediumBtn" href="${pageContext.request.contextPath}/login"><s:message code="Subscribe" /></a></div>
     </sec:authorize>
 
     <sec:authorize access="hasRole('ROLE_USER')">
         <div id="subdiv">
             <c:choose>
                 <c:when test="${userAlreadyRegistredForCourse == 'true'}">
-                    <div id="unsubscribe" class='myMediumBtn' onclick="unsubscribe()"><s:message code="Unsubscribe"/></div>
+                    <div id="unsubscribe" class='myMediumBtn' onclick="unsubscribe()">
+                        <s:message code="Unsubscribe"/>
+                    </div>
                 </c:when>
                 <c:otherwise>
-                    <div id="subscribe" class='myMediumBtn' onclick="subscribe()"><s:message code="Subscribe"/></div>
+                    <div id="subscribe" class='myMediumBtn' onclick="subscribe()">
+                        <s:message code="Subscribe" />
+                    </div>
                 </c:otherwise>
             </c:choose>
         </div>
     </sec:authorize>
 
     <sec:authorize access="hasRole('ROLE_TEACHER')">
-        <div><a class='myMediumBtn' href="${pageContext.request.contextPath}/editcourse?courseid=${course.id}"
-                role="button"><s:message code="Edit"/></a></div>
+        <div>
+            <a class='myMediumBtn' href="${pageContext.request.contextPath}/editcourse?courseid=${course.id}">
+                <s:message code="Edit"/>
+            </a>
+        </div>
     </sec:authorize>
 
     <div id="subscribeResult"></div>
@@ -66,7 +74,6 @@
                 <th><s:message code="Lastname"/></th>
                 <th><s:message code="Rating"/></th>
                 <th><s:message code="Review"/></th>
-                    <%--<th><s:message code="End_Date"/></th>--%>
                 <th width="20%"></th>
             </tr>
             </thead>
@@ -79,10 +86,11 @@
                     <td><input type="text" id="grade_${loop.index}" disabled value="${item.grade}"/></td>
                     <td><input type="text" id="review_${loop.index}" disabled value="${item.review}"/></td>
                     <td>
-                        <a href="#" class="btn btn-warning btn-sm edit" attr_id="${loop.index}" role="button">
+                        <a href="#" class="btn btn-warning btn-sm edit" attr_id="${loop.index}">
                             <s:message code="Edit"/>
                         </a>
-                        <a href="#" class="btn btn-danger btn-sm hidden save" student_id="${item.groupId.student.id}" attr_id="${loop.index}" role="button">
+                        <a href="#" class="btn btn-danger btn-sm hidden save" student_id="${item.groupId.student.id}"
+                           attr_id="${loop.index}">
                             <s:message code="Save"/>
                         </a>
                     </td>
@@ -93,17 +101,13 @@
         <div class="result"></div>
         <div class="text-center">
             <ul class="pagination">
-                <li class="">
-                    <a href="#" id="prevPage">«</a>
-                </li>
+                <li class="" id="prevPage">«</li>
                 <c:forEach var="i" begin="1" end="${numOfPages}">
                     <li class="page" id="${i}">
-                        <a href="#"><c:out value="${i}"/></a>
+                        <c:out value="${i}"/>
                     </li>
                 </c:forEach>
-                <li class="">
-                    <a href="#" id="nextPage">»</a>
-                </li>
+                <li class="" id="nextPage">»</li>
             </ul>
         </div>
 
@@ -114,5 +118,5 @@
 <jsp:include page="static/i18n.jsp"/>
 <jsp:include page="static/footer.jsp"/>
 <script src='<c:url value="/resources/js/courseStudents.js"/>'></script>
-<script src='<c:url value="/resources/js/navigation.js"/>'></script>
+<script src='<c:url value="/resources/js/pagination.js"/>'></script>
 <script src='<c:url value="/resources/js/subscribe.js"/>'></script>
