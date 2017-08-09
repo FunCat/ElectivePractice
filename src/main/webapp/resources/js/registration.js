@@ -1,17 +1,16 @@
 $(document).ready(function(){
     $("#registrationBtn").click(function(){
-        var userLogin = $(".userLogin").val();
-        var userPassword = $(".userPassword").val();
-        var userPassword2 = $(".userPassword2").val();
-        var userName = $(".userName").val();
-        var userLastname = $(".userLastname").val();
-        var userBirthday = $(".userBirthday").val();
+
+        var $userLogin = $(".userLogin").val();
+        var $userPassword = $(".userPassword").val();
+        var $userPassword2 = $(".userPassword2").val();
+        var $userName = $(".userName").val();
+        var $userLastname = $(".userLastname").val();
+        var $userBirthday = $(".userBirthday").val();
         var $result = $(".result");
 
-
-
-        if(userLogin === "" || userPassword === "" || userPassword2 === "" ||
-            userName === "" || userLastname === "" || userBirthday === ""){
+        if($userLogin === "" || $userPassword === "" || $userPassword2 === "" ||
+            $userName === "" || $userLastname === "" || $userBirthday === ""){
             $result.html("");
             $result.html(i18nStrings["NotAllRequiredField"]);
         }
@@ -19,21 +18,21 @@ $(document).ready(function(){
             $.ajax({
                 type: 'POST',
                 data: {
-                    login: userLogin,
-                    password: userPassword,
-                    password2: userPassword2,
-                    firstname: userName,
-                    lastname: userLastname,
+                    login: $userLogin,
+                    password: $userPassword,
+                    password2: $userPassword2,
+                    firstname: $userName,
+                    lastname: $userLastname,
                     surname: $(".userSurname").val(),
-                    birthday: userBirthday,
+                    birthday: $userBirthday
                 },
                 url: contextPath + "/registration_check",
                 success: function (data) {
-                    console.log(data);
                     $result.html("");
-                    if (data === "Успешная регистрация!") {
+
+                    if (data === i18nStrings["SuccessRegistration"])
                         window.location.href = contextPath + "/login";
-                    }
+
                     $(".userPassword").val("");
                     $(".userPassword2").val("");
                     $result.html(data);

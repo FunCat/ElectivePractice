@@ -2,7 +2,7 @@
 <%@ taglib prefix="s" uri="/WEB-INF/tld/spring.tld" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 
 <jsp:include page="static/header.jsp"/>
 <div class="col-sm-4 col-lg-4">
@@ -29,7 +29,7 @@
     </sec:authorize>
 </div>
 
-<jsp:include page="static/i18n.jsp"/>
 <jsp:include page="static/footer.jsp"/>
+<jsp:include page="static/i18n.jsp"/>
 <script src='<c:url value="/resources/js/teacherCourses.js"/>'></script>
 <script src='<c:url value="/resources/js/pagination.js"/>'></script>

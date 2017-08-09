@@ -5,10 +5,13 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -17,25 +20,15 @@ import java.util.Locale;
 
 import static org.junit.Assert.*;
 
-//@ComponentScan(basePackages = {
-//        "com.epam.electives.controller",
-//        "com.epam.electives.services",
-//        "com.epam.electives.dao",
-//
-//})
-//class SpringTestContext{
-//}
-//
-//@RunWith(SpringJUnit4ClassRunner.class)
-//@ContextConfiguration(classes = SpringTestContext.class)
+@WebAppConfiguration
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = {"file:src/main/webapp/WEB-INF/appconfig-root.xml"})
 public class UserControllerTest {
 
+    @Autowired
     UserController userController;
-
-    @Before
-    public void init(){
-         userController = new UserController();
-    }
+    @Autowired
+    private MessageSource messageSource;
 
     @Test
     public void checkPasswordFormat() throws Exception {
@@ -103,7 +96,6 @@ public class UserControllerTest {
     }
 
     @Test
-    @Ignore
     public void checkUserRegistration(){
         UserProfile user = new UserProfile();
 
@@ -126,7 +118,9 @@ public class UserControllerTest {
         String result = userController.userRegistrationCheck(user.getLogin(), user.getPassword(), user.getPassword(),
                 user.getFirstname(), user.getLastname(), user.getSurname(), birthday, Locale.getDefault());
 
-        assertEquals(result, "Success registration!");
+        assertEquals(result, messageSource.getMessage("SuccessRegistration", null, Locale.getDefault()));
+
+
 
     }
 }
