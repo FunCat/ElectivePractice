@@ -16,7 +16,7 @@ public interface CourseDao {
 
     Course findCourseById(Long id);
 
-    void saveOrUpdate(Course news);
+    void saveOrUpdate(Course course);
 
     PageDto<Course> findParts(GetEntityRequest request);
 
@@ -27,6 +27,8 @@ public interface CourseDao {
     List<UserProfile> findStudentsByCourse(Course course);
 
     PageDto<Course> findCoursesByStudent (GetEntityRequest request, UserProfile userProfile);
+
+    PageDto<Course> getCoursesByTag (int columSorting, boolean desc, String tag, GetEntityRequest request);
 
     PageDto<Group> getPartOfStudentsByCourse (GetEntityRequest request, Long id);
 }

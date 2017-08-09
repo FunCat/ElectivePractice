@@ -31,7 +31,7 @@ a{
     border-color: #414141;
 }
 .title_page_wrap{
-    margin: 10px 0px;
+    margin: 10px 0;
     font-size: 150%;
     font-weight: 600;
     color: #414141;
@@ -77,10 +77,10 @@ a{
     float: left;
 }
 .nameCourseInfo{
-    margin-bottom: 0px;
+    margin-bottom: 0;
 }
 .teacherCourseInfo{
-    margin: 0px;
+    margin: 0;
     font-size: 14px;
 }
 .rightBlockInfo{
@@ -105,7 +105,7 @@ a{
     border: 1px solid #a99898;
     border-radius: 10px;
     padding: 10px;
-    margin: 10px 0px;
+    margin: 10px 0;
 }
 .description textarea{
     width: 100%;
@@ -114,4 +114,77 @@ a{
 .deleteAccount{
     color: red;
     margin-top: 10px;
+}
+
+.pagination li{
+    position: relative;
+    float: left;
+    padding: 4px 12px;
+    line-height: 1.666;
+    text-decoration: none;
+    background-color: #efefef;
+    margin-right: 10px;
+    border-radius: 2px;
+    color: #555555;
+}
+.pagination li:hover{
+    color: #ffffff;
+    background-color: #009688;
+    border-color: #009688;
+    cursor: pointer;
+}
+.pagination > li:first-child,
+.pagination > li:first-child {
+    margin-left: 0;
+}
+.pagination > .active,
+.pagination > .active,
+.pagination > .active,
+.pagination > .active,
+.pagination > .active,
+.pagination > .active {
+    z-index: 2;
+    color: #ffffff;
+    background-color: #009688;
+    border-color: #009688;
+    cursor: default;
+}
+.pagination > .disabled,
+.pagination > .disabled,
+.pagination > .disabled,
+.pagination > .disabled,
+.pagination > .disabled,
+.pagination > .disabled {
+    color: #777777;
+    background-color: #efefef;
+    border-color: #dddddd;
+    cursor: not-allowed;
+}
+.wrap_search_box{
+    margin: 20px 0 5px 0;
+    float: right;
+}
+.active_status{
+    margin: 7px 0 0 0;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #009688;
+}
+.arhive_status{
+    margin: 7px 0 0 0;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #ac2925;
+}
+.columSort:hover{
+    cursor: pointer;
+    background-color: rgba(128, 128, 128, 0.15);
+}
+.columDesc::after{
+    content: '↓';
+}
+.columAsc::after{
+    content: '↑';
 }

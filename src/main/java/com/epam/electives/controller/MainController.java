@@ -13,14 +13,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestWrapper;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import java.security.Principal;
+
 import java.util.Locale;
-import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
@@ -50,8 +48,9 @@ public class MainController  {
         if(request == null) {
             request = new GetEntityRequest(0,10);
         }
-        PageDto<Course> courses = courseMainService.getPart(request);
+        PageDto<Course> courses = courseMainService.getCoursesByTag(3, false, "", request);
         modelAndView.addObject("courses", courses.getData());
+        modelAndView.addObject("i18nKeys", i18nUtil.getKeys());
         modelAndView.addObject("numOfPages",
                 (courses.getRecordsTotal() % 10 == 0) ?
                         courses.getRecordsTotal() / 10 :
@@ -62,22 +61,28 @@ public class MainController  {
     @RequestMapping(value = "/courseinfo", method = RequestMethod.GET)
     public ModelAndView courseinfo(@RequestParam(value = "id") Long id, @RequestBody(required = false) GetEntityRequest request, HttpServletRequest httpServletRequest){
         ModelAndView modelAndView = new ModelAndView("courseinfo");
+        modelAndView.addObject("i18nKeys", i18nUtil.getKeys());
         Course course = courseMainService.getById(id);
-        boolean courseContainsUser = false;
         modelAndView.addObject("course",course);
+
+        boolean courseContainsUser = false;
+        boolean isUserCreatorOfTheCourse = false;
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String login = auth.getName();
+
         if(!login.equals("anonymousUser")) {
             for (UserProfile user : courseMainService.getStudentsFromCourse(course)) {
                 if (user.getLogin().equals(login)) courseContainsUser = true;
             }
         }
         modelAndView.addObject("userAlreadyRegistredForCourse", courseContainsUser);
+        if(login.equals(course.getTeacher().getLogin())){
+            isUserCreatorOfTheCourse = true;
+        }
+        modelAndView.addObject("isUserCreatorOfTheCourse", isUserCreatorOfTheCourse);
 
         if(!httpServletRequest.isUserInRole("ROLE_TEACHER")) return modelAndView;
-
-        modelAndView.addObject("i18nKeys", i18nUtil.getKeys());
 
         if(request == null) {
             request = new GetEntityRequest(0,10);
@@ -97,6 +102,7 @@ public class MainController  {
     public boolean subscribe(Principal login,@RequestParam(value = "courseid") long courseId){
         boolean success = false;
         Course course = courseMainService.getById(courseId);
+        if(course.getTeacher().getLogin().equals(login)) return success;
         if(course.getStatus()== Course.Status.ACTIVE ){
             UserProfile user = userMainService.getByLogin(login.getName());
             success = groupMainService.addUserToCourse(user, course);
@@ -134,5 +140,18 @@ public class MainController  {
 
         model.setViewName("login");
         return model;
+    }
+
+    @RequestMapping(value = "/404")
+    public ModelAndView errorPage(){
+        return new ModelAndView("static/404");
+    }
+
+    @RequestMapping(value = "/403")
+    public ModelAndView errorAccessDenied(Principal user){
+        ModelAndView modelAndView = new ModelAndView("static/403");
+        UserProfile userProfile = userMainService.getByLogin(user.getName());
+        modelAndView.addObject(userProfile);
+        return modelAndView;
     }
 }

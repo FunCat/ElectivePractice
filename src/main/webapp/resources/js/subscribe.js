@@ -1,5 +1,4 @@
 function subscribe(){
-        console.log("sub");
         $.ajax({
             contentType: 'application/json',
             dataType: 'json',
@@ -13,7 +12,9 @@ function subscribe(){
                     $("#subscribeResult").html("Успешно");
                     $("#subscribe").remove();
                     $("#subdiv").append(
-                        "<div id = 'unsubscribe' class='myMediumBtn' onclick='unsubscribe()'>Отписаться</div>"
+                        "<div id = 'unsubscribe' class='myMediumBtn' onclick='unsubscribe()'>" +
+                        i18nStrings["Unsubscribe"] +
+                        "</div>"
                     );
                 }
                 else $("#subscribeResult").html("Действие невозможно");
@@ -21,8 +22,6 @@ function subscribe(){
         });
 }
 function unsubscribe() {
-        console.log("unsub");
-
         $.ajax({
             contentType: 'application/json',
             dataType: 'json',
@@ -36,7 +35,9 @@ function unsubscribe() {
                     $("#subscribeResult").html("Успешно");
                     $("#unsubscribe").remove();
                     $("#subdiv").append(
-                        "<div id = 'subscribe' class='myMediumBtn' onclick='subscribe()'>Записаться</div>"
+                        "<div id = 'subscribe' class='myMediumBtn' onclick='subscribe()'>" +
+                        i18nStrings["Subscribe"] +
+                        "</div>"
                     );
                 }
                 else $("#subscribeResult").html("Действие невозможно");

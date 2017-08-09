@@ -8,9 +8,6 @@
             http://www.springframework.org/schema/tx/spring-tx-3.2.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
 
-    <context:annotation-config/>
-    <context:component-scan base-package="com.epam"/>
-
     <tx:annotation-driven transaction-manager="transactionManager" mode="proxy"/>
 
     <bean class="org.springframework.orm.jpa.JpaTransactionManager" id="transactionManager">
@@ -41,9 +38,8 @@
     </bean>
 
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
-          p:driverClassName="org.postgresql.Driver"
-          p:url="jdbc:postgresql://localhost:5432/electives"
-          p:username="postgres"
-          p:password="epam"/>
-
+          p:driverClassName="${jdbc.driverClassName}"
+          p:url="${jdbc.url}"
+          p:username="${jdbc.username}"
+          p:password="${jdbc.password}"/>
 </beans>

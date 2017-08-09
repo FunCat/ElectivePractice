@@ -13,8 +13,8 @@ function getCoursesPage() {
                 $("#studentList").append("<tr>" +
                     "<td>" + value.groupId.student.firstname + "</td>" +
                     "<td>" + value.groupId.student.lastname + "</td>" +
-                    "<td><input type='text' id='grade_"+index +"' disabled value="+value.grade+" /></td>" +
-                    "<td><input type='text' id='review_"+index+"' disabled value="+value.review+" /></td>" +
+                    "<td><input type='text' id='grade_"+index +"' disabled value='"+value.grade+"' /></td>" +
+                    "<td><input type='text' id='review_"+index+"' disabled value='"+value.review+"' /></td>" +
                     "<td>" +
                     "<a href='#' class='btn btn-warning btn-sm edit' attr_id="+index+" role='button'>"+
                     i18nStrings["Edit"] +

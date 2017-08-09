@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="s" uri="/WEB-INF/tld/spring.tld" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -31,7 +31,7 @@
 <div class="container">
     <div class="row">
         <div class="col-sm-8 col-lg-8">
-            <h1>Electives</h1>
+            <h1><a href="${pageContext.request.contextPath}/" style="text-decoration: none;">Electives</a></h1>
         </div>
         <div class="col-sm-4 col-lg-4">
             <sec:authorize access="!isAuthenticated()">
@@ -46,53 +46,10 @@
 
         <div class="col-sm-12 col-lg-12">
             <div class="text-right">
-                <%--<a href="${requestScope['javax.servlet.forward.query_string']}?lang=en">English</a>
-                | <a href="${requestScope['javax.servlet.forward.query_string']}?lang=ru">Russian</a>--%>
-                <a href="?lang=en">English</a> | <a href="?lang=ru">Russian</a>
+                <a href="" id="en_locale">English</a> | <a id="ru_locale" >Russian</a>
             </div>
             <div class="text-right">
                 <s:message code="Cur_Language"/> : ${pageContext.response.locale}
             </div>
         </div>
-    </div> <!-- /container -->
-
-            <%--<nav class="navbar navbar-inverse" role="navigation">--%>
-                <%--<!-- Brand and toggle get grouped for better mobile display -->--%>
-                <%--<div class="navbar-header">--%>
-                    <%--<button type="button" class="navbar-toggle" data-toggle="collapse"--%>
-                            <%--data-target=".navbar-ex2-collapse">--%>
-                        <%--<span class="sr-only">Toggle navigation</span>--%>
-                        <%--<span class="icon-bar"></span>--%>
-                        <%--<span class="icon-bar"></span>--%>
-                        <%--<span class="icon-bar"></span>--%>
-                    <%--</button>--%>
-                    <%--<a class="navbar-brand" href="#">Brand</a>--%>
-                <%--</div>--%>
-
-                <%--<!-- Collect the nav links, forms, and other content for toggling -->--%>
-                <%--<div class="collapse navbar-collapse navbar-ex2-collapse">--%>
-                    <%--<ul class="nav navbar-nav">--%>
-                        <%--<li class="active"><a href="#">Link</a></li>--%>
-                        <%--<li><a href="#">Link</a></li>--%>
-                        <%--<li class="dropdown">--%>
-                            <%--<a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b--%>
-                                    <%--class="caret"></b></a>--%>
-                            <%--<ul class="dropdown-menu">--%>
-                                <%--<li><a href="#">Action</a></li>--%>
-                                <%--<li><a href="#">Another action</a></li>--%>
-                                <%--<li class="divider"></li>--%>
-                                <%--<li class="dropdown-header">Dropdown header</li>--%>
-                                <%--<li><a href="#">Separated link</a></li>--%>
-                                <%--<li><a href="#">One more separated link</a></li>--%>
-                            <%--</ul>--%>
-                        <%--</li>--%>
-                    <%--</ul>--%>
-                    <%--<form class="navbar-form navbar-right" role="search">--%>
-                        <%--<div class="form-group">--%>
-                            <%--<input type="text" class="form-control" placeholder="Search">--%>
-                        <%--</div>--%>
-                    <%--</form>--%>
-                <%--</div><!-- /.navbar-collapse -->--%>
-            <%--</nav>--%>
-
-
+    </div>

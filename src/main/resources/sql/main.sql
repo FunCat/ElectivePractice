@@ -12,6 +12,7 @@ VALUES ('1987-11-5', 'Leonardo', 'Stewart', '', 'leonardo.stewart',  '$2a$10$yRC
   ('1967-06-07', 'Tom', 'Morello', '', 'tom', '$2a$10$LLTTsuHWP8/QihVuNTmSD.Fsfme/.mVU1mhFI/jC87tm2JrKA.xzO', TRUE),
   ('1967-06-07', 'Wes', 'Borland', '', 'wes', '$2a$10$3O8MFTNA9TfFa2MOgL8YQO3dyM3j6t2MzcQiKFnXjiBroKctmpOwm', TRUE),
   ('1970-05-03', 'John', 'Frusciante', '', 'john','$2a$10$vYz/l.ME5I0q9X50/AjLM.ilVanrX1AbfJkv.q.qjgcAyAtaEbfyy', TRUE),
+  ('1968-07-10', 'Thom', 'Yorke', '', 'thom','$2a$10$gys0VrvcVBo9vSZUNjNuTOp9vfjARyKOx.ISdLn/WhOVfgL.Xw2na', TRUE),
   ('1986-11-12', 'Ivan', 'Ivanov', '', 'admin',  '$2a$10$xxS1WJjCKuofc7NZn7U9SeToGXdA93f.wr7bd31cMm6tEVjHDSI86', TRUE);
 
 -- Add COURSES
