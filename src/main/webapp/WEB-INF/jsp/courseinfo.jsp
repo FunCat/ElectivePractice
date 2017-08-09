@@ -37,6 +37,7 @@
 
     <sec:authorize access="hasRole('ROLE_USER')">
         <div id="subdiv">
+            <c:if test="${isUserCreatorOfTheCourse == 'false'}">
             <c:choose>
                 <c:when test="${userAlreadyRegistredForCourse == 'true'}">
                     <div id="unsubscribe" class='myMediumBtn' onclick="unsubscribe()">
@@ -49,19 +50,27 @@
                     </div>
                 </c:otherwise>
             </c:choose>
+            </c:if>
         </div>
     </sec:authorize>
 
-    <sec:authorize access="hasRole('ROLE_TEACHER')">
+    <c:choose>
+    <c:when test="${isUserCreatorOfTheCourse == 'true'}">
         <div>
             <a class='myMediumBtn' href="${pageContext.request.contextPath}/editcourse?courseid=${course.id}">
                 <s:message code="Edit"/>
             </a>
         </div>
-    </sec:authorize>
+
+        <c:if test="${course.status eq 'ACTIVE'}">
+        <div>
+            <a class='myMediumBtn' href="${pageContext.request.contextPath}/teacher/сompletecourse?courseid=${course.id}">
+                <s:message code="CompleteCourse"/>
+            </a>
+        </div>
+        </c:if>
 
     <div id="subscribeResult"></div>
-    <sec:authorize access="hasRole('ROLE_TEACHER')">
 
         <div class="col-sm-4 col-lg-4">
             <h3><s:message code="Students"/></h3>
@@ -111,7 +120,8 @@
             </ul>
         </div>
 
-    </sec:authorize>
+    </c:when>
+    </c:choose>
 </div>
 <script> var id = "${course.id}";</script>
 
