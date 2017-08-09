@@ -11,19 +11,19 @@ import com.epam.electives.services.UserMainService;
 import com.epam.electives.support.I18nUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.security.Principal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-
-/**
- * Created by rusamaha on 7/31/17.
- */
 
 @Controller
 @RequestMapping("/")
@@ -109,6 +109,18 @@ public class CourseController {
         ModelAndView modelAndView = new ModelAndView("deletecourse");
         return modelAndView;
     }
+
+    @RequestMapping(value = "/teacher/сompletecourse", method = RequestMethod.GET)
+    public void completeCourse(Principal user, @RequestParam(value = "courseid") int courseid,
+                                        HttpServletRequest httpServletRequest,
+                                        HttpServletResponse httpServletResponse) throws IOException {
+        Course course = courseMainService.getById(courseid);
+        course.setStatus(Course.Status.ARCHIVE);
+        courseMainService.saveOrUpdate(course);
+
+        httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + "/courseinfo?id="+courseid);
+        }
+
 
     @RequestMapping(value = "/save_course", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
     @ResponseBody

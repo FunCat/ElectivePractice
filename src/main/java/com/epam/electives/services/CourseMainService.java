@@ -62,5 +62,4 @@ public class CourseMainService {
     public PageDto<Group> getPartOfStudentsByCourse(GetEntityRequest request, Long id){
         return courseDao.getPartOfStudentsByCourse(request, id);
     }
-
 }
