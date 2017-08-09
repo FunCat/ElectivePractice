@@ -136,7 +136,10 @@ public class CourseDaoImpl implements CourseDao {
         }
         Long totalRecordsCount = new Long(courses.size());
         Integer size = (request.getStart() + request.getLength() > courses.size()) ? courses.size() : request.getStart() + request.getLength();
-        List<Course> result = courses.subList(request.getStart() % courses.size(), size);
+        List<Course> result = new ArrayList<>();
+        if (size != 0) {
+            result = courses.subList(request.getStart() % courses.size(), size);
+        }
         return new PageDto<>(result,totalRecordsCount);
     }
 
