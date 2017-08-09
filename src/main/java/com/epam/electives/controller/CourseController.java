@@ -11,6 +11,7 @@ import com.epam.electives.services.UserMainService;
 import com.epam.electives.support.I18nUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -115,9 +116,12 @@ public class CourseController {
                                         HttpServletRequest httpServletRequest,
                                         HttpServletResponse httpServletResponse) throws IOException {
         Course course = courseMainService.getById(courseid);
-        course.setStatus(Course.Status.ARCHIVE);
-        courseMainService.saveOrUpdate(course);
-
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String login = auth.getName();
+        if(login.equals(course.getTeacher().getLogin())) {
+            course.setStatus(Course.Status.ARCHIVE);
+            courseMainService.saveOrUpdate(course);
+        }
         httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + "/courseinfo?id="+courseid);
         }
 
