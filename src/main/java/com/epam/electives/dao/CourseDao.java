@@ -16,7 +16,7 @@ public interface CourseDao {
 
     Course findCourseById(Long id);
 
-    void saveOrUpdate(Course news);
+    void saveOrUpdate(Course course);
 
     PageDto<Course> findParts(GetEntityRequest request);
 

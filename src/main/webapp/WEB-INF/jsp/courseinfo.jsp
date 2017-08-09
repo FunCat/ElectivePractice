@@ -1,12 +1,8 @@
-<%--
-  Created by Crash
-  Date: 02.08.2017
---%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@ taglib prefix="s" uri="/WEB-INF/tld/spring.tld" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 
 <jsp:include page="static/header.jsp"/>
 <div class="container">
@@ -83,8 +79,8 @@
                 <tr>
                     <td>${item.groupId.student.firstname}</td>
                     <td>${item.groupId.student.lastname}</td>
-                    <td><input type="text" id="grade_${loop.index}" disabled value="${item.grade}"/></td>
-                    <td><input type="text" id="review_${loop.index}" disabled value="${item.review}"/></td>
+                    <td><input id="grade_${loop.index}" disabled value="${item.grade}"/></td>
+                    <td><input id="review_${loop.index}" disabled value="${item.review}"/></td>
                     <td>
                         <a href="#" class="btn btn-warning btn-sm edit" attr_id="${loop.index}">
                             <s:message code="Edit"/>
@@ -115,8 +111,8 @@
 </div>
 <script> var id = "${course.id}";</script>
 
-<jsp:include page="static/i18n.jsp"/>
 <jsp:include page="static/footer.jsp"/>
+<jsp:include page="static/i18n.jsp"/>
 <script src='<c:url value="/resources/js/courseStudents.js"/>'></script>
 <script src='<c:url value="/resources/js/pagination.js"/>'></script>
 <script src='<c:url value="/resources/js/subscribe.js"/>'></script>

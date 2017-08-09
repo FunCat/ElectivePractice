@@ -92,7 +92,9 @@ public class CourseDaoImpl implements CourseDao {
     public PageDto<Course> findParts(GetEntityRequest request) {
         Criteria criteria = getCurrentSession().createCriteria(Course.class);
 
-        criteria.add(Restrictions.eq("status", Course.Status.ACTIVE));
+        criteria.add(Restrictions.or(
+                Restrictions.eq("status", Course.Status.ACTIVE),
+                Restrictions.eq("status", Course.Status.ARCHIVE)));
 
         Long totalRecordsCount = (Long) criteria.setProjection(rowCount()).uniqueResult();
 
@@ -117,7 +119,7 @@ public class CourseDaoImpl implements CourseDao {
     public List<UserProfile> findStudentsByCourse(Course course){
         Criteria criteria = getCurrentSession().createCriteria(Group.class);
         List<Group> groups = criteria.add(Restrictions.eq("groupId.course.id", course.getId())).list();
-        List<UserProfile> result = new ArrayList<UserProfile>();
+        List<UserProfile> result = new ArrayList<>();
         for(Group group : groups){
             result.add(group.getGroupId().getStudent());
         }

@@ -137,7 +137,9 @@ public class UserController {
      */
     @RequestMapping("/registration")
     public ModelAndView userRegistration(){
-        return new ModelAndView("registration");
+        ModelAndView modelAndView = new ModelAndView("registration");
+        modelAndView.addObject("i18nKeys", i18nUtil.getKeys());
+        return modelAndView;
     }
 
     /**

@@ -36,12 +36,10 @@ public class CourseMainService {
 
     public Course saveOrUpdate(Course course){
 
-        if(course.getId()!=null) {
-            course.setStartDate(new Date());
-        } else {
-            course.setEndDate(new Date());
+        if(course.getId()== null) {
             course.setStatus(Course.Status.ACTIVE);
         }
+
         courseDao.saveOrUpdate(course);
         return course;
     }
