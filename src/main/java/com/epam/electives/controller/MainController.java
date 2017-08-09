@@ -48,7 +48,7 @@ public class MainController  {
         if(request == null) {
             request = new GetEntityRequest(0,10);
         }
-        PageDto<Course> courses = courseMainService.getPart(request);
+        PageDto<Course> courses = courseMainService.getCoursesByTag(3, false, "", request);
         modelAndView.addObject("courses", courses.getData());
         modelAndView.addObject("i18nKeys", i18nUtil.getKeys());
         modelAndView.addObject("numOfPages",
