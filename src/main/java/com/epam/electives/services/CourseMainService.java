@@ -35,11 +35,6 @@ public class CourseMainService {
     }
 
     public Course saveOrUpdate(Course course){
-
-        if(course.getId()== null) {
-            course.setStatus(Course.Status.ACTIVE);
-        }
-
         courseDao.saveOrUpdate(course);
         return course;
     }
@@ -56,8 +51,8 @@ public class CourseMainService {
         return courseDao.findByTeacher(request, userProfile);
     }
 
-    public PageDto<Course> getCoursesByTag(String tag, GetEntityRequest request){
-        return courseDao.getCoursesByTag(tag, request);
+    public PageDto<Course> getCoursesByTag(int columSorting, boolean desc, String tag, GetEntityRequest request){
+        return courseDao.getCoursesByTag(columSorting, desc, tag, request);
     }
     public PageDto<Group> getPartOfStudentsByCourse(GetEntityRequest request, Long id){
         return courseDao.getPartOfStudentsByCourse(request, id);

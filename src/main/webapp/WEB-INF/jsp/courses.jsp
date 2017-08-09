@@ -23,10 +23,10 @@
     <thead>
     <tr>
         <th></th>
-        <th><s:message code="Course_Name"/></th>
-        <th><s:message code="Course_Teacher"/></th>
-        <th><s:message code="Start_Date"/></th>
-        <th><s:message code="End_Date"/></th>
+        <th class="columSort" data-columsorting="1"><s:message code="Course_Name"/></th>
+        <th class="columSort" data-columsorting="2"><s:message code="Course_Teacher"/></th>
+        <th class="columSort columDesc" data-columsorting="3"><s:message code="Start_Date"/></th>
+        <th class="columSort" data-columsorting="4"><s:message code="End_Date"/></th>
         <th></th>
     </tr>
     </thead>
@@ -71,15 +71,19 @@
 <jsp:include page="static/footer.jsp"/>
 <jsp:include page="static/i18n.jsp"/>
 <script src='<c:url value="/resources/js/pagination.js"/>'></script>
+<script src='<c:url value="/resources/js/sortingCourses.js"/>'></script>
 <script>
+    var columSorting = 3;
+    var desc = false;
+
     function getCoursesPage() {
-        getCoursesPageDefaultPagination("/coursestag?term=" + $("#tags").val());
+        getCoursesPageDefaultPagination("/coursestag?columSorting=" + columSorting + "&desc=" + desc + "&term=" + $("#tags").val());
     }
 
     $(document).ready(function () {
         $("#tags").change(function () {
             a.start = 0;
-            getCoursesPageDefaultPagination("/coursestag?term=" + $("#tags").val());
+            getCoursesPageDefaultPagination("/coursestag?columSorting=" + columSorting + "&desc=" + desc + "&term=" + $("#tags").val());
         });
     })
 </script>
