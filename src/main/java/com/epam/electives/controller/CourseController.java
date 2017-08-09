@@ -162,6 +162,7 @@ public class CourseController {
         course.setStartDate(startDate);
         course.setEndDate(endDate);
         course.setDescription(descriptionCourse);
+        course.setStatus(Course.Status.ACTIVE);
 
         courseMainService.saveOrUpdate(course);
 
@@ -245,11 +246,14 @@ public class CourseController {
 
     @ResponseBody
     @RequestMapping(value = "/coursestag")
-    public PageDto<Course> partByTeacher(@RequestParam("term") String tag, @RequestBody(required = false) GetEntityRequest request) {
+    public PageDto<Course> partByTeacher(@RequestParam("columSorting") int columSorting,
+                                         @RequestParam("desc") boolean desc,
+                                         @RequestParam("term") String tag,
+                                         @RequestBody(required = false) GetEntityRequest request) {
         if (request == null) {
             request = new GetEntityRequest(0, 10);
         }
-        return courseMainService.getCoursesByTag(tag, request);
+        return courseMainService.getCoursesByTag(columSorting, desc, tag, request);
     }
 
 }
