@@ -1,20 +1,13 @@
 package com.epam.electives.model;
 
 import com.epam.electives.support.JsonDateSerializer;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Data;
-import lombok.NonNull;
 import org.hibernate.annotations.Type;
-import org.springframework.context.i18n.LocaleContextHolder;
 
 import javax.persistence.*;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
-
 
 @Data
 @Entity

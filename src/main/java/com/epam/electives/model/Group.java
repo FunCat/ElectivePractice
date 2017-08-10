@@ -4,10 +4,6 @@ import lombok.Data;
 
 import javax.persistence.*;
 
-/**
- * Created by rusamaha on 7/29/17.
- */
-
 @Data
 @Entity
 @Table(name = "CourseGroup")

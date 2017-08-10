@@ -47,6 +47,13 @@ public class CourseController {
     @Value("${pgn.elements}")
     private Integer pgElNum;
 
+    /**
+     * Return page where teacher can manage his courses.
+     *
+     * @param login   object from java.security that represent user login.
+     * @param request uses for pagination (if request is null, get default value).
+     * @return page with teacher courses.
+     */
     @RequestMapping(value = "/teacher/managecourses")
     public ModelAndView courses(Principal login, @RequestBody(required = false) GetEntityRequest request) {
 
@@ -64,6 +71,13 @@ public class CourseController {
         return modelAndView;
     }
 
+    /**
+     * Return PageDto object that display total amount of courses from DB and part of courses that managed by the teacher.
+     *
+     * @param login   object from java.security that represent teacher login.
+     * @param request indicates the beginning and the number of courses that need to get from DB.
+     * @return PageDto object.
+     */
     @ResponseBody
     @RequestMapping(value = "/teacher/part")
     public PageDto<Course> partByTeacher(Principal login, @RequestBody(required = false) GetEntityRequest request) {
@@ -76,9 +90,11 @@ public class CourseController {
 
 
     /**
-     * @param id      courseId
-     * @param request GetEntityRequest contains begin and amount of entities
-     * @return part of Groups
+     * Return PageDto object that display total amount of courses from DB and part of group that managed by the teacher and recorded by users.
+     *
+     * @param id      course id that is looking by the teacher.
+     * @param request uses for pagination (if request is null, get default value).
+     * @return PageDto object.
      */
     @ResponseBody
     @RequestMapping(value = "/course/students")
@@ -90,13 +106,24 @@ public class CourseController {
         return group;
     }
 
+    /**
+     * Update information about course group by the teacher.
+     *
+     * @param group group that need to update.
+     */
     @ResponseBody
     @RequestMapping(value = "/editgroup", method = RequestMethod.POST)
     public void editGroup(@RequestBody Group group) {
         groupMainService.editGradeReview(group);
     }
 
-
+    /**
+     * Return editcourse page where teacher can update his course.
+     *
+     * @param login    object from java.security that represent teacher login.
+     * @param courseid course id that teacher wants to update.
+     * @return editcourse page.
+     */
     @RequestMapping(value = "/editcourse")
     public ModelAndView editCourse(Principal login, @RequestParam("courseid") int courseid) {
         ModelAndView modelAndView = new ModelAndView("editcourse");
@@ -110,6 +137,13 @@ public class CourseController {
         return modelAndView;
     }
 
+    /**
+     * Return deletecourse page where teacher need to confirm delete operation.
+     *
+     * @param login object from java.security that represent teacher login.
+     * @param id    course id that teacher wants to delete.
+     * @return deletecourse page.
+     */
     @RequestMapping(value = "/teacher/deletecourse", method = RequestMethod.GET)
     public ModelAndView deleteCourses(Principal login, @RequestParam(value = "courseid") int id) {
         ModelAndView modelAndView = new ModelAndView("deletecourse");
@@ -119,6 +153,15 @@ public class CourseController {
         return modelAndView;
     }
 
+    /**
+     * Change course status on ARCHIVE status.
+     *
+     * @param user                object from java.security that represent teacher login.
+     * @param courseid            course id that teacher wants to archive.
+     * @param httpServletRequest
+     * @param httpServletResponse
+     * @throws IOException
+     */
     @RequestMapping(value = "/teacher/сompletecourse", method = RequestMethod.GET)
     public void completeCourse(Principal user, @RequestParam(value = "courseid") int courseid,
                                HttpServletRequest httpServletRequest,
@@ -132,6 +175,7 @@ public class CourseController {
         }
         httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + "/courseinfo?id=" + courseid);
     }
+
 
     @RequestMapping(value = "/teacher/cancelcourse", method = RequestMethod.GET)
     public void cancelCourse(Principal user, @RequestParam(value = "courseid") int courseid,
@@ -147,7 +191,18 @@ public class CourseController {
         httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + "/courseinfo?id=" + courseid);
     }
 
-
+    /**
+     * Update information about course.
+     *
+     * @param login             object from java.security that represent teacher login.
+     * @param idCourse          course id that teacher wants to update.
+     * @param nameCourse        name of course.
+     * @param startDateCourse   start date of course.
+     * @param endDateCourse     end date of course.
+     * @param descriptionCourse description of course.
+     * @param locale            current locale that used by the user.
+     * @return String with success text or error text.
+     */
     @RequestMapping(value = "/save_course", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public String userEditProfile(Principal login,
@@ -186,13 +241,19 @@ public class CourseController {
         course.setStartDate(startDate);
         course.setEndDate(endDate);
         course.setDescription(descriptionCourse);
-        course.setStatus(Course.Status.ACTIVE);
+        if (course.getStatus() == null)
+            course.setStatus(Course.Status.ACTIVE);
 
         courseMainService.saveOrUpdate(course);
 
         return messageSource.getMessage("SuccessUpdateCourse", null, locale);
     }
 
+    /**
+     * Return addcourse page where teacher can create a new course.
+     *
+     * @return addcourse page.
+     */
     @RequestMapping(value = "/addcourse")
     public ModelAndView addCourse() {
         ModelAndView modelAndView = new ModelAndView("addcourse");
@@ -200,6 +261,17 @@ public class CourseController {
         return modelAndView;
     }
 
+    /**
+     * Save information about new course.
+     *
+     * @param login             object from java.security that represent teacher login.
+     * @param nameCourse        name of course.
+     * @param startDateCourse   start date of course.
+     * @param endDateCourse     end date of course.
+     * @param descriptionCourse description of course.
+     * @param locale            current locale that used by the user.
+     * @return String with success text or error text.
+     */
     @RequestMapping(value = "/add_new_course", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public String addNewCourse(Principal login,
@@ -246,7 +318,14 @@ public class CourseController {
         return messageSource.getMessage("SuccessUpdateCourse", null, locale);
     }
 
-    @RequestMapping(value = "teacher")
+    /**
+     * Return page with public information about teacher (name and courses).
+     *
+     * @param teacherId teacher id which we want to look.
+     * @param request   uses for pagination (if request is null, get default value).
+     * @return public page with information about teacher.
+     */
+    @RequestMapping(value = "/teacher")
     public ModelAndView teacherCourses(@RequestParam("id") int teacherId, @RequestBody(required = false) GetEntityRequest request) {
         UserProfile teacher = userMainService.getById(teacherId);
         ModelAndView modelAndView = new ModelAndView("teacher");
@@ -270,6 +349,15 @@ public class CourseController {
         return modelAndView;
     }
 
+    /**
+     * Return PageDto object that display total amount of courses from DB and part of courses which match with the tag search.
+     *
+     * @param columSorting the number of column by which is sorted.
+     * @param desc         boolean variable that shows do we need to sort by DESC order (true - DESC / false - ASC).
+     * @param tag          tag search.
+     * @param request      uses for pagination (if request is null, get default value).
+     * @return PageDto object.
+     */
     @ResponseBody
     @RequestMapping(value = "/coursestag")
     public PageDto<Course> partByTeacher(@RequestParam("columSorting") int columSorting,
