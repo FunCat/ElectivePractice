@@ -340,12 +340,7 @@ public class CourseController {
         if (request == null) {
             request = new GetEntityRequest(0, pgElNum);
         }
-        PageDto<Course> courses = partByTeacher(new Principal() {
-            @Override
-            public String getName() {
-                return teacher.getLogin();
-            }
-        }, request);
+        PageDto<Course> courses = courseMainService.getActiveCoursesByTeacher(request, (long) teacherId);
 
         modelAndView.addObject("courses", courses.getData());
         modelAndView.addObject("teacher", teacher);
@@ -355,6 +350,22 @@ public class CourseController {
                         courses.getRecordsTotal() / pgElNum :
                         courses.getRecordsTotal() / pgElNum + 1);
         return modelAndView;
+    }
+
+    /**
+     * Return PageDto object that display total amount of courses from DB and part of courses which created by teacher
+     *
+     * @param teacherId teacher id which we want to look.
+     * @param request   uses for pagination (if request is null, get default value).
+     * @return PageDto object.
+     */
+    @ResponseBody
+    @RequestMapping(value = "/teacher/courses")
+    public PageDto<Course> teacherPublicPage(@RequestParam("id") int teacherId, @RequestBody(required = false) GetEntityRequest request) {
+        if (request == null) {
+            request = new GetEntityRequest(0, pgElNum);
+        }
+        return courseMainService.getActiveCoursesByTeacher(request, (long) teacherId);
     }
 
     /**

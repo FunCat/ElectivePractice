@@ -53,11 +53,16 @@ public class CourseMainService {
     public PageDto<Course> getCoursesByTag(int columSorting, boolean desc, String tag, GetEntityRequest request){
         return courseDao.getCoursesByTag(columSorting, desc, tag, request);
     }
+
     public PageDto<Group> getPartOfStudentsByCourse(GetEntityRequest request, Long id){
         return courseDao.getPartOfStudentsByCourse(request, id);
     }
 
     public void deleteCourseFromDB(Course course){
         courseDao.delete(course);
+    }
+
+    public PageDto<Course> getActiveCoursesByTeacher(GetEntityRequest request, Long teacherId){
+        return courseDao.getActiveCoursesByTeacher(request, teacherId);
     }
 }

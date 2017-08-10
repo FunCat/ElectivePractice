@@ -84,6 +84,22 @@ public class CourseDaoImpl implements CourseDao {
     }
 
     @Override
+    public PageDto<Course> getActiveCoursesByTeacher(GetEntityRequest request, Long teacherId) {
+        Criteria criteria = getCurrentSession().createCriteria(Course.class);
+        List<Course> courses = criteria.add(Restrictions.and(
+                Restrictions.eq("teacher.id", teacherId),
+                Restrictions.eq("status", Course.Status.ACTIVE))).addOrder(Order.asc("id")).list();
+
+        Long totalRecordsCount = new Long(courses.size());
+        Integer size = (request.getStart() + request.getLength() > courses.size()) ? courses.size() : request.getStart() + request.getLength();
+        List<Course> result = new ArrayList<>();
+        if (size != 0) {
+            result = courses.subList(request.getStart() % courses.size(), size);
+        }
+        return new PageDto<>(result,totalRecordsCount);
+    }
+
+    @Override
     public void saveOrUpdate(Course course) {
         getCurrentSession().saveOrUpdate(course);
     }
