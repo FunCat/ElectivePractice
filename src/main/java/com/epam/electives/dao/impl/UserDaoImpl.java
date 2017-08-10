@@ -5,7 +5,6 @@ import com.epam.electives.dto.GetEntityRequest;
 import com.epam.electives.dto.PageDto;
 import com.epam.electives.model.UserProfile;
 import com.epam.electives.model.UserRole;
-import lombok.extern.log4j.Log4j;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Projections;
@@ -14,6 +13,9 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
 import java.util.List;
 
@@ -98,15 +100,6 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public List<String> getUserRoles(String login) {
-        UserProfile user = findUserByLogin(login);
-        Criteria criteria = getCurrentSession().createCriteria(UserRole.class);
-        criteria.add(Restrictions.eq("user_id", user.getId()));
-        criteria.setProjection(Projections.property("authority"));
-        return criteria.list();
-    }
-
-    @Override
     public void addRoleToUser(UserProfile user) {
         UserRole role = new UserRole();
         role.setUser(user);
@@ -119,5 +112,15 @@ public class UserDaoImpl implements UserDao {
         UserProfile userProfile = findUserByLogin(login);
         userProfile.setEnabled(false);
         saveOrUpdate(userProfile);
+    }
+
+    @Override
+    public void deleteUserByUserProfile(UserProfile userProfile){
+        Criteria criteria = getCurrentSession().createCriteria(UserRole.class);
+        UserRole userRole = (UserRole) criteria.add(Restrictions.eq("user.id", userProfile.getId())).uniqueResult();
+        getCurrentSession().delete(userRole);
+        Criteria criteria1 = getCurrentSession().createCriteria(UserProfile.class);
+        UserProfile userProfile1 = (UserProfile) criteria1.add(Restrictions.eq("id", userProfile.getId())).uniqueResult();
+        getCurrentSession().delete(userProfile1);
     }
 }

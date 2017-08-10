@@ -32,4 +32,6 @@ public interface CourseDao {
     PageDto<Course> getCoursesByTag (int columSorting, boolean desc, String tag, GetEntityRequest request);
 
     PageDto<Group> getPartOfStudentsByCourse (GetEntityRequest request, Long id);
+
+
 }

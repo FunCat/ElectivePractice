@@ -241,8 +241,6 @@ public class CourseController {
         course.setStartDate(startDate);
         course.setEndDate(endDate);
         course.setDescription(descriptionCourse);
-        if (course.getStatus() == null)
-            course.setStatus(Course.Status.ACTIVE);
 
         courseMainService.saveOrUpdate(course);
 
@@ -312,6 +310,7 @@ public class CourseController {
         course.setEndDate(endDate);
         course.setDescription(descriptionCourse);
         course.setTeacher(userProfile);
+        course.setStatus(Course.Status.ACTIVE);
 
         courseMainService.saveOrUpdate(course);
 

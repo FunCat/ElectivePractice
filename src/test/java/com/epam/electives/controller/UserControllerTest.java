@@ -40,10 +40,6 @@ public class UserControllerTest {
     @Autowired
     UserMainService userMainService;
     @Autowired
-    CourseDao courseDao;
-    @Autowired
-    CourseDaoImpl courseDaoImpl;
-    @Autowired
     private MessageSource messageSource;
 
     @Test
@@ -165,9 +161,6 @@ public class UserControllerTest {
         assertEquals(result, messageSource.getMessage("NotMatchesPassword", null, Locale.getDefault()));
 
         // Clear DB after testing
-        UserRole userRole = (UserRole) courseDaoImpl.getCurrentSession().createCriteria(UserRole.class)
-                .add(Restrictions.eq("user", user)).uniqueResult();
-        courseDaoImpl.getCurrentSession().delete(userRole);
-        courseDaoImpl.getCurrentSession().delete(userProfile);
+        userMainService.deleteUserByUserProfile(userProfile);
     }
 }
