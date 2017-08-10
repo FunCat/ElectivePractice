@@ -18,6 +18,9 @@ function subscribe(){
                     );
                 }
                 else $("#subscribeResult").html("Действие невозможно");
+            },
+            error: function(response){
+                alert("Error subscribe on the course!")
             }
         });
 }
@@ -41,6 +44,9 @@ function unsubscribe() {
                     );
                 }
                 else $("#subscribeResult").html("Действие невозможно");
+            },
+            error: function(response){
+                alert("Error unsubscribe from course!")
             }
         });
 }

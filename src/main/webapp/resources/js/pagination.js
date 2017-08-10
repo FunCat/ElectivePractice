@@ -47,6 +47,9 @@ function getCoursesPageDefault(url) {
                     "</tr>")
 
             });
+        },
+        error: function(response){
+            alert("Error in Default Pagination")
         }
     });
 }

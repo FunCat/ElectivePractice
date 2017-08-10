@@ -1,28 +1,15 @@
 package com.epam.electives.controller;
 
-import com.epam.electives.dao.CourseDao;
-import com.epam.electives.dao.impl.CourseDaoImpl;
 import com.epam.electives.model.UserProfile;
-import com.epam.electives.model.UserRole;
 import com.epam.electives.services.UserMainService;
-import org.hibernate.Criteria;
-import org.hibernate.Session;
-import org.hibernate.criterion.Restrictions;
-import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -83,25 +70,25 @@ public class UserControllerTest {
         assertEquals(false, userController.checkDateFormat(date));
 
         date = "12.01.2017";
-        assertEquals(true, userController.checkDateFormat(date));
+        assertEquals(false, userController.checkDateFormat(date));
 
         date = "01.12.2017";
-        assertEquals(true, userController.checkDateFormat(date));
+        assertEquals(false, userController.checkDateFormat(date));
 
         date = "31.12.2017";
-        assertEquals(true, userController.checkDateFormat(date));
+        assertEquals(false, userController.checkDateFormat(date));
 
         date = "12.31.2017";
         assertEquals(false, userController.checkDateFormat(date));
 
         date = "05.08.2017";
-        assertEquals(true, userController.checkDateFormat(date));
+        assertEquals(false, userController.checkDateFormat(date));
 
         date = "05/08/2017";
         assertEquals(true, userController.checkDateFormat(date));
 
         date = "05-08-2017";
-        assertEquals(true, userController.checkDateFormat(date));
+        assertEquals(false, userController.checkDateFormat(date));
 
         date = "05082017";
         assertEquals(false, userController.checkDateFormat(date));
