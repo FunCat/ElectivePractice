@@ -31,6 +31,9 @@ $("#saveCourse").click(function (){
                     window.location.href = contextPath + "/courseinfo?id=" + $idCourse;
 
                 $resultRequest.html(data);
+            },
+            error: function () {
+                alert("Error update course!");
             }
         });
     }
@@ -66,6 +69,9 @@ $("#addCourse").click(function (){
                     window.location.href = contextPath + "/teacher/managecourses";
 
                 $resultRequest.html(data);
+            },
+            error: function () {
+                alert("Error add new course!");
             }
         });
     }

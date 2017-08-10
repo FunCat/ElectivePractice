@@ -36,6 +36,9 @@ $(document).ready(function(){
                     $(".userPassword").val("");
                     $(".userPassword2").val("");
                     $result.html(data);
+                },
+                error: function(response){
+                    alert("Error registration new user!")
                 }
             });
         }
