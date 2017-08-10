@@ -8,6 +8,7 @@ import com.epam.electives.services.CourseMainService;
 import com.epam.electives.services.UserMainService;
 import com.epam.electives.support.I18nUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCrypt;
@@ -38,6 +39,8 @@ public class UserController {
     private MessageSource messageSource;
     @Autowired
     I18nUtil i18nUtil;
+    @Value("${pgn.elements}")
+    private Integer pgElNum;
 
     /**
      * Return page with user profile.
@@ -57,23 +60,23 @@ public class UserController {
     /**
      * Update information about user.
      *
-     * @param login object from java.security that represent user login.
-     * @param firstname new user firstname.
-     * @param lastname new user lastname.
+     * @param login      object from java.security that represent user login.
+     * @param firstname  new user firstname.
+     * @param lastname   new user lastname.
      * @param middlename new user middlename.
-     * @param userlogin new user login.
-     * @param birthday new user birthday.
+     * @param userlogin  new user login.
+     * @param birthday   new user birthday.
      * @return String with result of updating.
      */
-    @RequestMapping(value= "/edit_profile", method=RequestMethod.POST, produces = "text/plain;charset=UTF-8")
+    @RequestMapping(value = "/edit_profile", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
     @ResponseBody
-    public String  userEditProfile(Principal login,
-                                        @RequestParam("firstname") String firstname,
-                                        @RequestParam("lastname") String lastname,
-                                        @RequestParam("middlename") String middlename,
-                                        @RequestParam("userlogin") String userlogin,
-                                        @RequestParam("birthday") String birthday,
-                                        Locale locale) {
+    public String userEditProfile(Principal login,
+                                  @RequestParam("firstname") String firstname,
+                                  @RequestParam("lastname") String lastname,
+                                  @RequestParam("middlename") String middlename,
+                                  @RequestParam("userlogin") String userlogin,
+                                  @RequestParam("birthday") String birthday,
+                                  Locale locale) {
         if (!checkDateFormat(birthday)) return messageSource.getMessage("ErrorFormatDate", null, locale);
 
         UserProfile user = userMainService.getByLogin(login.getName());
@@ -91,7 +94,7 @@ public class UserController {
         }
         user.setBirthday(date);
         UserProfile checking = userMainService.saveOrUpdate(user);
-        if(checking != null)
+        if (checking != null)
             return messageSource.getMessage("SuccessUpdate", null, locale);
         return messageSource.getMessage("ErrorSomething", null, locale);
     }
@@ -99,32 +102,32 @@ public class UserController {
     /**
      * Change user password.
      *
-     * @param login object from java.security that represent user login.
-     * @param nowPassword password that user has got at the moment.
-     * @param newPassword new password.
+     * @param login        object from java.security that represent user login.
+     * @param nowPassword  password that user has got at the moment.
+     * @param newPassword  new password.
      * @param newPassword2 repeat new password.
      * @return String with result of updating.
      */
-    @RequestMapping(value= "/edit_password", method=RequestMethod.POST, produces = "text/plain;charset=UTF-8")
+    @RequestMapping(value = "/edit_password", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
     @ResponseBody
-    public String  userEditProfile(Principal login,
-                                   @RequestParam("nowpassword") String nowPassword,
-                                   @RequestParam("newpassword") String newPassword,
-                                   @RequestParam("newpassword2") String newPassword2,
-                                   Locale locale) {
+    public String userEditProfile(Principal login,
+                                  @RequestParam("nowpassword") String nowPassword,
+                                  @RequestParam("newpassword") String newPassword,
+                                  @RequestParam("newpassword2") String newPassword2,
+                                  Locale locale) {
 
         UserProfile user = userMainService.getByLogin(login.getName());
-        if(!checkPassword(nowPassword, user.getPassword()))
+        if (!checkPassword(nowPassword, user.getPassword()))
             return messageSource.getMessage("NotMatchNowPassword", null, locale);
 
         if (!checkPasswordFormat(newPassword)) return messageSource.getMessage("ErrorFormatPassword", null, locale);
 
-        if(!newPassword.equals(newPassword2))
+        if (!newPassword.equals(newPassword2))
             return messageSource.getMessage("NotMatchesPassword", null, locale);
 
         user.setPassword(bcryptPassword(newPassword));
         UserProfile checking = userMainService.saveOrUpdate(user);
-        if(checking != null)
+        if (checking != null)
             return messageSource.getMessage("SuccessUpdate", null, locale);
         return messageSource.getMessage("ErrorSomething", null, locale);
     }
@@ -136,7 +139,7 @@ public class UserController {
      * @return Page with form registration.
      */
     @RequestMapping("/registration")
-    public ModelAndView userRegistration(){
+    public ModelAndView userRegistration() {
         ModelAndView modelAndView = new ModelAndView("registration");
         modelAndView.addObject("i18nKeys", i18nUtil.getKeys());
         return modelAndView;
@@ -145,16 +148,16 @@ public class UserController {
     /**
      * Check the validity of the registration data.
      *
-     * @param login user login.
-     * @param password user password.
+     * @param login     user login.
+     * @param password  user password.
      * @param password2 repeat user password.
      * @param firstname user firstname.
-     * @param surname user surname.
-     * @param lastname user lastname.
-     * @param birthday user birthday.
+     * @param surname   user surname.
+     * @param lastname  user lastname.
+     * @param birthday  user birthday.
      * @return String with response.
      */
-    @RequestMapping(value="/registration_check", method=RequestMethod.POST, produces = "text/plain;charset=UTF-8")
+    @RequestMapping(value = "/registration_check", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public String userRegistrationCheck(@RequestParam("login") String login,
                                         @RequestParam("password") String password,
@@ -177,15 +180,15 @@ public class UserController {
         } catch (ParseException e) {
             return messageSource.getMessage("ErrorFormatDate", null, locale);
         }
-        if(convertedCurrentDate == null)
+        if (convertedCurrentDate == null)
             return messageSource.getMessage("ErrorFormatDate", null, locale);
 
-        if(!password.equals(password2)){
+        if (!password.equals(password2)) {
             return messageSource.getMessage("NotMatchesPassword", null, locale);
         }
 
         UserProfile user = userMainService.getByLogin(login);
-        if(user != null)
+        if (user != null)
             return messageSource.getMessage("LoginIsUsed", null, locale);
 
         user = new UserProfile();
@@ -232,16 +235,16 @@ public class UserController {
         String login = username.getName();
         UserProfile user = userMainService.getByLogin(login);
         ModelAndView modelAndView = new ModelAndView("usercourses");
-        if(request == null) {
-            request = new GetEntityRequest(0,10);
+        if (request == null) {
+            request = new GetEntityRequest(0, pgElNum);
         }
         PageDto<Course> courses = getUserCourses(username, request);
         modelAndView.addObject("courses", courses.getData());
         modelAndView.addObject("i18nKeys", i18nUtil.getKeys());
         modelAndView.addObject("numOfPages",
-                (courses.getRecordsTotal() % 10 == 0) ?
-                        courses.getRecordsTotal() / 10 :
-                        courses.getRecordsTotal() / 10 + 1);
+                (courses.getRecordsTotal() % pgElNum == 0) ?
+                        courses.getRecordsTotal() / pgElNum :
+                        courses.getRecordsTotal() / pgElNum + 1);
 
         return modelAndView;
     }
@@ -249,16 +252,16 @@ public class UserController {
     /**
      * Returns the list of courses in which the recorded user.
      *
-     * @param login object from java.security that represent user login.
+     * @param login   object from java.security that represent user login.
      * @param request for pagination.
      * @return The list of courses in which the recorded user.
      */
     @ResponseBody
     @RequestMapping(value = "/partuser", method = RequestMethod.POST)
     public PageDto<Course> getUserCourses(Principal login,
-                                            @RequestBody GetEntityRequest request){
+                                          @RequestBody GetEntityRequest request) {
         UserProfile user = userMainService.getByLogin(login.getName());
-        PageDto<Course> courses = userMainService.getPartUser(request,user);
+        PageDto<Course> courses = userMainService.getPartUser(request, user);
         return courses;
     }
 
@@ -284,18 +287,18 @@ public class UserController {
      * Check that stored password matches with
      *
      * @param password_plaintext user password
-     * @param stored_hash stored password in DB
+     * @param stored_hash        stored password in DB
      * @return true if password matches or false if not
      */
     public static boolean checkPassword(String password_plaintext, String stored_hash) {
         boolean password_verified = false;
 
-        if(null == stored_hash || !stored_hash.startsWith("$2a$"))
+        if (null == stored_hash || !stored_hash.startsWith("$2a$"))
             throw new java.lang.IllegalArgumentException("Invalid hash provided for comparison");
 
         password_verified = BCrypt.checkpw(password_plaintext, stored_hash);
 
-        return(password_verified);
+        return (password_verified);
     }
 
     /**

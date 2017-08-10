@@ -15,7 +15,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
-    @Log4j
+
     @Repository
     @Transactional
     public class GroupDaoImpl implements GroupDao {

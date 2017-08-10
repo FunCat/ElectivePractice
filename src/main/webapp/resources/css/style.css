@@ -164,20 +164,21 @@ a{
     margin: 20px 0 5px 0;
     float: right;
 }
-.active_status{
+.active_status, .archive_status, .canceled_status{
     margin: 7px 0 0 0;
     width: 10px;
     height: 10px;
     border-radius: 50%;
-    background-color: #009688;
+
 }
-.arhive_status{
-    margin: 7px 0 0 0;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background-color: #ac2925;
+.active_status { background-color: #009688; }
+.archive_status { background-color: #ac2925; }
+.canceled_status{ background-color: #dcdcdc; }
+
+.active_status.dote, .archive_status.dote, .canceled_status.dote {
+    float: left; margin: 5px 8px 4px 4px;
 }
+
 .columSort:hover{
     cursor: pointer;
     background-color: rgba(128, 128, 128, 0.15);
@@ -187,4 +188,11 @@ a{
 }
 .columAsc::after{
     content: '↑';
+}
+
+.footer {
+    clear: both;
+}
+.editButtons {
+
 }

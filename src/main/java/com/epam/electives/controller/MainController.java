@@ -10,20 +10,21 @@ import com.epam.electives.services.GroupMainService;
 import com.epam.electives.services.UserMainService;
 import com.epam.electives.support.I18nUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import java.security.Principal;
 
-import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
+import java.util.Locale;
 
 @Controller
 @RequestMapping("/")
-public class MainController  {
+public class MainController {
     @Autowired
     UserMainService userMainService;
     @Autowired
@@ -37,33 +38,37 @@ public class MainController  {
     @Autowired
     I18nUtil i18nUtil;
 
+
+    @Value("${pgn.elements}")
+    private Integer pgElNum;
+
     @RequestMapping
-    public ModelAndView start(){
+    public ModelAndView start() {
         return courses(null);
     }
 
     @RequestMapping(value = "/courses", method = RequestMethod.GET)
-    public ModelAndView courses(@RequestBody(required = false) GetEntityRequest request){
+    public ModelAndView courses(@RequestBody(required = false) GetEntityRequest request) {
         ModelAndView modelAndView = new ModelAndView("courses");
-        if(request == null) {
-            request = new GetEntityRequest(0,10);
+        if (request == null) {
+            request = new GetEntityRequest(0, pgElNum);
         }
         PageDto<Course> courses = courseMainService.getCoursesByTag(3, false, "", request);
         modelAndView.addObject("courses", courses.getData());
         modelAndView.addObject("i18nKeys", i18nUtil.getKeys());
         modelAndView.addObject("numOfPages",
-                (courses.getRecordsTotal() % 10 == 0) ?
-                        courses.getRecordsTotal() / 10 :
-                        courses.getRecordsTotal() / 10 + 1);
+                (courses.getRecordsTotal() % pgElNum == 0) ?
+                        courses.getRecordsTotal() / pgElNum :
+                        courses.getRecordsTotal() / pgElNum + 1);
         return modelAndView;
     }
 
     @RequestMapping(value = "/courseinfo", method = RequestMethod.GET)
-    public ModelAndView courseinfo(@RequestParam(value = "id") Long id, @RequestBody(required = false) GetEntityRequest request, HttpServletRequest httpServletRequest){
+    public ModelAndView courseinfo(@RequestParam(value = "id") Long id, @RequestBody(required = false) GetEntityRequest request, HttpServletRequest httpServletRequest) {
         ModelAndView modelAndView = new ModelAndView("courseinfo");
         modelAndView.addObject("i18nKeys", i18nUtil.getKeys());
         Course course = courseMainService.getById(id);
-        modelAndView.addObject("course",course);
+        modelAndView.addObject("course", course);
 
         boolean courseContainsUser = false;
         boolean isUserCreatorOfTheCourse = false;
@@ -71,39 +76,39 @@ public class MainController  {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String login = auth.getName();
 
-        if(!login.equals("anonymousUser")) {
+        if (!login.equals("anonymousUser")) {
             for (UserProfile user : courseMainService.getStudentsFromCourse(course)) {
                 if (user.getLogin().equals(login)) courseContainsUser = true;
             }
         }
         modelAndView.addObject("userAlreadyRegistredForCourse", courseContainsUser);
-        if(login.equals(course.getTeacher().getLogin())){
+        if (login.equals(course.getTeacher().getLogin())) {
             isUserCreatorOfTheCourse = true;
         }
         modelAndView.addObject("isUserCreatorOfTheCourse", isUserCreatorOfTheCourse);
 
-        if(!httpServletRequest.isUserInRole("ROLE_TEACHER")) return modelAndView;
+        if (!httpServletRequest.isUserInRole("ROLE_TEACHER")) return modelAndView;
 
-        if(request == null) {
-            request = new GetEntityRequest(0,10);
+        if (request == null) {
+            request = new GetEntityRequest(0, pgElNum);
         }
         PageDto<Group> group = courseMainService.getPartOfStudentsByCourse(request, id);  //// TODO: rename table Group
         modelAndView.addObject("group", group.getData());
         modelAndView.addObject("numOfPages",
-                (group.getRecordsTotal() % 10 == 0) ?
-                        group.getRecordsTotal() / 10 :
-                        group.getRecordsTotal() / 10 + 1);
+                (group.getRecordsTotal() % pgElNum == 0) ?
+                        group.getRecordsTotal() / pgElNum :
+                        group.getRecordsTotal() / pgElNum + 1);
 
         return modelAndView;
     }
 
     @RequestMapping(value = "/subscribe", method = RequestMethod.GET)
     @ResponseBody
-    public boolean subscribe(Principal login,@RequestParam(value = "courseid") long courseId){
+    public boolean subscribe(Principal login, @RequestParam(value = "courseid") long courseId) {
         boolean success = false;
         Course course = courseMainService.getById(courseId);
-        if(course.getTeacher().getLogin().equals(login)) return success;
-        if(course.getStatus()== Course.Status.ACTIVE ){
+        if (course.getTeacher().getLogin().equals(login)) return success;
+        if (course.getStatus() == Course.Status.ACTIVE) {
             UserProfile user = userMainService.getByLogin(login.getName());
             success = groupMainService.addUserToCourse(user, course);
         }
@@ -112,10 +117,10 @@ public class MainController  {
 
     @RequestMapping(value = "/unsubscribe", method = RequestMethod.GET)
     @ResponseBody
-    public boolean unsubscribe(Principal login,@RequestParam(value = "courseid") long courseId){
+    public boolean unsubscribe(Principal login, @RequestParam(value = "courseid") long courseId) {
         boolean success = false;
         Course course = courseMainService.getById(courseId);
-        if(course.getStatus()== Course.Status.ACTIVE ){
+        if (course.getStatus() == Course.Status.ACTIVE) {
             UserProfile user = userMainService.getByLogin(login.getName());
             success = groupMainService.removeUserFromCourse(user, course);
         }
@@ -125,14 +130,14 @@ public class MainController  {
 
     @ResponseBody
     @RequestMapping(value = "/part", method = RequestMethod.POST)
-    public PageDto<Course> mainAllNews(@RequestBody GetEntityRequest request){
+    public PageDto<Course> mainAllNews(@RequestBody GetEntityRequest request) {
         PageDto<Course> courses = courseMainService.getPart(request);
         return courses;
     }
 
 
-    @RequestMapping(value="/login")
-    public ModelAndView login(@RequestParam(value = "error",required = false) String error, Locale locale) {
+    @RequestMapping(value = "/login")
+    public ModelAndView login(@RequestParam(value = "error", required = false) String error, Locale locale) {
         ModelAndView model = new ModelAndView();
         if (error != null) {
             model.addObject("error", messageSource.getMessage("ErrorSignIn", null, locale));
@@ -143,12 +148,12 @@ public class MainController  {
     }
 
     @RequestMapping(value = "/404")
-    public ModelAndView errorPage(){
+    public ModelAndView errorPage() {
         return new ModelAndView("static/404");
     }
 
     @RequestMapping(value = "/403")
-    public ModelAndView errorAccessDenied(Principal user){
+    public ModelAndView errorAccessDenied(Principal user) {
         ModelAndView modelAndView = new ModelAndView("static/403");
         UserProfile userProfile = userMainService.getByLogin(user.getName());
         modelAndView.addObject(userProfile);
