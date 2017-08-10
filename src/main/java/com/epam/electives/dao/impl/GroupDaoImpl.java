@@ -54,4 +54,9 @@ import javax.transaction.Transactional;
         public void editGradeReview(Group group) {
             getCurrentSession().saveOrUpdate(group);
         }
+
+        @Override
+        public Group getGroup(GroupId groupId){
+            return (Group) getCurrentSession().get(Group.class, groupId);
+        }
     }

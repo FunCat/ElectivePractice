@@ -4,6 +4,7 @@ import com.epam.electives.dto.GetEntityRequest;
 import com.epam.electives.dto.PageDto;
 import com.epam.electives.model.Course;
 import com.epam.electives.model.Group;
+import com.epam.electives.model.GroupId;
 import com.epam.electives.model.UserProfile;
 import com.epam.electives.services.CourseMainService;
 import com.epam.electives.services.GroupMainService;
@@ -82,15 +83,21 @@ public class MainController {
         Course course = courseMainService.getById(id);
         modelAndView.addObject("course", course);
 
-        boolean courseContainsUser = false;
-        boolean isUserCreatorOfTheCourse = false;
-
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String login = auth.getName();
 
+        boolean courseContainsUser = false;
+        boolean isUserCreatorOfTheCourse = false;
+
         if (!login.equals("anonymousUser")) {
-            for (UserProfile user : courseMainService.getStudentsFromCourse(course)) {
-                if (user.getLogin().equals(login)) courseContainsUser = true;
+            UserProfile user = userMainService.getByLogin(login);
+            GroupId groupId = new GroupId();
+            groupId.setStudent(user);
+            groupId.setCourse(course);
+            Group userGroup = groupMainService.getGroupById(groupId);
+            modelAndView.addObject("userGroup", userGroup);
+            for (UserProfile userP : courseMainService.getStudentsFromCourse(course)) {
+                if (userP.getLogin().equals(login)) courseContainsUser = true;
             }
         }
         modelAndView.addObject("userAlreadyRegistredForCourse", courseContainsUser);

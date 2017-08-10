@@ -63,6 +63,19 @@
         </div>
     </sec:authorize>
 
+
+    <c:if test="${userAlreadyRegistredForCourse == 'true'}">
+    <table class="table table-striped" data-effect="fade">
+        <tr>
+    <td>${userGroup.groupId.student.firstname}</td>
+    <td>${userGroup.groupId.student.lastname}</td>
+    <td>${userGroup.grade}</td>
+    <td>${userGroup.review}</td>
+        </tr>
+    </table>
+    </c:if>
+
+
     <c:choose>
     <c:when test="${isUserCreatorOfTheCourse == 'true'}">
     <div class="editButtons">
