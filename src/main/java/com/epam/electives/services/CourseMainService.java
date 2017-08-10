@@ -57,4 +57,8 @@ public class CourseMainService {
     public PageDto<Group> getPartOfStudentsByCourse(GetEntityRequest request, Long id){
         return courseDao.getPartOfStudentsByCourse(request, id);
     }
+
+    public void deleteCourseFromDB(Course course){
+        courseDao.delete(course);
+    }
 }

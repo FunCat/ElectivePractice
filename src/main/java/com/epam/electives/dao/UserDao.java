@@ -33,9 +33,9 @@ public interface UserDao {
 
     List<UserProfile> findN(int n);
 
-    List<String> getUserRoles(String login);
-
     void addRoleToUser(UserProfile user);
 
     void deleteUserByLogin(String login);
+
+    void delete(UserProfile user);
 }

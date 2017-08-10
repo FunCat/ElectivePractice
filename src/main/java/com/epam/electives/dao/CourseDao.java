@@ -5,6 +5,7 @@ import com.epam.electives.dto.PageDto;
 import com.epam.electives.model.Course;
 import com.epam.electives.model.Group;
 import com.epam.electives.model.UserProfile;
+import org.hibernate.Session;
 
 import java.util.List;
 
@@ -31,4 +32,6 @@ public interface CourseDao {
     PageDto<Course> getCoursesByTag (int columSorting, boolean desc, String tag, GetEntityRequest request);
 
     PageDto<Group> getPartOfStudentsByCourse (GetEntityRequest request, Long id);
+
+    void delete(Course course);
 }

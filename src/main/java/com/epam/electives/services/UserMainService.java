@@ -64,4 +64,8 @@ public class UserMainService {
     public void deleteUserByLogin(String login){
         userDao.deleteUserByLogin(login);
     }
+
+    public void deleteUserFromDB(UserProfile user){
+        userDao.delete(user);
+    }
 }

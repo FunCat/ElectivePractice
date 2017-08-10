@@ -202,4 +202,9 @@ public class CourseDaoImpl implements CourseDao {
         List<Course> result = courses.subList(request.getStart(), size);
         return new PageDto<>(result, totalRecordsCount);
     }
+
+    public void delete(Course course){
+        course = (Course) getCurrentSession().get(Course.class, course.getId());
+        getCurrentSession().delete(course);
+    }
 }
