@@ -37,7 +37,7 @@ public class CourseDaoImpl implements CourseDao {
         this. entityManager = entityManager;
     }
 
-    Session getCurrentSession(){
+    public Session getCurrentSession(){
         return entityManager.unwrap(Session.class);
     }
 

@@ -1,6 +1,13 @@
 package com.epam.electives.controller;
 
+import com.epam.electives.dao.CourseDao;
+import com.epam.electives.dao.impl.CourseDaoImpl;
 import com.epam.electives.model.UserProfile;
+import com.epam.electives.model.UserRole;
+import com.epam.electives.services.UserMainService;
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -9,10 +16,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -27,6 +37,12 @@ public class UserControllerTest {
 
     @Autowired
     UserController userController;
+    @Autowired
+    UserMainService userMainService;
+    @Autowired
+    CourseDao courseDao;
+    @Autowired
+    CourseDaoImpl courseDaoImpl;
     @Autowired
     private MessageSource messageSource;
 
@@ -115,12 +131,43 @@ public class UserControllerTest {
         user.setBirthday(convertedCurrentDate);
         user.setEnabled(true);
 
+        // Error format date
         String result = userController.userRegistrationCheck(user.getLogin(), user.getPassword(), user.getPassword(),
-                user.getFirstname(), user.getLastname(), user.getSurname(), birthday, Locale.getDefault());
+                user.getFirstname(), user.getLastname(), user.getSurname(), "40/05/1999", Locale.getDefault());
+        assertEquals(result, messageSource.getMessage("ErrorFormatDate", null, Locale.getDefault()));
 
+        // Error format password
+        result = userController.userRegistrationCheck(user.getLogin(), "123", "123",
+                user.getFirstname(), user.getLastname(), user.getSurname(), birthday, Locale.getDefault());
+        assertEquals(result, messageSource.getMessage("ErrorFormatPassword", null, Locale.getDefault()));
+
+        // Success Registration
+        result = userController.userRegistrationCheck(user.getLogin(), user.getPassword(), user.getPassword(),
+                user.getFirstname(), user.getLastname(), user.getSurname(), birthday, Locale.getDefault());
         assertEquals(result, messageSource.getMessage("SuccessRegistration", null, Locale.getDefault()));
 
+        // Check correct registration
+        UserProfile userProfile = userMainService.getByLogin("testLogin");
+        assertEquals(user.getLogin(), userProfile.getLogin());
+        assertEquals(user.getFirstname(), userProfile.getFirstname());
+        assertEquals(user.getLastname(), userProfile.getLastname());
+        assertEquals(user.getSurname(), userProfile.getSurname());
+        assertEquals(user.getOnlyDate(), userProfile.getOnlyDate());
 
+        // Login is used
+        result = userController.userRegistrationCheck(user.getLogin(), user.getPassword(), user.getPassword(),
+                user.getFirstname(), user.getLastname(), user.getSurname(), birthday, Locale.getDefault());
+        assertEquals(result, messageSource.getMessage("LoginIsUsed", null, Locale.getDefault()));
 
+        // Not matches password
+        result = userController.userRegistrationCheck("newLogin", user.getPassword(), "",
+                user.getFirstname(), user.getLastname(), user.getSurname(), birthday, Locale.getDefault());
+        assertEquals(result, messageSource.getMessage("NotMatchesPassword", null, Locale.getDefault()));
+
+        // Clear DB after testing
+        UserRole userRole = (UserRole) courseDaoImpl.getCurrentSession().createCriteria(UserRole.class)
+                .add(Restrictions.eq("user", user)).uniqueResult();
+        courseDaoImpl.getCurrentSession().delete(userRole);
+        courseDaoImpl.getCurrentSession().delete(userProfile);
     }
 }

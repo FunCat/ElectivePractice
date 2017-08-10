@@ -7,6 +7,7 @@ import com.epam.electives.model.UserProfile;
 import com.epam.electives.services.CourseMainService;
 import com.epam.electives.services.UserMainService;
 import com.epam.electives.support.I18nUtil;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -39,6 +40,8 @@ public class UserController {
     @Autowired
     I18nUtil i18nUtil;
 
+    private static final Logger logger = Logger.getLogger(UserController.class.getName());
+
     /**
      * Return page with user profile.
      *
@@ -51,6 +54,7 @@ public class UserController {
         UserProfile user = userMainService.getByLogin(login);
         ModelAndView modelAndView = new ModelAndView("profile");
         modelAndView.addObject("userProfile", user);
+        logger.info("User - " + login + " came on the /profile page!");
         return modelAndView;
     }
 
@@ -74,9 +78,14 @@ public class UserController {
                                         @RequestParam("userlogin") String userlogin,
                                         @RequestParam("birthday") String birthday,
                                         Locale locale) {
-        if (!checkDateFormat(birthday)) return messageSource.getMessage("ErrorFormatDate", null, locale);
+        String userLogin = login.getName();
+        logger.info("User - " + userLogin + " started editing the profile page!");
+        if (!checkDateFormat(birthday)) {
+            logger.warn("User - " + userLogin + " format of birthday - FAILED!");
+            return messageSource.getMessage("ErrorFormatDate", null, locale);
+        }
 
-        UserProfile user = userMainService.getByLogin(login.getName());
+        UserProfile user = userMainService.getByLogin(userLogin);
         user.setFirstname(firstname);
         user.setLastname(lastname);
         user.setSurname(middlename);
@@ -87,12 +96,16 @@ public class UserController {
             date = formatter.parse(birthday);
         } catch (ParseException e) {
             e.printStackTrace();
+            logger.warn("User - " + userLogin + " convert birthday - FAILED!");
             return messageSource.getMessage("ErrorFormatDate", null, locale);
         }
         user.setBirthday(date);
         UserProfile checking = userMainService.saveOrUpdate(user);
-        if(checking != null)
+        if(checking != null) {
+            logger.info("User - " + userLogin + " updating profile page - OK!");
             return messageSource.getMessage("SuccessUpdate", null, locale);
+        }
+        logger.warn("User - " + userLogin + " updating profile page - FAILED!");
         return messageSource.getMessage("ErrorSomething", null, locale);
     }
 
@@ -112,20 +125,33 @@ public class UserController {
                                    @RequestParam("newpassword") String newPassword,
                                    @RequestParam("newpassword2") String newPassword2,
                                    Locale locale) {
+        String userLogin = login.getName();
+        logger.info("User - " + userLogin + " started changing the password!");
 
-        UserProfile user = userMainService.getByLogin(login.getName());
-        if(!checkPassword(nowPassword, user.getPassword()))
+        UserProfile user = userMainService.getByLogin(userLogin);
+
+        if(!checkPassword(nowPassword, user.getPassword())) {
+            logger.warn("User - " + userLogin + " match password with DB password - FAILED!");
             return messageSource.getMessage("NotMatchNowPassword", null, locale);
+        }
 
-        if (!checkPasswordFormat(newPassword)) return messageSource.getMessage("ErrorFormatPassword", null, locale);
+        if (!checkPasswordFormat(newPassword)){
+            logger.warn("User - " + userLogin + " format of new passwords - FAILED!");
+            return messageSource.getMessage("ErrorFormatPassword", null, locale);
+        }
 
-        if(!newPassword.equals(newPassword2))
+        if(!newPassword.equals(newPassword2)) {
+            logger.warn("User - " + userLogin + " match new passwords - FAILED!");
             return messageSource.getMessage("NotMatchesPassword", null, locale);
+        }
 
         user.setPassword(bcryptPassword(newPassword));
         UserProfile checking = userMainService.saveOrUpdate(user);
-        if(checking != null)
+        if(checking != null) {
+            logger.info("User - " + userLogin + " updating password - OK!");
             return messageSource.getMessage("SuccessUpdate", null, locale);
+        }
+        logger.warn("User - " + userLogin + " updating password - FAILED!");
         return messageSource.getMessage("ErrorSomething", null, locale);
     }
 
@@ -139,6 +165,7 @@ public class UserController {
     public ModelAndView userRegistration(){
         ModelAndView modelAndView = new ModelAndView("registration");
         modelAndView.addObject("i18nKeys", i18nUtil.getKeys());
+        logger.info("New user - came on the /registration page!");
         return modelAndView;
     }
 
@@ -165,9 +192,16 @@ public class UserController {
                                         @RequestParam("birthday") String birthday,
                                         Locale locale) {
 
-        if (!checkDateFormat(birthday)) return messageSource.getMessage("ErrorFormatDate", null, locale);
+        logger.info("New user - started registration!");
+        if (!checkDateFormat(birthday)){
+            logger.warn("Registration new user - format of birthday - FAILED!");
+            return messageSource.getMessage("ErrorFormatDate", null, locale);
+        }
 
-        if (!checkPasswordFormat(password)) return messageSource.getMessage("ErrorFormatPassword", null, locale);
+        if (!checkPasswordFormat(password)){
+            logger.warn("Registration new user - format of password - FAILED!");
+            return messageSource.getMessage("ErrorFormatPassword", null, locale);
+        }
 
         Date dateBirthday;
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -175,18 +209,20 @@ public class UserController {
         try {
             convertedCurrentDate = sdf.parse(birthday);
         } catch (ParseException e) {
+            logger.debug("Registration new user - convert birthday - FAILED!");
             return messageSource.getMessage("ErrorFormatDate", null, locale);
         }
-        if(convertedCurrentDate == null)
-            return messageSource.getMessage("ErrorFormatDate", null, locale);
 
         if(!password.equals(password2)){
+            logger.warn("Registration new user - match passwords - FAILED!");
             return messageSource.getMessage("NotMatchesPassword", null, locale);
         }
 
         UserProfile user = userMainService.getByLogin(login);
-        if(user != null)
+        if(user != null) {
+            logger.warn("Registration new user - login is already used - FAILED!");
             return messageSource.getMessage("LoginIsUsed", null, locale);
+        }
 
         user = new UserProfile();
         user.setLogin(login);
@@ -198,6 +234,7 @@ public class UserController {
         user.setEnabled(true);
         userMainService.saveOrUpdate(user);
         userMainService.addUserToRole(user);
+        logger.info("Registration new user - registration - OK!");
         return messageSource.getMessage("SuccessRegistration", null, locale);
     }
 
@@ -218,7 +255,7 @@ public class UserController {
      * @return True if birthday format is correct or False.
      */
     boolean checkDateFormat(@RequestParam("birthday") String birthday) {
-        return Pattern.matches("(0[1-9]|[12][0-9]|3[01])[-/.](0[1-9]|1[012])[-/.](19|20)\\d\\d", birthday);
+        return Pattern.matches("(0[1-9]|[12][0-9]|3[01])[/](0[1-9]|1[012])[/](19|20)\\d\\d", birthday);
     }
 
     /**
@@ -242,7 +279,7 @@ public class UserController {
                 (courses.getRecordsTotal() % 10 == 0) ?
                         courses.getRecordsTotal() / 10 :
                         courses.getRecordsTotal() / 10 + 1);
-
+        logger.info("User - " + login + " came on the /usercourses page!");
         return modelAndView;
     }
 
@@ -276,7 +313,6 @@ public class UserController {
             hashedPassword = passwordEncoder.encode(password);
             i++;
         }
-        System.out.println(hashedPassword);
         return hashedPassword;
     }
 
@@ -290,7 +326,7 @@ public class UserController {
     public static boolean checkPassword(String password_plaintext, String stored_hash) {
         boolean password_verified = false;
 
-        if(null == stored_hash || !stored_hash.startsWith("$2a$"))
+        if(null == stored_hash)
             throw new java.lang.IllegalArgumentException("Invalid hash provided for comparison");
 
         password_verified = BCrypt.checkpw(password_plaintext, stored_hash);
@@ -306,6 +342,7 @@ public class UserController {
     @RequestMapping(value = "/deleteaccount")
     public void deleteAccount(Principal user, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws IOException {
         String login = user.getName();
+        logger.info("User - " + login + " delete account!");
         userMainService.deleteUserByLogin(login);
         SecurityContextHolder.getContext().setAuthentication(null);
         httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + "/courses");
