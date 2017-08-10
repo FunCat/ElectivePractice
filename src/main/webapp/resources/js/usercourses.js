@@ -52,8 +52,8 @@ function getCoursesPage() {
                 $("#coursesList").append("<tr>" +
                     "<td>" + value.name + "</td>" +
                     "<td>" + value.teacher.lastname + "</td>" +
-                    "<td>" + new Date(value.startDate).toDateString().slice(0,10) + "</td>" +
-                    "<td>" + new Date(value.endDate).toDateString().slice(0,10) + "</td>" +
+                    "<td>" + value.startDate + "</td>" +
+                    "<td>" + value.endDate + "</td>" +
                     "<td>" +
                     "<a class='myMediumBtn' href='"+contextPath+"/courseinfo?id=" +
                     value.id + "' role='button'>Подробнее</a>" +
