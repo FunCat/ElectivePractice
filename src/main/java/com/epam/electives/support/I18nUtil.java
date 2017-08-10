@@ -11,11 +11,9 @@ import java.util.List;
 public class I18nUtil {
 
     @Autowired
-    ApplicationContext applicationContext; //TODO: make Autowired CustomBundleMessageSource instead taking it from appCtx
-    //    CustomBundleMessageSource customBundleMessageSource;
+    CustomBundleMessageSource customBundleMessageSource;
 
     public List<String> getKeys(){
-        CustomBundleMessageSource customBundleMessageSource = (CustomBundleMessageSource) applicationContext.getBean("messageSource");
         return customBundleMessageSource.getKeys(LocaleContextHolder.getLocale());
     }
 }

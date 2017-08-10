@@ -28,7 +28,18 @@
         <tbody id="coursesList">
         <c:forEach var="item" items="${courses}">
             <tr>
-                <td>${item.name}</td>
+                <td>
+                    <c:if test="${item.status eq 'ACTIVE'}">
+                        <div class="active_status dote"></div>
+                    </c:if>
+                    <c:if test="${item.status eq 'CANCELED'}">
+                        <div class="canceled_status dote"></div>
+                    </c:if>
+                    <c:if test="${item.status eq 'ARCHIVE'}">
+                        <div class="archive_status dote"></div>
+                    </c:if>
+                        ${item.name}
+                </td>
                 <td>
                     <a href="${pageContext.request.contextPath}/teacher?id=${item.teacher.id}">${item.teacher.firstname} ${item.teacher.lastname}</a>
                 </td>
@@ -36,7 +47,7 @@
                 <td><fmt:formatDate pattern="dd MMM yyyy" value="${item.endDate}" /></td>
                 <td>
                     <a class="btn btn-primary btn-sm" href="${pageContext.request.contextPath}/courseinfo?id=${item.id}"><s:message code="More" /></a>
-                    <a class="btn btn-danger btn-sm"  href="${pageContext.request.contextPath}/courseinfo?id=${item.id}"><s:message code="Delete" /></a>
+                    <%--<a class="btn btn-danger btn-sm"  href="${pageContext.request.contextPath}/teacher/deletecourse?courseid=${item.id}"><s:message code="Delete" /></a>--%>
                 </td>
             </tr>
 

@@ -19,7 +19,7 @@ import java.util.List;
 
 import static org.hibernate.criterion.Projections.rowCount;
 
-@Log4j
+
 @Repository
 @Transactional
 public class UserDaoImpl implements UserDao {

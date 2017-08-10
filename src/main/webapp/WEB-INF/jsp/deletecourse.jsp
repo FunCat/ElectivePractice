@@ -22,12 +22,18 @@
 
     <a class="btn btn-primary" href="#"><s:message code="Add_Course" /></a>
 </div>
-<div  class="col-md-10" >
+<div  class="col-md-10 text-center" >
     <sec:authorize access="hasRole('ROLE_TEACHER')">
         Do you really want to delete course?
-
+        <a class="btn btn-danger btn-large" href="${pageContext.request.contextPath}/teacher/cancelcourse?courseid=${course.id}">
+            <s:message code="Yes"/>
+        </a>
+        <a class="btn btn-primary btn-large" href="${pageContext.request.contextPath}/courseinfo?id=${course.id}">
+            <s:message code="No"/>
+        </a>
     </sec:authorize>
 </div>
+
 
 <jsp:include page="static/footer.jsp"/>
 <jsp:include page="static/i18n.jsp"/>

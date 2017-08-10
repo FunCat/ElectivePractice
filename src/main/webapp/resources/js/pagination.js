@@ -66,7 +66,7 @@ function getCoursesPageDefaultPagination(url) {
             $.each(response.data, function (index, value) {
                 console.log(index, value);
                 $("#coursesList").append("<tr><td>" +
-                    ((value.status == 'ACTIVE') ? "<div class='active_status'></div>" : "<div class='arhive_status'></div>") + "</td>" +
+                    ((value.status == 'ACTIVE') ? "<div class='active_status'></div>" : "<div class='archive_status'></div>") + "</td>" +
                     "<td>" + value.name + "</td>" +
                     "<td><a href='" + contextPath + "/teacher?id=" + value.teacher.id + "'>" + value.teacher.firstname + " " + value.teacher.lastname + "</a></td>" +
                     "<td>" + value.startDate + "</td>" +
@@ -87,6 +87,9 @@ function getCoursesPageDefaultPagination(url) {
             $pagination.append("<li class='' id='nextPage' onclick='nextPage()'>»</li>");
 
             changePaginationClasses();
+        },
+        error: function(response){
+            alert("Error in Default Pagination")
         }
     });
 }

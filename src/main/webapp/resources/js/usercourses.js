@@ -61,6 +61,10 @@ function getCoursesPage() {
                     "</tr>")
 
             });
+        },
+        error: function(response){
+            alert("Error in user getCoursesPage()");
+            console.log(response)
         }
     });
 }
@@ -91,6 +95,10 @@ $(".pagination .page").click(function () {
                     "</td>" +
                     "</tr>")
             });
+        },
+        error: function (response) {
+            alert("Error in user courses pagination");
+            console.log(response);
         }
     });
 });

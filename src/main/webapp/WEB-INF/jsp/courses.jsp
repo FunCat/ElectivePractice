@@ -39,7 +39,7 @@
                         <div class="active_status"></div>
                     </c:when>
                     <c:otherwise>
-                        <div class="arhive_status"></div>
+                        <div class="archive_status"></div>
                     </c:otherwise>
                 </c:choose>
             </td>

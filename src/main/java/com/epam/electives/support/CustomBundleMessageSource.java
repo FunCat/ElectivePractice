@@ -10,7 +10,7 @@ import java.util.Properties;
 
 public class CustomBundleMessageSource extends ReloadableResourceBundleMessageSource {
 
-    public List<String> getKeys(Locale locale){
+    public List<String> getKeys(Locale locale){ // locale passed for variant with different keys in different locales
         List<String> keys = new ArrayList<>();
         PropertiesHolder propertiesHolder = getMergedProperties(locale);
         Properties properties = propertiesHolder.getProperties();

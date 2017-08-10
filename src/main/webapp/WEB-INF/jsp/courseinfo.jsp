@@ -9,8 +9,21 @@
     <div class="headInfo">
         <div class="leftBlockInfo">
             <h1 class="nameCourseInfo">${course.name}</h1>
-            <div class="teacherName"><h3
-                    class="teacherCourseInfo">${course.teacher.firstname} ${course.teacher.lastname}</h3></div>
+            <c:if test="${course.status eq 'ACTIVE'}" >
+                <div class="active_status dote"></div>
+                <span class=""><s:message code="Status"/>: <s:message code="Active"/></span>
+            </c:if>
+            <c:if test="${course.status eq 'CANCELED'}">
+                <div class="canceled_status dote"></div>
+                <span class=""><s:message code="Status"/>: <s:message code="Canceled"/></span>
+            </c:if>
+            <c:if test="${course.status eq 'ARCHIVE'}">
+                <div class="archive_status dote"></div>
+                <span class=""><s:message code="Status"/>: <s:message code="Archived"/></span>
+            </c:if>
+            <div class="teacherName">
+                <s:message code="Course_Teacher"/>: <b> ${course.teacher.firstname} ${course.teacher.lastname}</b>
+            </div>
         </div>
         <div class="rightBlockInfo">
             <div class="calendar">
@@ -52,20 +65,22 @@
 
     <c:choose>
     <c:when test="${isUserCreatorOfTheCourse == 'true'}">
-        <div>
-            <a class='myMediumBtn' href="${pageContext.request.contextPath}/editcourse?courseid=${course.id}">
-                <s:message code="Edit"/>
-            </a>
-        </div>
-
+    <div class="editButtons">
+        <a class='btn btn-primary btn-large' href="${pageContext.request.contextPath}/editcourse?courseid=${course.id}">
+            <s:message code="Edit"/>
+        </a>
         <c:if test="${course.status eq 'ACTIVE'}">
-        <div>
-            <a class='myMediumBtn' href="${pageContext.request.contextPath}/teacher/сompletecourse?courseid=${course.id}">
+            <a class='btn btn-primary btn-large'
+               href="${pageContext.request.contextPath}/teacher/сompletecourse?courseid=${course.id}">
                 <s:message code="CompleteCourse"/>
             </a>
-        </div>
+            <a class='btn btn-danger btn-large'
+               href="${pageContext.request.contextPath}/teacher/deletecourse?courseid=${course.id}">
+                <s:message code="CancelCourse"/>
+            </a>
         </c:if>
-
+    </div>
+    <div style="clear: both; "></div>
     <div id="subscribeResult"></div>
 
         <div class="col-sm-4 col-lg-4">

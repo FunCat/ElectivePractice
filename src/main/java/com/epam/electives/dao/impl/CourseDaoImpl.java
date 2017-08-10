@@ -25,7 +25,7 @@ import java.util.List;
 
 import static org.hibernate.criterion.Projections.rowCount;
 
-@Log4j
+
 @Repository
 @Transactional
 public class CourseDaoImpl implements CourseDao {
@@ -187,6 +187,10 @@ public class CourseDaoImpl implements CourseDao {
                 columName = "startDate";
         }
         criteria.add(Restrictions.like("name", tag, MatchMode.ANYWHERE).ignoreCase());
+        criteria.add(Restrictions.or(
+                Restrictions.eq("status", Course.Status.ACTIVE),
+                Restrictions.eq("status", Course.Status.ARCHIVE)));
+
         List<Course> courses = new ArrayList<>();
         if(desc)
             courses = criteria.addOrder(Order.desc(columName)).list();

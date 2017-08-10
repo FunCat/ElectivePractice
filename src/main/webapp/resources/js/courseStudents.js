@@ -26,6 +26,9 @@ function getCoursesPage() {
                     "</tr>"
                 )
             });
+        },
+        error: function () {
+            alert("Error courseStudent pagination");
         }
     });
 }

@@ -10,6 +10,7 @@ import com.epam.electives.support.I18nUtil;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.core.Local;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.core.context.SecurityContext;
@@ -43,6 +44,8 @@ public class UserController {
     private MessageSource messageSource;
     @Autowired
     I18nUtil i18nUtil;
+    @Value("${pgn.elements}")
+    private Integer pgElNum;
 
     private static final Logger logger = Logger.getLogger(UserController.class.getName());
 
@@ -65,12 +68,12 @@ public class UserController {
     /**
      * Update information about user.
      *
-     * @param login object from java.security that represent user login.
-     * @param firstname new user firstname.
-     * @param lastname new user lastname.
+     * @param login      object from java.security that represent user login.
+     * @param firstname  new user firstname.
+     * @param lastname   new user lastname.
      * @param middlename new user middlename.
-     * @param userlogin new user login.
-     * @param birthday new user birthday.
+     * @param userlogin  new user login.
+     * @param birthday   new user birthday.
      * @return String with result of updating.
      */
     @RequestMapping(value= "/edit_profile", method=RequestMethod.POST, produces = "text/plain;charset=UTF-8")
@@ -116,13 +119,13 @@ public class UserController {
     /**
      * Change user password.
      *
-     * @param login object from java.security that represent user login.
-     * @param nowPassword password that user has got at the moment.
-     * @param newPassword new password.
+     * @param login        object from java.security that represent user login.
+     * @param nowPassword  password that user has got at the moment.
+     * @param newPassword  new password.
      * @param newPassword2 repeat new password.
      * @return String with result of updating.
      */
-    @RequestMapping(value= "/edit_password", method=RequestMethod.POST, produces = "text/plain;charset=UTF-8")
+    @RequestMapping(value = "/edit_password", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public String  userEditProfile(Principal login,
                                    @RequestParam("nowpassword") String nowPassword,
@@ -176,13 +179,13 @@ public class UserController {
     /**
      * Check the validity of the registration data.
      *
-     * @param login user login.
-     * @param password user password.
+     * @param login     user login.
+     * @param password  user password.
      * @param password2 repeat user password.
      * @param firstname user firstname.
-     * @param surname user surname.
-     * @param lastname user lastname.
-     * @param birthday user birthday.
+     * @param surname   user surname.
+     * @param lastname  user lastname.
+     * @param birthday  user birthday.
      * @return String with response.
      */
     @RequestMapping(value="/registration_check", method=RequestMethod.POST, produces = "text/plain;charset=UTF-8")
@@ -216,6 +219,8 @@ public class UserController {
             logger.debug("Registration new user - convert birthday - FAILED!");
             return messageSource.getMessage("ErrorFormatDate", null, locale);
         }
+        if(convertedCurrentDate == null)
+            return messageSource.getMessage("ErrorFormatDate", null, locale);
 
         if(!password.equals(password2)){
             logger.warn("Registration new user - match passwords - FAILED!");
@@ -273,16 +278,16 @@ public class UserController {
         String login = username.getName();
         UserProfile user = userMainService.getByLogin(login);
         ModelAndView modelAndView = new ModelAndView("usercourses");
-        if(request == null) {
-            request = new GetEntityRequest(0,10);
+        if (request == null) {
+            request = new GetEntityRequest(0, pgElNum);
         }
         PageDto<Course> courses = getUserCourses(username, request);
         modelAndView.addObject("courses", courses.getData());
         modelAndView.addObject("i18nKeys", i18nUtil.getKeys());
         modelAndView.addObject("numOfPages",
-                (courses.getRecordsTotal() % 10 == 0) ?
-                        courses.getRecordsTotal() / 10 :
-                        courses.getRecordsTotal() / 10 + 1);
+                (courses.getRecordsTotal() % pgElNum == 0) ?
+                        courses.getRecordsTotal() / pgElNum :
+                        courses.getRecordsTotal() / pgElNum + 1);
         logger.info("User - " + login + " came on the /usercourses page!");
         return modelAndView;
     }
