@@ -2,13 +2,10 @@ package com.epam.electives.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
-import lombok.NonNull;
 import org.hibernate.annotations.Type;
-import org.springframework.context.i18n.LocaleContextHolder;
 
 import javax.persistence.*;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
 

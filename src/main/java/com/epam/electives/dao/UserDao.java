@@ -3,14 +3,7 @@ package com.epam.electives.dao;
 import com.epam.electives.dto.GetEntityRequest;
 import com.epam.electives.dto.PageDto;
 import com.epam.electives.model.UserProfile;
-import org.hibernate.Criteria;
-import org.hibernate.Session;
-import org.hibernate.criterion.Restrictions;
-import org.hibernate.jpa.internal.EntityManagerImpl;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import java.lang.invoke.MethodType;
 import java.util.List;
 
 

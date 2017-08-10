@@ -8,10 +8,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-/**
- * Created by rusamaha on 7/29/17.
- */
-
 @Data
 @Entity
 public class UserProfile {

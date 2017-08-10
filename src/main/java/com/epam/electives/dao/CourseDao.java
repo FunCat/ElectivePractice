@@ -12,6 +12,7 @@ import java.util.List;
  * Created by rusamaha on 7/19/17.
  */
 public interface CourseDao {
+
     List<Course> findAll();
 
     Course findCourseById(Long id);
