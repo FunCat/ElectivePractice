@@ -9,6 +9,7 @@ import com.epam.electives.services.CourseMainService;
 import com.epam.electives.services.GroupMainService;
 import com.epam.electives.services.UserMainService;
 import com.epam.electives.support.I18nUtil;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
@@ -47,6 +48,8 @@ public class CourseController {
     @Value("${pgn.elements}")
     private Integer pgElNum;
 
+    private static final Logger logger = Logger.getLogger(UserController.class.getName());
+
     /**
      * Return page where teacher can manage his courses.
      *
@@ -68,6 +71,7 @@ public class CourseController {
                 (courses.getRecordsTotal() % pgElNum == 0) ?
                         courses.getRecordsTotal() / pgElNum :
                         courses.getRecordsTotal() / pgElNum + 1);
+        logger.info("User - " + login + " came on the /mangagecourse page!");
         return modelAndView;
     }
 
@@ -85,6 +89,7 @@ public class CourseController {
         if (request == null) {
             request = new GetEntityRequest(0, pgElNum);
         }
+        logger.info("Teacher's PageDto object - " + login + " pagination part!");
         return courseMainService.getByTeacher(request, userProfile);
     }
 
@@ -103,6 +108,7 @@ public class CourseController {
             request = new GetEntityRequest(0, pgElNum);
         }
         PageDto<Group> group = courseMainService.getPartOfStudentsByCourse(request, id);
+        logger.info("Teachers's Students PageDto object created!");
         return group;
     }
 
@@ -114,6 +120,7 @@ public class CourseController {
     @ResponseBody
     @RequestMapping(value = "/editgroup", method = RequestMethod.POST)
     public void editGroup(@RequestBody Group group) {
+        logger.info("Update information about course group by the teacher!");
         groupMainService.editGradeReview(group);
     }
 
@@ -130,10 +137,12 @@ public class CourseController {
         UserProfile userProfile = userMainService.getByLogin(login.getName());
         Course course = courseMainService.getById(courseid);
         if (!userProfile.equals(course.getTeacher())) {
+            logger.warn("Editcourse page where teacher" + login + "can update his course loaded.");
             return new ModelAndView("static/404");
         }
         modelAndView.addObject("i18nKeys", i18nUtil.getKeys());
         modelAndView.addObject(course);
+        logger.info("Editcourse page where teacher" + login + "can update his course loaded.");
         return modelAndView;
     }
 
@@ -147,7 +156,7 @@ public class CourseController {
     @RequestMapping(value = "/teacher/deletecourse", method = RequestMethod.GET)
     public ModelAndView deleteCourses(Principal login, @RequestParam(value = "courseid") int id) {
         ModelAndView modelAndView = new ModelAndView("deletecourse");
-
+        logger.info("Update information about course group by the teacher" + login +"!");
         Course course = courseMainService.getById(id);
         modelAndView.addObject("course", course);
         return modelAndView;
