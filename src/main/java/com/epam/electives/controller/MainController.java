@@ -4,6 +4,7 @@ import com.epam.electives.dto.GetEntityRequest;
 import com.epam.electives.dto.PageDto;
 import com.epam.electives.model.Course;
 import com.epam.electives.model.Group;
+import com.epam.electives.model.GroupId;
 import com.epam.electives.model.UserProfile;
 import com.epam.electives.services.CourseMainService;
 import com.epam.electives.services.GroupMainService;
@@ -31,10 +32,8 @@ public class MainController {
     CourseMainService courseMainService;
     @Autowired
     GroupMainService groupMainService;
-
     @Autowired
     private MessageSource messageSource;
-
     @Autowired
     I18nUtil i18nUtil;
 
@@ -47,6 +46,12 @@ public class MainController {
         return courses(null);
     }
 
+    /**
+     * Return page with all courses (main page).
+     *
+     * @param request uses for pagination (if request is null, get default value).
+     * @return courses page.
+     */
     @RequestMapping(value = "/courses", method = RequestMethod.GET)
     public ModelAndView courses(@RequestBody(required = false) GetEntityRequest request) {
         ModelAndView modelAndView = new ModelAndView("courses");
@@ -63,6 +68,14 @@ public class MainController {
         return modelAndView;
     }
 
+    /**
+     * Return page with info about course.
+     *
+     * @param id                 course id.
+     * @param request            uses for pagination (if request is null, get default value).
+     * @param httpServletRequest uses for detect if the user has ROLE_TEACHER.
+     * @return courseinfo page.
+     */
     @RequestMapping(value = "/courseinfo", method = RequestMethod.GET)
     public ModelAndView courseinfo(@RequestParam(value = "id") Long id, @RequestBody(required = false) GetEntityRequest request, HttpServletRequest httpServletRequest) {
         ModelAndView modelAndView = new ModelAndView("courseinfo");
@@ -70,15 +83,21 @@ public class MainController {
         Course course = courseMainService.getById(id);
         modelAndView.addObject("course", course);
 
-        boolean courseContainsUser = false;
-        boolean isUserCreatorOfTheCourse = false;
-
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String login = auth.getName();
 
+        boolean courseContainsUser = false;
+        boolean isUserCreatorOfTheCourse = false;
+
         if (!login.equals("anonymousUser")) {
-            for (UserProfile user : courseMainService.getStudentsFromCourse(course)) {
-                if (user.getLogin().equals(login)) courseContainsUser = true;
+            UserProfile user = userMainService.getByLogin(login);
+            GroupId groupId = new GroupId();
+            groupId.setStudent(user);
+            groupId.setCourse(course);
+            Group userGroup = groupMainService.getGroupById(groupId);
+            modelAndView.addObject("userGroup", userGroup);
+            for (UserProfile userP : courseMainService.getStudentsFromCourse(course)) {
+                if (userP.getLogin().equals(login)) courseContainsUser = true;
             }
         }
         modelAndView.addObject("userAlreadyRegistredForCourse", courseContainsUser);
@@ -102,6 +121,13 @@ public class MainController {
         return modelAndView;
     }
 
+    /**
+     * Subscribe user for the course.
+     *
+     * @param login    object from java.security that represent user login.
+     * @param courseId course id where user want to subscribe.
+     * @return true/false if user is subscribed
+     */
     @RequestMapping(value = "/subscribe", method = RequestMethod.GET)
     @ResponseBody
     public boolean subscribe(Principal login, @RequestParam(value = "courseid") long courseId) {
@@ -115,6 +141,13 @@ public class MainController {
         return success;
     }
 
+    /**
+     * Unsubscribe user for the course.
+     *
+     * @param login    object from java.security that represent user login.
+     * @param courseId course id where user want to unsubscribe.
+     * @return true/false if user is unsubscribed
+     */
     @RequestMapping(value = "/unsubscribe", method = RequestMethod.GET)
     @ResponseBody
     public boolean unsubscribe(Principal login, @RequestParam(value = "courseid") long courseId) {
@@ -127,7 +160,12 @@ public class MainController {
         return success;
     }
 
-
+    /**
+     * Return PageDto object that display total amount of courses from DB and part courses.
+     *
+     * @param request indicates the beginning and the number of courses that need to get from DB.
+     * @return PageDto object.
+     */
     @ResponseBody
     @RequestMapping(value = "/part", method = RequestMethod.POST)
     public PageDto<Course> mainAllNews(@RequestBody GetEntityRequest request) {
@@ -135,7 +173,13 @@ public class MainController {
         return courses;
     }
 
-
+    /**
+     * Return login page.
+     *
+     * @param error  unnecessary param that indicates when failed login.
+     * @param locale current locale that used by the user.
+     * @return login page.
+     */
     @RequestMapping(value = "/login")
     public ModelAndView login(@RequestParam(value = "error", required = false) String error, Locale locale) {
         ModelAndView model = new ModelAndView();
@@ -147,11 +191,22 @@ public class MainController {
         return model;
     }
 
+    /**
+     * Return 404 - Page not found!
+     *
+     * @return page with error 404.
+     */
     @RequestMapping(value = "/404")
     public ModelAndView errorPage() {
         return new ModelAndView("static/404");
     }
 
+    /**
+     * Return 403 - Access is denied!
+     *
+     * @param user object from java.security that represent user login.
+     * @return page with error 403.
+     */
     @RequestMapping(value = "/403")
     public ModelAndView errorAccessDenied(Principal user) {
         ModelAndView modelAndView = new ModelAndView("static/403");

@@ -161,6 +161,6 @@ public class UserControllerTest {
         assertEquals(result, messageSource.getMessage("NotMatchesPassword", null, Locale.getDefault()));
 
         // Clear DB after testing
-        userMainService.deleteUserFromDB(user);
+        userMainService.deleteUserByUserProfile(userProfile);
     }
 }

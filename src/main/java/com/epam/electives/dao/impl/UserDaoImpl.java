@@ -13,6 +13,9 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
@@ -97,7 +100,7 @@ public class UserDaoImpl implements UserDao {
         return new PageDto<>(records, totalRecordsCount);
     }
 
-  @Override
+    @Override
     public void addRoleToUser(UserProfile user) {
         UserRole role = new UserRole();
         role.setUser(user);
@@ -112,14 +115,13 @@ public class UserDaoImpl implements UserDao {
         saveOrUpdate(userProfile);
     }
 
-    public void deleteRole(UserProfile user){
+    @Override
+    public void deleteUserByUserProfile(UserProfile userProfile){
         Criteria criteria = getCurrentSession().createCriteria(UserRole.class);
-        UserRole role = (UserRole)criteria.add(Restrictions.eq("user.id", user.getId())).uniqueResult();
-        getCurrentSession().delete(role);
-    }
-    public void delete(UserProfile user){
-        deleteRole(user);
-        user = (UserProfile) getCurrentSession().get(UserProfile.class, user.getId());
-        getCurrentSession().delete(user);
+        UserRole userRole = (UserRole) criteria.add(Restrictions.eq("user.id", userProfile.getId())).uniqueResult();
+        getCurrentSession().delete(userRole);
+        Criteria criteria1 = getCurrentSession().createCriteria(UserProfile.class);
+        UserProfile userProfile1 = (UserProfile) criteria1.add(Restrictions.eq("id", userProfile.getId())).uniqueResult();
+        getCurrentSession().delete(userProfile1);
     }
 }

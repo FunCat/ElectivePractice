@@ -3,6 +3,7 @@ package com.epam.electives.services;
 import com.epam.electives.dao.GroupDao;
 import com.epam.electives.model.Course;
 import com.epam.electives.model.Group;
+import com.epam.electives.model.GroupId;
 import com.epam.electives.model.UserProfile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,10 @@ public class GroupMainService {
 
     public void editGradeReview(Group group){
         groupDao.editGradeReview(group);
+    }
+
+    public Group getGroupById(GroupId groupId){
+        return groupDao.getGroup(groupId);
     }
 }
 

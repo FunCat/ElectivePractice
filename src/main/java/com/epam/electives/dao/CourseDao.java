@@ -5,14 +5,11 @@ import com.epam.electives.dto.PageDto;
 import com.epam.electives.model.Course;
 import com.epam.electives.model.Group;
 import com.epam.electives.model.UserProfile;
-import org.hibernate.Session;
 
 import java.util.List;
 
-/**
- * Created by rusamaha on 7/19/17.
- */
 public interface CourseDao {
+
     List<Course> findAll();
 
     Course findCourseById(Long id);
@@ -34,4 +31,6 @@ public interface CourseDao {
     PageDto<Group> getPartOfStudentsByCourse (GetEntityRequest request, Long id);
 
     void delete(Course course);
+
+
 }

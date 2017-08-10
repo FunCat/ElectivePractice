@@ -6,9 +6,7 @@ import com.epam.electives.model.Group;
 import com.epam.electives.model.GroupId;
 import com.epam.electives.model.UserProfile;
 import lombok.extern.log4j.Log4j;
-import org.hibernate.Criteria;
 import org.hibernate.Session;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -55,5 +53,10 @@ import javax.transaction.Transactional;
         @Override
         public void editGradeReview(Group group) {
             getCurrentSession().saveOrUpdate(group);
+        }
+
+        @Override
+        public Group getGroup(GroupId groupId){
+            return (Group) getCurrentSession().get(Group.class, groupId);
         }
     }
