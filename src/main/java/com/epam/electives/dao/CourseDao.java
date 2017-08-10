@@ -23,6 +23,8 @@ public interface CourseDao {
 
     PageDto<Course> findByTeacher(GetEntityRequest request, UserProfile userProfile);
 
+    PageDto<Course> getActiveCoursesByTeacher(GetEntityRequest request, Long teacherId);
+
     List<Course> findN(int n);
 
     List<UserProfile> findStudentsByCourse(Course course);

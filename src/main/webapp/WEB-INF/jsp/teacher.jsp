@@ -51,6 +51,6 @@
 <script src='<c:url value="/resources/js/pagination.js"/>'></script>
 <script>
     function getCoursesPage() {
-        getCoursesPageDefault("/teacher/part");
+        getCoursesPageDefault("/teacher/courses?id=${teacher.id}");
     }
 </script>

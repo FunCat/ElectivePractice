@@ -5,9 +5,6 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<c:set var="ACTIVE_COURSE">
-    <%= Course.Status.ACTIVE.name() %>
-</c:set>
 <jsp:include page="static/header.jsp"/>
 <div class="col-sm-4 col-lg-4">
     <h3><s:message code="Courses"/></h3>
