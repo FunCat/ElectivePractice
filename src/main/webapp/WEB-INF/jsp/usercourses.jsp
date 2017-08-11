@@ -21,8 +21,20 @@
             </tr>
             </thead>
             <tbody id="coursesList">
-                <c:forEach var="item" items="${courses}">
+            <c:forEach var="item" items="${courses}">
                     <tr>
+                        <td>
+                            <c:if test="${item.status eq 'ACTIVE'}">
+                                <div class="active_status dote"></div>
+                            </c:if>
+                            <c:if test="${item.status eq 'CANCELED'}">
+                                <div class="canceled_status dote"></div>
+                            </c:if>
+                            <c:if test="${item.status eq 'ARCHIVE'}">
+                                <div class="archive_status dote"></div>
+                            </c:if>
+                                ${item.name}
+                        </td>
                         <td>${item.name}</td>
                         <td><a href="${pageContext.request.contextPath}/teacher?id=${item.teacher.id}">${item.teacher.firstname} ${item.teacher.lastname}</a></td>
                         <td><fmt:formatDate pattern="dd MMM yyyy" value="${item.startDate}" /></td>
@@ -51,8 +63,9 @@
 <jsp:include page="static/footer.jsp"/>
 <jsp:include page="static/i18n.jsp"/>
 <script src='<c:url value="/resources/js/pagination.js"/>'></script>
-<script>
-    function getCoursesPage() {
-        getCoursesPageDefault("/partuser");
-    }
-</script>
+<script src='<c:url value="/resources/js/usercourses.js"/>'></script>
+<%--<script>--%>
+    <%--function getCoursesPage() {--%>
+        <%--getCoursesPageDefault("/partuser");--%>
+    <%--}--%>
+<%--</script>--%>
