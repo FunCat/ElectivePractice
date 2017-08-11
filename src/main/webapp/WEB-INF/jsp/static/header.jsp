@@ -42,6 +42,9 @@
                 <a href="<c:url value="/logout" />"><div class="loginBtn" style="text-decoration: none;"><s:message code="SignOut" /></div></a>
                 <a href="${pageContext.request.contextPath}/profile"><div class="loginBtn" style="text-decoration: none;"><s:message code="Profile" /></div></a>
             </sec:authorize>
+            <sec:authorize access="hasRole('ROLE_ADMIN')">
+                <a href="${pageContext.request.contextPath}/adminpanel"><div class="loginBtn" style="text-decoration: none;"><s:message code="Admin_Panel" /></div></a>
+            </sec:authorize>
         </div>
 
         <div class="col-sm-12 col-lg-12">
