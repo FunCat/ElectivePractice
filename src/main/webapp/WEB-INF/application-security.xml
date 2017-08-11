@@ -17,6 +17,8 @@
         <intercept-url pattern="/teacher/managecourses" access="hasRole('ROLE_TEACHER')" />
         <intercept-url pattern="/editcourse" access="hasRole('ROLE_TEACHER')" />
 
+        <intercept-url pattern="/adminpanel" access="hasRole('ROLE_ADMIN')" />
+
         <form-login
                 login-page="/login"
                 authentication-failure-url="/login?error=true"
