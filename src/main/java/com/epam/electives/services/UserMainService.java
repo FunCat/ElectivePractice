@@ -7,6 +7,7 @@ import com.epam.electives.dto.PageDto;
 import com.epam.electives.model.Course;
 import com.epam.electives.model.UserProfile;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -66,4 +67,6 @@ public class UserMainService {
     }
 
     public void deleteUserByUserProfile(UserProfile userProfile){userDao.deleteUserByUserProfile(userProfile);}
+
+    public void registrateUser(UserProfile userProfile) {userDao.registrateUser(userProfile);}
 }
