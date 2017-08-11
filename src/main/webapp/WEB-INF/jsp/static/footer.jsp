@@ -2,14 +2,9 @@
 <%@ taglib prefix="s" uri="/WEB-INF/tld/spring.tld" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
+<%@ taglib prefix="myTags" tagdir="/WEB-INF/tags" %>
 
-            <footer class="footer text-center">
-                <p>Made by Trainees from EPAM</p>
-                <div class="credits">
-                    <a href="https://bootstrapmade.com/">Bootstrap Themes</a> by <a
-                        href="https://bootstrapmade.com/">BootstrapMade</a>
-                </div>
-            </footer>
+<myTags:Footer />
         </div>
     </body>
 </html>

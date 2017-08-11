@@ -10,7 +10,7 @@
     <http use-expressions="true">
 
         <access-denied-handler error-page="/403" />
-
+        <intercept-url pattern="/admin" access="hasRole('ROLE_ADMIN')" />
         <intercept-url pattern="/profile" access="hasRole('ROLE_USER')" />
         <intercept-url pattern="/usercourses" access="hasRole('ROLE_USER')" />
 
