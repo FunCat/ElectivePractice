@@ -34,6 +34,9 @@ import javax.transaction.Transactional;
             GroupId groupId = new GroupId();
             groupId.setStudent(user);
             groupId.setCourse(course);
+            if (getCurrentSession().get(Group.class, groupId)!=null){
+                return false;
+            }
             group.setGroupId(groupId);
             getCurrentSession().saveOrUpdate(group);
             return true;
@@ -45,7 +48,9 @@ import javax.transaction.Transactional;
             groupId.setStudent(user);
             groupId.setCourse(course);
             Group group = (Group) getCurrentSession().get(Group.class, groupId);
-
+            if (getCurrentSession().get(Group.class, groupId)==null){
+                return false;
+            }
             getCurrentSession().delete(group);
             return true;
         }
