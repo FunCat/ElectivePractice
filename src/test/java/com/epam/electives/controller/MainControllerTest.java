@@ -53,8 +53,7 @@ public class MainControllerTest {
         }
         user.setBirthday(convertedCurrentDate);
         user.setEnabled(true);
-        userMainService.saveOrUpdate(user);
-        userMainService.addUserToRole(user);
+        userMainService.registrateUser(user);
 
         teacher = new UserProfile();
         teacher.setLogin("MainDude");
@@ -72,8 +71,7 @@ public class MainControllerTest {
         }
         teacher.setBirthday(convertedCurrentDate);
         teacher.setEnabled(true);
-        userMainService.saveOrUpdate(teacher);
-        userMainService.addUserToRole(teacher);
+        userMainService.registrateUser(teacher);
 
         course = new Course();
         course.setStatus(Course.Status.ACTIVE);
