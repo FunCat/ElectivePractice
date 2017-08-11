@@ -20,6 +20,8 @@ public interface UserDao {
 
     void saveOrUpdate(UserProfile user);
 
+    void registrateUser(UserProfile user);
+
     List<UserProfile> findN(int n);
 
     void addRoleToUser(UserProfile user);

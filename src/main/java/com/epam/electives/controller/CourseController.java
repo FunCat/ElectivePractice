@@ -121,7 +121,9 @@ public class CourseController {
     @RequestMapping(value = "/editgroup", method = RequestMethod.POST)
     public void editGroup(@RequestBody Group group) {
         logger.info("Update information about course group by the teacher!");
-        groupMainService.editGradeReview(group);
+        if(group.getGroupId().getCourse().getStatus() == Course.Status.ARCHIVE) {
+            groupMainService.editGradeReview(group);
+        }
     }
 
     /**

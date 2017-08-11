@@ -46,7 +46,7 @@
 
     <sec:authorize access="hasRole('ROLE_USER')">
         <div id="subdiv">
-            <c:if test="${isUserCreatorOfTheCourse == 'false'}">
+            <c:if test="${isUserCreatorOfTheCourse == 'false' && course.status eq 'ACTIVE'}">
             <c:choose>
                 <c:when test="${userAlreadyRegistredForCourse == 'true'}">
                     <div id="unsubscribe" class='myMediumBtn' onclick="unsubscribe()">
@@ -79,10 +79,10 @@
     <c:choose>
     <c:when test="${isUserCreatorOfTheCourse == 'true'}">
     <div class="editButtons">
+        <c:if test="${course.status eq 'ACTIVE'}">
         <a class='btn btn-primary btn-large' href="${pageContext.request.contextPath}/editcourse?courseid=${course.id}">
             <s:message code="Edit"/>
         </a>
-        <c:if test="${course.status eq 'ACTIVE'}">
             <a class='btn btn-primary btn-large'
                href="${pageContext.request.contextPath}/teacher/сompletecourse?courseid=${course.id}">
                 <s:message code="CompleteCourse"/>
@@ -119,6 +119,7 @@
                     <td><input id="grade_${loop.index}" disabled value="${item.grade}"/></td>
                     <td><input id="review_${loop.index}" disabled value="${item.review}"/></td>
                     <td>
+                        <c:if test="${course.status eq 'ARCHIVE'}">
                         <a href="#" class="btn btn-warning btn-sm edit" attr_id="${loop.index}">
                             <s:message code="Edit"/>
                         </a>
@@ -126,6 +127,7 @@
                            attr_id="${loop.index}">
                             <s:message code="Save"/>
                         </a>
+                        </c:if>
                     </td>
                 </tr>
             </c:forEach>

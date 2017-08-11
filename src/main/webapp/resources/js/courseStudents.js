@@ -48,8 +48,12 @@ $(document).ready(function () {
         $(this).addClass('hidden');
         $(this).prev('.edit').removeClass('hidden');
 
+        var grade_id = $(this).attr('attr_id');
+
         $('#grade_'+$(this).attr('attr_id')).attr('disabled', true);
         $('#review_'+$(this).attr('attr_id')).attr('disabled', true);
+
+
 
         var group = {
             groupId: {
@@ -74,7 +78,12 @@ $(document).ready(function () {
                 $(".result").html(data);
             },
             error:function (data) {
-                alert("Error");
+                if(!Number.isInteger($('#grade_'+$(this).attr('attr_id')).val())){
+                    $('#grade_' + grade_id).val("");
+                    alert("Wrong format of raiting!");
+                }
+                else
+                    alert("Error");
             }
         })
     })

@@ -212,6 +212,7 @@ public class MainController {
         ModelAndView modelAndView = new ModelAndView("static/403");
         UserProfile userProfile = userMainService.getByLogin(user.getName());
         modelAndView.addObject(userProfile);
+
         return modelAndView;
     }
 }
