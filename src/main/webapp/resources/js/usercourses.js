@@ -1,43 +1,3 @@
-var curPage = 0;
-var curInterval = 10;
-
-var a = {
-    start: curPage,
-    length: curInterval
-};
-
-$(document).bind('DOMSubtreeModified', function () {
-    if (curPage == 0) {
-        $(".pagination li:first").addClass('disabled')
-    } else {
-        $(".pagination li:first").removeClass('disabled')
-    }
-    if (curPage == numOfPages-1) {
-        $(".pagination li:last").addClass('disabled')
-    } else {
-        $(".pagination li:last").removeClass('disabled')
-    }
-    $(".pagination .page").removeClass("active");
-    $(".pagination #"+(curPage+1)).addClass("active");
-});
-
-$(document).ready(function(){
-    getCoursesPage();
-    console.log(numOfPages);
-});
-
-$("#nextPage").click(function () {
-    if (curPage == numOfPages-1) return;
-    a.start = ++curPage * curInterval;
-    getCoursesPage();
-});
-
-$("#prevPage").click(function () {
-    if (curPage == 0) return;
-    a.start = --curPage * curInterval;
-    getCoursesPage();
-});
-
 function getCoursesPage() {
     $.ajax({
         contentType: 'application/json',
@@ -49,56 +9,30 @@ function getCoursesPage() {
             $("#coursesList").html("");
             $.each(response.data, function (index, value) {
                 console.log(index, value);
+                var cl;
+                if (value.status === "ACTIVE") {cl = 'active_status dote'}
+                else if (value.status === "ARCHIVE") {cl = 'archive_status dote'}
+                else {cl = 'canceled_status dote'}
                 $("#coursesList").append("<tr>" +
-                    "<td>" + value.name + "</td>" +
-                    "<td>" + value.teacher.lastname + "</td>" +
+                    "<td><div class='"+ cl + "'></div>"+ value.name + "</td>" +
+                    "<td><a href='" + contextPath + "/teacher?id=" + value.teacher.id + "'>" + value.teacher.firstname + " " + value.teacher.lastname + "</a></td>" +
                     "<td>" + value.startDate + "</td>" +
                     "<td>" + value.endDate + "</td>" +
                     "<td>" +
-                    "<a class='myMediumBtn' href='"+contextPath+"/courseinfo?id=" +
-                    value.id + "' role='button'>Подробнее</a>" +
+                    "<a class='btn btn-primary btn-sm' href='"+contextPath+"/courseinfo?id=" + value.id + "'>" +
+                    i18nStrings["More"] +
+                    "</a> " +
+                    // "<a class='btn btn-danger btn-sm' href='"+contextPath+"/teacher/deletecourse?courseid=" + value.id + "'>" +
+                    // i18nStrings["Delete"] +
+                    // "</a>" +
                     "</td>" +
                     "</tr>")
 
             });
         },
         error: function(response){
-            alert("Error in user getCoursesPage()");
+            alert("Error in getUserCoursesPage()");
             console.log(response)
         }
     });
 }
-
-$(".pagination .page").click(function () {
-    a.start = ($(this).attr('id') - 1) * 10;
-    curPage = $(this).attr('id') - 1;
-
-    $.ajax({
-        contentType: 'application/json',
-        dataType: 'json',
-        type: 'POST',
-        data: JSON.stringify(a),
-        url: contextPath + "/partuser",
-        success: function (response) {
-            // console.log(response);
-            $("#coursesList").html("");
-            $.each(response.data, function (index, value) {
-                console.log(index, value);
-                $("#coursesList").append("<tr>" +
-                    "<td>" + value.name + "</td>" +
-                    "<td>" + value.teacher.lastname + "</td>" +
-                    "<td>" + new Date(value.startDate).toDateString().slice(0,10) + "</td>" +
-                    "<td>" + new Date(value.endDate).toDateString().slice(0,10) + "</td>" +
-                    "<td>" +
-                    "<a class='myMediumBtn' href='"+contextPath+"/courseinfo?id=" +
-                    value.id + "' role='button'>Подробнее</a>" +
-                    "</td>" +
-                    "</tr>")
-            });
-        },
-        error: function (response) {
-            alert("Error in user courses pagination");
-            console.log(response);
-        }
-    });
-});
