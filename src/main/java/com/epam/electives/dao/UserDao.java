@@ -29,4 +29,6 @@ public interface UserDao {
     void deleteUserByLogin(String login);
 
     void deleteUserByUserProfile(UserProfile userProfile);
+
+    List<UserProfile> getUsers();
 }

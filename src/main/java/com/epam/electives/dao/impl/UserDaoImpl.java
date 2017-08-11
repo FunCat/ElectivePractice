@@ -133,4 +133,17 @@ public class UserDaoImpl implements UserDao {
         UserProfile userProfile1 = (UserProfile) criteria1.add(Restrictions.eq("id", userProfile.getId())).uniqueResult();
         getCurrentSession().delete(userProfile1);
     }
+
+    @Override
+    public List<UserProfile> getUsers() {
+        Criteria criteria = getCurrentSession().createCriteria(UserRole.class);
+        List<UserRole> allUsers = criteria.list();
+        List<UserRole> teachers = criteria.add(Restrictions.eq("authority", "ROLE_TEACHER")).list();
+        allUsers.remove(teachers);
+        List<UserProfile> result = new ArrayList<>();
+        for (UserRole userRole:allUsers) {
+            result.add(userRole.getUser());
+        }
+        return result;
+    }
 }

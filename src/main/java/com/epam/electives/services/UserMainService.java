@@ -69,4 +69,8 @@ public class UserMainService {
     public void deleteUserByUserProfile(UserProfile userProfile){userDao.deleteUserByUserProfile(userProfile);}
 
     public void registrateUser(UserProfile userProfile) {userDao.registrateUser(userProfile);}
+
+    public List<UserProfile> getUsers(){
+        return userDao.getUsers();
+    }
 }
