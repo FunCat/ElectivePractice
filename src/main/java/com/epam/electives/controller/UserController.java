@@ -235,8 +235,12 @@ public class UserController {
         user.setSurname(surname);
         user.setBirthday(convertedCurrentDate);
         user.setEnabled(true);
-        userMainService.saveOrUpdate(user);
-        userMainService.addUserToRole(user);
+
+        userMainService.registrateUser(user);
+
+//        userMainService.saveOrUpdate(user);
+//        userMainService.addUserToRole(user);
+
         logger.info("Registration new user - registration - OK!");
         return messageSource.getMessage("SuccessRegistration", null, locale);
     }

@@ -32,3 +32,8 @@
 </div>
 
 <jsp:include page="static/footer.jsp"/>
+<script>
+    $(document).ready(function(){
+        $('.userLogin').focus();
+    })
+</script>

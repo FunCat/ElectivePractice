@@ -7,6 +7,7 @@ import com.epam.electives.model.UserProfile;
 import com.epam.electives.model.UserRole;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
@@ -17,6 +18,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,10 +33,10 @@ public class UserDaoImpl implements UserDao {
 
     @PersistenceContext
     public void setEntityManager(EntityManager entityManager) {
-        this. entityManager = entityManager;
+        this.entityManager = entityManager;
     }
 
-    Session getCurrentSession(){
+    Session getCurrentSession() {
         return entityManager.unwrap(Session.class);
     }
 
@@ -52,9 +54,9 @@ public class UserDaoImpl implements UserDao {
     @Override
     public UserProfile findUserByName(String name, String surname, String lastname) {
         Criteria criteria = getCurrentSession().createCriteria(UserProfile.class);
-        return (UserProfile)criteria.add(Restrictions.eq("lastname",lastname))
-                .add(Restrictions.eq("name",name))
-                .add(Restrictions.eq("surname",surname))
+        return (UserProfile) criteria.add(Restrictions.eq("lastname", lastname))
+                .add(Restrictions.eq("name", name))
+                .add(Restrictions.eq("surname", surname))
                 .uniqueResult();
     }
 
@@ -101,6 +103,13 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
+    @Transactional
+    public void registrateUser(UserProfile user) {
+        saveOrUpdate(user);
+        addRoleToUser(user);
+    }
+
+    @Override
     public void addRoleToUser(UserProfile user) {
         UserRole role = new UserRole();
         role.setUser(user);
@@ -116,7 +125,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public void deleteUserByUserProfile(UserProfile userProfile){
+    public void deleteUserByUserProfile(UserProfile userProfile) {
         Criteria criteria = getCurrentSession().createCriteria(UserRole.class);
         UserRole userRole = (UserRole) criteria.add(Restrictions.eq("user.id", userProfile.getId())).uniqueResult();
         getCurrentSession().delete(userRole);

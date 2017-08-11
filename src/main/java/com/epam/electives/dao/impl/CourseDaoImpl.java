@@ -7,7 +7,6 @@ import com.epam.electives.dto.PageDto;
 import com.epam.electives.model.Course;
 import com.epam.electives.model.Group;
 import com.epam.electives.model.UserProfile;
-import lombok.extern.log4j.Log4j;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
 import org.hibernate.Session;
